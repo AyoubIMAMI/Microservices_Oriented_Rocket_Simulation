@@ -1,5 +1,6 @@
 package fr.teama.missionservice.connectors;
 
+import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 import fr.teama.missionservice.interfaces.proxy.IRocketProxy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +14,13 @@ public class RocketProxy implements IRocketProxy {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public String getRocketStatus() {
+    public String getRocketStatus() throws RocketServiceUnavailableException {
         ResponseEntity<String> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/rocket", String.class);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         } else {
-            throw new RuntimeException("Impossible to fetch rocket data.");
+            throw new RocketServiceUnavailableException();
         }
     }
 }
