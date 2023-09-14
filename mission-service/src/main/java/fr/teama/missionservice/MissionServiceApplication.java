@@ -1,13 +1,13 @@
-package fr.teama.pollservice;
+package fr.teama.missionservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PollServiceApplication {
+public class MissionServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PollServiceApplication.class, args);
+        SpringApplication.run(MissionServiceApplication.class, args);
     }
 
 }
