@@ -1,6 +1,8 @@
 #!/bin/bash
 
-echo "stopping all"
-docker-compose --file menu-service/docker-compose-menu.yml down
+echo "** Stopping all"
+docker-compose --file menu-service/docker-compose-menu.yml \
+               --file mission-service/docker-compose-mission.yml \
+               --file rocket-service/docker-compose-rocket.yml down
 
-echo "all services stopped "
+echo "** All services stopped"

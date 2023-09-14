@@ -1,0 +1,8 @@
+version: "3"
+
+services:
+  mission-service:
+    image: "marsy/mission-service"
+    restart: always
+    ports:
+      - 3001:8080
