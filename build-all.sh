@@ -11,6 +11,8 @@ echo "** Compiling all"
 
 compile_dir "weather-service"
 
-read -p "Press any key to continue... "
+compile_dir "mission-service"
+
+# read -p "Press any key to continue... "
 
 echo "** Done all"
