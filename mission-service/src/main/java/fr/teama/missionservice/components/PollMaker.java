@@ -1,23 +1,25 @@
 package fr.teama.missionservice.components;
 
 import fr.teama.missionservice.interfaces.IPollMaker;
-import org.springframework.http.RequestEntity;
+import fr.teama.missionservice.interfaces.proxy.IRocketProxy;
+import fr.teama.missionservice.interfaces.proxy.IWeatherProxy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 @Component
 public class PollMaker implements IPollMaker {
 
+    @Autowired
+    IWeatherProxy weatherProxy;
+
+    @Autowired
+    IRocketProxy rocketProxy;
+
     @Override
     public ResponseEntity<String> startMission() {
-        String weatherStatus = new WeatherProxy().getWeatherStatus();
-        String rocketStatus = new RocketProxy().getRocketStatus();
+        String weatherStatus = weatherProxy.getWeatherStatus();
+        String rocketStatus = rocketProxy.getRocketStatus();
 
         if (weatherStatus.equals("GO") && rocketStatus.equals("GO"))
             return ResponseEntity.ok().body("GO");
