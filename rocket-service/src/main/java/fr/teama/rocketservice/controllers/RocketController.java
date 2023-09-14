@@ -11,21 +11,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class RocketController {
     public static final String BASE_URI = "/api/rocket";
 
-    private final RocketAnalyzer rocketAnalyzer;
+    private final IRocketAnalyzer rocketAnalyzer;
 
     @Autowired
-    public RocketController(RocketAnalyzer rocketAnalyzer) {
+    public RocketController(IRocketAnalyzer rocketAnalyzer) {
         this.rocketAnalyzer = rocketAnalyzer;
     }
 
-    @GetMapping(path = BASE_URI+"/status")
+    @GetMapping(path = BASE_URI + "/status")
     public ResponseEntity<String> getRocketStatus() {
         return rocketAnalyzer.getRocketStatus();
     }
-    @PostMapping(path = BASE_URI+"/launch")
+
+    @PostMapping(path = BASE_URI + "/launch")
     public ResponseEntity<String> startRocket() {
         System.out.println("GO");
         return ResponseEntity.ok().body("OK");
     }
-
 }
