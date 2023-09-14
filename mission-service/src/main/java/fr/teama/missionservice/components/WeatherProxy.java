@@ -1,5 +1,6 @@
 package fr.teama.missionservice.components;
 
+import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -10,15 +11,15 @@ public class WeatherProxy {
     @Value("${api.baseurl}")
     private String apiBaseUrlHostAndPort;
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();
 
-    public String getWeatherStatus() {
+    public String getWeatherStatus() throws WeatherServiceUnavailableException {
         ResponseEntity<String> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/weather", String.class);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         } else {
-            throw new RuntimeException("Impossible to fetch weather data.");
+            throw new WeatherServiceUnavailableException();
         }
     }
 }
