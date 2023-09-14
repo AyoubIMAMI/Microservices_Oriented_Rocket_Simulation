@@ -13,6 +13,8 @@ compile_dir "weather-service"
 
 compile_dir "mission-service"
 
+compile_dir "rocket-service"
+
 # read -p "Press any key to continue... "
 
 echo "** Done all"
