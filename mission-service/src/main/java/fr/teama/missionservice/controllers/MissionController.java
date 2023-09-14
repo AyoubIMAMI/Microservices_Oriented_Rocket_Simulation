@@ -1,5 +1,6 @@
 package fr.teama.missionservice.controllers;
 
+import fr.teama.missionservice.components.PollMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +13,7 @@ public class MissionController {
     private final PollMaker pollMaker;
 
     @Autowired
-    public WeatherController(PollMaker pollMaker) {
+    public MissionController(PollMaker pollMaker) {
         this.pollMaker = pollMaker;
     }
 
