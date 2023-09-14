@@ -7,13 +7,13 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class WeatherProxy {
-    @Value("${weather.api.baseurl}")
-    private String weatherHostandPort;
+    @Value("${api.baseurl}")
+    private String apiBaseUrlHostAndPort;
 
     private RestTemplate restTemplate = new RestTemplate();
 
     public String getWeatherStatus() {
-        ResponseEntity<String> response = restTemplate.getForEntity(weatherHostandPort + "/weather", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/weather", String.class);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
