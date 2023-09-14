@@ -1,5 +1,7 @@
 package fr.teama.missionservice.controllers;
 
+import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
+import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
 import fr.teama.missionservice.interfaces.IPollMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ public class MissionController {
     }
 
     @PostMapping(path = BASE_URI + "/poll")
-    public ResponseEntity<String> startMission() {
+    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException {
         return pollMaker.startMission();
     }
 }

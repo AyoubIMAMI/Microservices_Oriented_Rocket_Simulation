@@ -1,5 +1,7 @@
 package fr.teama.missionservice.components;
 
+import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
+import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
 import fr.teama.missionservice.interfaces.IPollMaker;
 import fr.teama.missionservice.interfaces.proxy.IRocketProxy;
 import fr.teama.missionservice.interfaces.proxy.IWeatherProxy;
@@ -17,7 +19,7 @@ public class PollMaker implements IPollMaker {
     IRocketProxy rocketProxy;
 
     @Override
-    public ResponseEntity<String> startMission() {
+    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException {
         String weatherStatus = weatherProxy.getWeatherStatus();
         String rocketStatus = rocketProxy.getRocketStatus();
 
