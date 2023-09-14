@@ -1,6 +1,6 @@
 package fr.teama.rocketservice.controllers;
 
-import fr.teama.rocketservice.components.RocketAnalyzer;
+import fr.teama.rocketservice.interfaces.IRocketAnalyzer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

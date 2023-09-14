@@ -6,6 +6,6 @@ docker-compose --file weather-service/docker-compose-weather.yml \
                --file rocket-service/docker-compose-rocket.yml up -d
 
 # remove # to add pause in script execution
-read -p "Press any key to continue... "
+# read -p "Press any key to continue... "
 
 echo "** All services started"
