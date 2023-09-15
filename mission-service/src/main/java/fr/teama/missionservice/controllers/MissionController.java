@@ -5,6 +5,7 @@ import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
 import fr.teama.missionservice.interfaces.IPollMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = MissionController.BASE_URI, produces = APPLICATION_JSON_VALUE)
 public class MissionController {
     public static final String BASE_URI = "/api/mission";
@@ -19,7 +21,7 @@ public class MissionController {
     @Autowired
     private IPollMaker pollMaker;
 
-    @PostMapping("/poll")
+    @PostMapping("/start")
     public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException {
         return pollMaker.startMission();
     }
