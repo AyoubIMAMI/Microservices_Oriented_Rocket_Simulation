@@ -25,7 +25,7 @@ public class RocketController {
 
     @PostMapping("/launch")
     public ResponseEntity<String> startRocket() {
-        System.out.println("GO");
+        System.out.println("Rocket launched");
         return ResponseEntity.ok().body("OK");
     }
 }

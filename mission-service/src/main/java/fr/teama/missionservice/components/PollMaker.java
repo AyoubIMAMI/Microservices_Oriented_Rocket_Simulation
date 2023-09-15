@@ -23,9 +23,11 @@ public class PollMaker implements IPollMaker {
         String weatherStatus = weatherProxy.getWeatherStatus();
         String rocketStatus = rocketProxy.getRocketStatus();
 
-        if (weatherStatus.equals("GO") && rocketStatus.equals("GO"))
+        if (weatherStatus.equals("GO") && rocketStatus.equals("GO")) {
+            rocketProxy.postLaunchOrder();
             return ResponseEntity.ok().body("GO");
-        else
+        } else {
             return ResponseEntity.ok().body("NO GO");
+        }
     }
 }
