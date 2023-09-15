@@ -5,7 +5,7 @@ function run_test() {
   ./start-all.sh
   sleep 2
 
-  printf "## Asking Mission Commander to start the Rocket \n" 
+  printf "## Asking Mission Commander to start the Rocket \n"
 
   curl --write-out '%{http_code}' --silent --show-error --output /dev/null --location --request POST http://localhost:8080/api/mission/poll
   ret_code=$?
