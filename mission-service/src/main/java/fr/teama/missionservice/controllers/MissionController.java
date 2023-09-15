@@ -12,12 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class MissionController {
     public static final String BASE_URI = "/api/mission";
 
-    private final IPollMaker pollMaker;
-
     @Autowired
-    public MissionController(IPollMaker pollMaker) {
-        this.pollMaker = pollMaker;
-    }
+    private IPollMaker pollMaker;
 
     @PostMapping(path = BASE_URI + "/poll")
     public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException {
