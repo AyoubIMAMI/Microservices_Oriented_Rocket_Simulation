@@ -11,12 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class RocketController {
     public static final String BASE_URI = "/api/rocket";
 
-    private final IRocketAnalyzer rocketAnalyzer;
-
     @Autowired
-    public RocketController(IRocketAnalyzer rocketAnalyzer) {
-        this.rocketAnalyzer = rocketAnalyzer;
-    }
+    private IRocketAnalyzer rocketAnalyzer;
 
     @GetMapping(path = BASE_URI + "/status")
     public ResponseEntity<String> getRocketStatus() {
