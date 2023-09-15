@@ -2,6 +2,7 @@ version: "3"
 
 services:
   rocket-service:
+    container_name: rocket-service
     image: "marsy/rocket-service"
     restart: always
     ports:

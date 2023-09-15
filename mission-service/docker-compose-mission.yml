@@ -2,6 +2,7 @@ version: "3"
 
 services:
   mission-service:
+    container_name: mission-service
     image: "marsy/mission-service"
     restart: always
     ports:

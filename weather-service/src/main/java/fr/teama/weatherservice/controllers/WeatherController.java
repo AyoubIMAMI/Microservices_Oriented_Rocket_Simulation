@@ -10,12 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class WeatherController {
     public static final String BASE_URI = "/api/weather";
 
-    private final IWeatherAnalyzer weatherAnalyzer;
-
     @Autowired
-    public WeatherController(IWeatherAnalyzer weatherAnalyzer) {
-        this.weatherAnalyzer = weatherAnalyzer;
-    }
+    private IWeatherAnalyzer weatherAnalyzer;
 
     @GetMapping(path = BASE_URI)
     public ResponseEntity<String> getWeatherStatus() {
