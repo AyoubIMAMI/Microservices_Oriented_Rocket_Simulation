@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class WeatherProxy implements IWeatherProxy {
-    @Value("${api.baseurl}")
+    @Value("${weather.host.baseurl}")
     private String apiBaseUrlHostAndPort;
 
     private final RestTemplate restTemplate = new RestTemplate();

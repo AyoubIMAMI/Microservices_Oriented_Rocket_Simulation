@@ -9,13 +9,13 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class RocketProxy implements IRocketProxy {
-    @Value("${api.baseurl}")
+    @Value("${rocket.host.baseurl}")
     private String apiBaseUrlHostAndPort;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
     public String getRocketStatus() throws RocketServiceUnavailableException {
-        ResponseEntity<String> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/rocket", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/rocket/status", String.class);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
