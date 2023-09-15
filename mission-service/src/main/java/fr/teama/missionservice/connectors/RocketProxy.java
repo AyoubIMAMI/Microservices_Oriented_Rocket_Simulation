@@ -23,4 +23,13 @@ public class RocketProxy implements IRocketProxy {
             throw new RocketServiceUnavailableException();
         }
     }
+
+    @Override
+    public void postLaunchOrder() throws RocketServiceUnavailableException {
+        ResponseEntity<String> response = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket/launch", null, String.class);
+
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new RocketServiceUnavailableException();
+        }
+    }
 }
