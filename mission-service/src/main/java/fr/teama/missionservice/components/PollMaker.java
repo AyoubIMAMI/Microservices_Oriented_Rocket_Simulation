@@ -26,10 +26,15 @@ public class PollMaker implements IPollMaker {
         printServiceMessage(weatherServiceReady, "Weather service ready", "Weather service NOT ready");
         printServiceMessage(rocketServiceReady, "Rocket service ready", "Rocket service NOT ready");
 
-        return ResponseEntity.ok().body(weatherServiceReady && rocketServiceReady ? "GO" : "NO GO");
+
+        if (weatherServiceReady && rocketServiceReady) {
+            rocketProxy.postLaunchOrder();
+            return ResponseEntity.ok().body("GO");
+        }
+        return ResponseEntity.ok().body("NO GO");
     }
 
-    public void printServiceMessage(boolean isServiceReady, String readyMessage, String notReadyMessage) {
-        System.out.println(isServiceReady ? readyMessage : notReadyMessage);
+    public void printServiceMessage(boolean serviceReady, String readyMessage, String notReadyMessage) {
+        System.out.println(serviceReady ? readyMessage : notReadyMessage);
     }
 }
