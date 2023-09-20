@@ -1,8 +1,8 @@
-package fr.teama.rockethardwaremock.components;
+package fr.teama.rockethardwareservice.components;
 
-import fr.teama.rockethardwaremock.interfaces.IHardware;
-import fr.teama.rockethardwaremock.models.Rocket;
-import fr.teama.rockethardwaremock.models.Stage;
+import fr.teama.rockethardwareservice.interfaces.IHardware;
+import fr.teama.rockethardwareservice.models.Rocket;
+import fr.teama.rockethardwareservice.models.Stage;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,7 +19,9 @@ public class Hardware implements IHardware {
 
     @Override
     public void rocketLaunched() {
+
         final int[] stageLevel = {1};
+
         while (true) {
             rocket.setAltitude(rocket.getAltitude() +  new Random().nextDouble() * 100);
             rocket.setSpeed(rocket.getSpeed() + new Random().nextDouble() * 10);
@@ -38,23 +40,12 @@ public class Hardware implements IHardware {
                 }
             });
 
-            waitDelay(delay);
-        }
-    }
-
-    @Override
-    public void startSendData() {
-        while (true) {
-            System.out.println(rocket);
-            waitDelay(delay);
-        }
-    }
-
-    private void waitDelay(long delay) {
-        try {
-            TimeUnit.SECONDS.sleep(delay);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            try {
+                TimeUnit.SECONDS.sleep(delay);
+                System.out.println(rocket);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

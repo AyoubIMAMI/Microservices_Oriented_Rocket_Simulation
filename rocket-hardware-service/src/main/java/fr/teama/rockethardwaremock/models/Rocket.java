@@ -1,4 +1,4 @@
-package fr.teama.rockethardwaremock.models;
+package fr.teama.rockethardwareservice.models;
 
 import java.util.List;
 

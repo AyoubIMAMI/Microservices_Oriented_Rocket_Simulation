@@ -1,6 +1,6 @@
-package fr.teama.rockethardwaremock.controllers;
+package fr.teama.rockethardwareservice.controllers;
 
-import fr.teama.rockethardwaremock.interfaces.IHardware;
+import fr.teama.rockethardwareservice.interfaces.IHardware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;

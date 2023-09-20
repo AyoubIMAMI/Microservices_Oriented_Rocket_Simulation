@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  telemetry-service:
+    container_name: telemetry-service
+    image: "marsy/telemetry-service"
+    restart: always
+    ports:
+      - 3003:8080

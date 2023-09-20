@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  hardware-service:
+    container_name: hardware-service
+    image: "marsy/hardware-service"
+    restart: always
+    ports:
+      - 3005:8080
