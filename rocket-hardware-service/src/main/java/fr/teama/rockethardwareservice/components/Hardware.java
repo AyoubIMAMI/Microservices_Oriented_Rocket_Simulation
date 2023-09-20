@@ -1,8 +1,10 @@
 package fr.teama.rockethardwareservice.components;
 
 import fr.teama.rockethardwareservice.interfaces.IHardware;
+import fr.teama.rockethardwareservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.rockethardwareservice.models.Rocket;
 import fr.teama.rockethardwareservice.models.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,7 +14,10 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class Hardware implements IHardware {
 
-    long delay = 1;
+    @Autowired
+    ITelemetryProxy telemetryProxy;
+
+    long updateDelay = 1;
 
     Rocket rocket = new Rocket(List.of(new Stage(1, 200), new Stage(2, 100)));
 
@@ -40,7 +45,7 @@ public class Hardware implements IHardware {
             });
 
             try {
-                TimeUnit.SECONDS.sleep(delay);
+                TimeUnit.SECONDS.sleep(updateDelay);
                 System.out.println(rocket);
             } catch (InterruptedException e) {
                 e.printStackTrace();

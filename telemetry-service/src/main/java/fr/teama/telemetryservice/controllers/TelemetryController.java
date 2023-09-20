@@ -33,7 +33,7 @@ public class TelemetryController {
     }
 
 
-    @PostMapping("/sendData")
+    @PostMapping("/send-data")
     public ResponseEntity<String> saveDataNewData() {
         return ResponseEntity.ok().body("saved");
     }

@@ -4,7 +4,7 @@ public class Stage {
 
     private final int stageId;
 
-    private double fuel;
+    private Double fuel;
 
     private boolean isActivated;
 
