@@ -1,14 +1,12 @@
 package fr.teama.telemetryservice.entities;
 
-import fr.teama.telemetryservice.entities.Stage;
-
 import java.util.List;
 
 public class Rocket {
 
-    private double altitude;
+    private Double altitude;
 
-    private double speed;
+    private Double speed;
 
     private List<Stage> stages;
 

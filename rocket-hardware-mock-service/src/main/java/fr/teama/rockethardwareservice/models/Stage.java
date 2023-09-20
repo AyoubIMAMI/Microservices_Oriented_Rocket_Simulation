@@ -2,7 +2,7 @@ package fr.teama.rockethardwareservice.models;
 
 public class Stage {
 
-    private final int stageId;
+    private final int stageLevel;
 
     private Double fuel;
 
@@ -10,15 +10,15 @@ public class Stage {
 
     private boolean isDetached;
 
-    public Stage(int stageId, double fuel) {
-        this.stageId = stageId;
+    public Stage(int stageLevel, double fuel) {
+        this.stageLevel = stageLevel;
         this.fuel = fuel;
         this.isActivated = false;
         this.isDetached = false;
     }
 
-    public int getStageId() {
-        return stageId;
+    public int getStageLevel() {
+        return stageLevel;
     }
 
     public double getFuel() {
@@ -44,7 +44,7 @@ public class Stage {
     @Override
     public String toString() {
         return "Stage{" +
-                "stageId=" + stageId +
+                "stageLevel=" + stageLevel +
                 ", fuel=" + fuel +
                 ", isActivated=" + isActivated +
                 ", isDetached=" + isDetached +

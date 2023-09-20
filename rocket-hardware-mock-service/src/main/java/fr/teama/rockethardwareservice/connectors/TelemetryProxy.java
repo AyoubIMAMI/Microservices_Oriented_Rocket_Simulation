@@ -2,10 +2,12 @@ package fr.teama.rockethardwareservice.connectors;
 
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.interfaces.proxy.ITelemetryProxy;
+import fr.teama.rockethardwareservice.models.Rocket;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+@Component
 public class TelemetryProxy implements ITelemetryProxy {
     @Value("${rocket.host.baseurl}")
     private String apiBaseUrlHostAndPort;
@@ -13,9 +15,9 @@ public class TelemetryProxy implements ITelemetryProxy {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public void postData(String data) throws TelemetryServiceUnavailableException {
+    public void sendRocketData(Rocket rocket) throws TelemetryServiceUnavailableException {
         try {
-            ResponseEntity<String> response = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/send-data", data, String.class);
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/send-data", rocket, String.class);
         } catch (Exception e) {
             throw new TelemetryServiceUnavailableException();
         }

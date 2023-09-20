@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>fr.teama</groupId>
-    <artifactId>rocket-hardware-service</artifactId>
+    <artifactId>rocket-hardware-mock-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rocket-hardware-service</name>
-    <description>rocket-hardware-service</description>
+    <name>rocket-hardware-mock-service</name>
+    <description>rocket-hardware-mock-service</description>
     <properties>
         <java.version>17</java.version>
     </properties>

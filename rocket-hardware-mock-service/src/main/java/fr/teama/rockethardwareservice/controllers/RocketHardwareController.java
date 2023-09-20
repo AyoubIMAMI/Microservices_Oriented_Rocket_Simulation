@@ -1,7 +1,10 @@
 package fr.teama.rockethardwareservice.controllers;
 
+import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.interfaces.IHardware;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +23,15 @@ public class RocketHardwareController {
     @Autowired
     private IHardware hardware;
 
-    @PostMapping("/launched")
-    public void rocketLaunched() {
-        hardware.rocketLaunched();
+    @PostMapping("/start-logging")
+    public ResponseEntity<String> rocketLaunched() throws TelemetryServiceUnavailableException {
+        hardware.startLogging();
+        return ResponseEntity.status(HttpStatus.OK).body("Logging started successfully");
+    }
+
+    @PostMapping("/stop-logging")
+    public ResponseEntity<String> stopLogging() {
+        hardware.stopLogging();
+        return ResponseEntity.status(HttpStatus.OK).body("Logging stopped successfully");
     }
 }

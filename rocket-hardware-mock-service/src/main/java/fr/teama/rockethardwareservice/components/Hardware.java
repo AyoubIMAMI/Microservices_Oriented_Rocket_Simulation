@@ -1,5 +1,6 @@
 package fr.teama.rockethardwareservice.components;
 
+import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.interfaces.IHardware;
 import fr.teama.rockethardwareservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.rockethardwareservice.models.Rocket;
@@ -19,18 +20,22 @@ public class Hardware implements IHardware {
 
     long updateDelay = 1;
 
+    boolean sendLog = false;
+
     Rocket rocket = new Rocket(List.of(new Stage(1, 200), new Stage(2, 100)));
 
     @Override
-    public void rocketLaunched() {
+    public void startLogging() throws TelemetryServiceUnavailableException {
 
         final int[] stageLevel = {1};
 
-        while (true) {
+        sendLog = true;
+
+        while (sendLog) {
             rocket.setAltitude(rocket.getAltitude() +  new Random().nextDouble() * 100);
             rocket.setSpeed(rocket.getSpeed() + new Random().nextDouble() * 10);
             rocket.getStages().forEach(stage -> {
-                if (stage.getStageId() == stageLevel[0]) {
+                if (stage.getStageLevel() == stageLevel[0]) {
                     if (!stage.isActivated()) {
                         stage.setActivated(true);
                     }
@@ -46,10 +51,15 @@ public class Hardware implements IHardware {
 
             try {
                 TimeUnit.SECONDS.sleep(updateDelay);
-                System.out.println(rocket);
+                telemetryProxy.sendRocketData(rocket);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void stopLogging() {
+        sendLog = false;
     }
 }
