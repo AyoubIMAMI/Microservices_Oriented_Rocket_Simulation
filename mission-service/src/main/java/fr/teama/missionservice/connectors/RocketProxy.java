@@ -25,7 +25,7 @@ public class RocketProxy implements IRocketProxy {
         try {
             logger.logInfo("Ask rocket department for the rocket status");
             ResponseEntity<String> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/rocket/status", String.class);
-            logger.logInfo("The rocket department replied \"" + response + "\"");
+            logger.logInfo("The rocket department replied \"" + response.getBody() + "\"");
             return response.getBody();
         } catch (Exception e) {
             logger.logError("The rocket department is unavailable");

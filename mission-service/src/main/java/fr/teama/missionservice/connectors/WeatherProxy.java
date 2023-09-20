@@ -23,7 +23,7 @@ public class WeatherProxy implements IWeatherProxy {
         try {
             logger.logInfo("Ask weather-service for the weather");
             ResponseEntity<String> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/weather", String.class);
-            logger.logInfo("The weather service replied \"" + response + "\"");
+            logger.logInfo("The weather service replied \"" + response.getBody() + "\"");
             return response.getBody();
         } catch (Exception e) {
             logger.logError("The weather service is unavailable");
