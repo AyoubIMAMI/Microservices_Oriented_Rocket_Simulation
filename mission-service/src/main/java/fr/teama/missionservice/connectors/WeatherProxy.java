@@ -15,11 +15,11 @@ public class WeatherProxy implements IWeatherProxy {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public String getWeatherStatus() throws WeatherServiceUnavailableException {
-        ResponseEntity<String> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/weather", String.class);
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/weather", String.class);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
-        } else {
+        } catch (Exception e) {
             throw new WeatherServiceUnavailableException();
         }
     }

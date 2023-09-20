@@ -9,10 +9,6 @@ function compile_dir()  # $1 is the dir to get it
 
 echo "** Building all"
 
-docker image rm marsy/weather-service
-docker image rm marsy/mission-service
-docker image rm marsy/rocket-service
-
 compile_dir "weather-service"
 
 compile_dir "mission-service"

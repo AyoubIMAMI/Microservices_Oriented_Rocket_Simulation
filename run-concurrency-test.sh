@@ -6,7 +6,7 @@ function run_test() {
   sleep 5
 
   printf "## Asking Mission Commander to start the Rocket \n"
-  response=$(curl --write-out '%{http_code}' --silent --show-error --location --request POST http://localhost:3001/api/mission/poll --output -)
+  response=$(curl --write-out '%{http_code}' --silent --show-error --location --request POST http://localhost:3001/api/mission/start --output -)
   ret_code=$?
 
   # Check the return code
