@@ -1,6 +1,8 @@
 package fr.teama.telemetryservice.controllers;
 
-import fr.teama.telemetryservice.interfaces.ITelemetryAnalyzer;
+import fr.teama.telemetryservice.controllers.dto.TrackingDTO;
+import fr.teama.telemetryservice.entities.Notification;
+import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,19 +15,21 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 public class TelemetryController {
     public static final String BASE_URI = "/api/telemetry";
 
-
-
     @Autowired
-    private ITelemetryAnalyzer telemetryAnalyzer;
+    private ITelemetryNotifier telemetryAnalyzer;
 
-    @PostMapping("/reach/altitude")
-    public ResponseEntity<String> whenTelemetryReachAltitude() {
-        return telemetryAnalyzer.getTelemetryStatus();
-    }
+    @PostMapping("/tracking")
+    public ResponseEntity<String> whenTelemetryReachAltitude(TrackingDTO trackingDTO) {
+        Notification notification=new Notification(trackingDTO.getServiceToBeNotified());
 
-    @PostMapping("/reach/fuel")
-    public ResponseEntity<String> whenTelemetryReachFuel() {
-        return telemetryAnalyzer.getTelemetryStatus();
+        trackingDTO.getData().forEach(data-> {
+            if (data.getFieldToTrack().equals("height"))
+                notification.setHeight(data.getData());
+            else if (data.getFieldToTrack().equals("fuel"))
+                notification.setFuel(data.getData());
+        });
+
+        return telemetryAnalyzer.trackingNotify(notification,trackingDTO.getServiceToBeNotified());
     }
 
 
