@@ -15,20 +15,20 @@ public class RocketProxy implements IRocketProxy {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public String getRocketStatus() throws RocketServiceUnavailableException {
-        ResponseEntity<String> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/rocket/status", String.class);
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/rocket/status", String.class);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
-        } else {
+        } catch (Exception e) {
             throw new RocketServiceUnavailableException();
         }
     }
 
     @Override
     public void postLaunchOrder() throws RocketServiceUnavailableException {
-        ResponseEntity<String> response = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket/launch", null, String.class);
-
-        if (!response.getStatusCode().is2xxSuccessful()) {
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket/launch", null, String.class);
+        } catch (Exception e) {
             throw new RocketServiceUnavailableException();
         }
     }

@@ -20,14 +20,25 @@ public class PollMaker implements IPollMaker {
 
     @Override
     public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException {
-        String weatherStatus = weatherProxy.getWeatherStatus();
-        String rocketStatus = rocketProxy.getRocketStatus();
+        System.out.println("Start Go/No Go poll");
 
-        if (weatherStatus.equals("GO") && rocketStatus.equals("GO")) {
+        boolean weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
+        boolean rocketServiceReady = rocketProxy.getRocketStatus().equals("GO");
+        boolean missionReady = weatherServiceReady && rocketServiceReady;
+
+        printServiceMessage(weatherServiceReady, "Weather: GO", "Weather: NO GO");
+        printServiceMessage(rocketServiceReady, "Rocket: GO", "Rocket: NO GO");
+        printServiceMessage(missionReady, "Mission: GO", "Mission: NO GO");
+
+        if (missionReady) {
             rocketProxy.postLaunchOrder();
             return ResponseEntity.ok().body("GO");
         } else {
             return ResponseEntity.ok().body("NO GO");
         }
+    }
+
+    public void printServiceMessage(boolean serviceReady, String readyMessage, String notReadyMessage) {
+        System.out.println(serviceReady ? readyMessage : notReadyMessage);
     }
 }
