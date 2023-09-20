@@ -5,7 +5,6 @@ import fr.teama.rockethardwareservice.models.Rocket;
 import fr.teama.rockethardwareservice.models.Stage;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +26,7 @@ public class Hardware implements IHardware {
             rocket.setSpeed(rocket.getSpeed() + new Random().nextDouble() * 10);
             rocket.getStages().forEach(stage -> {
                 if (stage.getStageId() == stageLevel[0]) {
-                    if (stage.isActivated() == false) {
+                    if (!stage.isActivated()) {
                         stage.setActivated(true);
                     }
                     stage.setFuel(stage.getFuel() - new Random().nextDouble() * 10);

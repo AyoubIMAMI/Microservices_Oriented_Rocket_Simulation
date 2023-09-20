@@ -1,9 +1,9 @@
 version: "3"
 
 services:
-  hardware-service:
-    container_name: hardware-service
-    image: "marsy/hardware-service"
+  rocket-hardware-service:
+    container_name: rocket-hardware-service
+    image: "marsy/rocket-hardware-service"
     restart: always
     ports:
       - 3005:8080
