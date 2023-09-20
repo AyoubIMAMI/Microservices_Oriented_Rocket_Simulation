@@ -1,5 +1,6 @@
 package fr.teama.rocketservice.controllers;
 
+import fr.teama.rocketservice.components.LoggerComponent;
 import fr.teama.rocketservice.interfaces.IRocketAnalyzer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,9 @@ public class RocketController {
     @Autowired
     private IRocketAnalyzer rocketAnalyzer;
 
+    @Autowired
+    private LoggerComponent logger;
+
     @GetMapping("/status")
     public ResponseEntity<String> getRocketStatus() {
         return rocketAnalyzer.getRocketStatus();
@@ -23,7 +27,7 @@ public class RocketController {
 
     @PostMapping("/launch")
     public ResponseEntity<String> startRocket() {
-        System.out.println("Rocket launched");
+        logger.logInfo("Rocket launched");
         return ResponseEntity.ok().body("OK");
     }
 }
