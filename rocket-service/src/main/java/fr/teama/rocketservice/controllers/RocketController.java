@@ -22,7 +22,9 @@ public class RocketController {
 
     @GetMapping("/status")
     public ResponseEntity<String> getRocketStatus() {
-        return rocketAnalyzer.getRocketStatus();
+        ResponseEntity<String> response = rocketAnalyzer.getRocketStatus();
+        logger.logInfo("Rocket department status get as : " + response.getBody());
+        return response;
     }
 
     @PostMapping("/launch")
