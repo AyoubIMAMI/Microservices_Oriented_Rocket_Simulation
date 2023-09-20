@@ -7,3 +7,15 @@ services:
     restart: always
     ports:
       - 3003:8080
+    depends_on:
+      - postgres
+
+  # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
+  postgres:
+    image: postgres:15.2
+    container_name: telemetrydb
+    environment:
+      - POSTGRES_PASSWORD=postgrespass
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_DB=telemetry-db
+
