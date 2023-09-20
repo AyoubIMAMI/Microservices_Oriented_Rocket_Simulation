@@ -36,10 +36,6 @@ public class Rocket {
         return stages;
     }
 
-    public void setStages(List<Stage> stages) {
-        this.stages = stages;
-    }
-
     @Override
     public String toString() {
         return "Rocket{" +
