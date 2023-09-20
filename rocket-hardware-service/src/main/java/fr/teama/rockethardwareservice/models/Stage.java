@@ -37,10 +37,6 @@ public class Stage {
         isActivated = activated;
     }
 
-    public boolean isDetached() {
-        return isDetached;
-    }
-
     public void setDetached(boolean detached) {
         isDetached = detached;
     }
