@@ -25,7 +25,7 @@ public class TelemetryProxy implements ITelemetryProxy {
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
             TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "rocket-department");
-            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/tracking", trackingDTO, String.class);
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/tracking", trackingDTO, String.class);
         } catch (Exception e) {
             throw new TelemetryServiceUnavailableException();
         }
