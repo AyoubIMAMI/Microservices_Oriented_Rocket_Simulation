@@ -18,10 +18,9 @@ public class TelemetryProxy implements ITelemetryProxy {
     @Override
     public ResponseEntity<String> missionStartNotify() throws TelemetryServiceUnavailableException {
         try {
-            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/tracking", null, String.class);
+            return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/tracking", null, String.class);
         } catch (Exception e) {
             throw new TelemetryServiceUnavailableException();
         }
-        return null;
     }
 }
