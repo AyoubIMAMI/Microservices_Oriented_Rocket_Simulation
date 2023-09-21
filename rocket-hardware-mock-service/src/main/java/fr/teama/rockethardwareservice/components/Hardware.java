@@ -3,8 +3,8 @@ package fr.teama.rockethardwareservice.components;
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.interfaces.IHardware;
 import fr.teama.rockethardwareservice.interfaces.proxy.ITelemetryProxy;
-import fr.teama.rockethardwareservice.models.Rocket;
-import fr.teama.rockethardwareservice.models.Stage;
+import fr.teama.rockethardwareservice.models.RocketData;
+import fr.teama.rockethardwareservice.models.StageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +22,7 @@ public class Hardware implements IHardware {
 
     boolean sendLog = false;
 
-    Rocket rocket = new Rocket(List.of(new Stage(1, 200), new Stage(2, 100)));
+    RocketData rocket = new RocketData(List.of(new StageData(1, 200), new StageData(2, 100)));
 
     @Override
     public void startLogging() throws TelemetryServiceUnavailableException {
@@ -50,8 +50,9 @@ public class Hardware implements IHardware {
             });
 
             try {
-                TimeUnit.SECONDS.sleep(updateDelay);
+                rocket.setTimestamp(java.time.LocalDateTime.now());
                 telemetryProxy.sendRocketData(rocket);
+                TimeUnit.SECONDS.sleep(updateDelay);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

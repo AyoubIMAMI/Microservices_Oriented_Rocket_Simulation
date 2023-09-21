@@ -1,6 +1,6 @@
 package fr.teama.telemetryservice.entities;
 
-import fr.teama.telemetryservice.controllers.dto.StageDTO;
+import fr.teama.telemetryservice.controllers.dto.StageDataDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -31,7 +31,7 @@ public class StageData {
 
     }
 
-    public StageData(StageDTO stageDTO) {
+    public StageData(StageDataDTO stageDTO) {
         this.stageLevel=stageDTO.getStageLevel();
         this.fuel=stageDTO.getFuel();
         this.isActivated=stageDTO.isActivated();
@@ -68,7 +68,7 @@ public class StageData {
 
     @Override
     public String toString() {
-        return "Stage{" +
+        return "StageData{" +
                 "stageLevel=" + stageLevel +
                 ", fuel=" + fuel +
                 ", isActivated=" + isActivated +

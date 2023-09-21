@@ -1,16 +1,19 @@
-package fr.teama.rockethardwareservice.models;
+package fr.teama.telemetryservice.controllers.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-public class Rocket {
+public class RocketDataDTO {
 
     private Double altitude;
 
     private Double speed;
 
-    private List<Stage> stages;
+    private List<StageDataDTO> stages;
 
-    public Rocket(List<Stage> stages) {
+    private LocalDateTime timestamp;
+
+    public RocketDataDTO(List<StageDataDTO> stages) {
         this.altitude = 0.0;
         this.speed = 0.0;
         this.stages = stages;
@@ -32,16 +35,25 @@ public class Rocket {
         this.speed = speed;
     }
 
-    public List<Stage> getStages() {
+    public List<StageDataDTO> getStages() {
         return stages;
     }
 
     @Override
     public String toString() {
-        return "Rocket{" +
+        return "RocketDataDTO{" +
                 "altitude=" + altitude +
                 ", speed=" + speed +
                 ", stages=" + stages +
+                ", timestamp=" + timestamp +
                 '}';
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 }
