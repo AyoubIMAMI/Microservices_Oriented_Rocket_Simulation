@@ -1,7 +1,9 @@
 package fr.teama.telemetryservice.entities;
 
+import fr.teama.telemetryservice.controllers.dto.RocketDTO;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,8 +24,23 @@ public class RocketData {
         this.stages = stages;
     }
 
+    public RocketData(RocketDTO rocketDTO) {
+        this.altitude=rocketDTO.getAltitude();
+        this.speed=rocketDTO.getSpeed();
+        this.stages=new ArrayList<>();
+        rocketDTO.getStages().forEach(stageDTO -> this.stages.add(new StageData(stageDTO)));
+    }
+
     public RocketData() {
 
+    }
+
+    public StageData getStageByLevel(int stageLevel){
+        for (StageData stage: stages){
+            if (stage.getStageLevel()==stageLevel)
+                return stage;
+        }
+        return null;
     }
 
     public double getAltitude() {

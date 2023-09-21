@@ -1,5 +1,6 @@
 package fr.teama.telemetryservice.entities;
 
+import fr.teama.telemetryservice.controllers.dto.StageDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -28,6 +29,13 @@ public class StageData {
 
     public StageData() {
 
+    }
+
+    public StageData(StageDTO stageDTO) {
+        this.stageLevel=stageDTO.getStageLevel();
+        this.fuel=stageDTO.getFuel();
+        this.isActivated=stageDTO.isActivated();
+        this.isDetached=stageDTO.isDetached();
     }
 
     public int getStageLevel() {

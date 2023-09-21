@@ -3,6 +3,8 @@ package fr.teama.telemetryservice.controllers;
 import fr.teama.telemetryservice.controllers.dto.RocketDTO;
 import fr.teama.telemetryservice.controllers.dto.TrackingDTO;
 import fr.teama.telemetryservice.entities.Notification;
+import fr.teama.telemetryservice.entities.RocketData;
+import fr.teama.telemetryservice.interfaces.DataSaver;
 import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,9 @@ public class TelemetryController {
     @Autowired
     private ITelemetryNotifier telemetryAnalyzer;
 
+    @Autowired
+    private DataSaver dataSaver;
+
     @PostMapping("/tracking")
     public ResponseEntity<String> whenTelemetryReachConditions(TrackingDTO trackingDTO) {
         Notification notification=new Notification(trackingDTO.getServiceToBeNotified());
@@ -29,14 +34,14 @@ public class TelemetryController {
             else if (data.getFieldToTrack().equals("fuel"))
                 notification.setFuel(data.getData());
         });
-
-        return telemetryAnalyzer.trackingNotify(notification,trackingDTO.getServiceToBeNotified());
+        telemetryAnalyzer.trackingNotify(notification,trackingDTO.getServiceToBeNotified());
+        return ResponseEntity.ok().body("Tracking condition saved");
     }
 
 
     @PostMapping("/send-data")
     public ResponseEntity<String> saveDataNewData(RocketDTO rocket) {
         System.out.println("Received data from rocket: " + rocket.toString());
-        return ResponseEntity.ok().body("saved");
+        return this.dataSaver.saveData(new RocketData(rocket));
     }
 }

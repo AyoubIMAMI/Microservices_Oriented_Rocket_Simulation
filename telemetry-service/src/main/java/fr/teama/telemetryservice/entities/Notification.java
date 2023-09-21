@@ -27,6 +27,10 @@ public class Notification {
         this.serviceToBeNotified = serviceToBeNotified;
     }
 
+    public Notification() {
+
+    }
+
     public void setServiceToBeNotified(String serviceToBeNotified) {
         this.serviceToBeNotified = serviceToBeNotified;
     }
@@ -37,5 +41,17 @@ public class Notification {
 
     public void setFuel(Double fuel) {
         this.fuel = fuel;
+    }
+
+    public String getServiceToBeNotified() {
+        return serviceToBeNotified;
+    }
+
+    public Double getHeight() {
+        return height;
+    }
+
+    public Double getFuel() {
+        return fuel;
     }
 }

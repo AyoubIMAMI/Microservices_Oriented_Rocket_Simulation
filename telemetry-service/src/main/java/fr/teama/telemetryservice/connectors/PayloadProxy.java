@@ -4,8 +4,10 @@ import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.interfaces.proxy.IPayloadProxy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+@Component
 public class PayloadProxy implements IPayloadProxy {
     @Value("${payload.host.baseurl}")
     private String apiBaseUrlHostAndPort;

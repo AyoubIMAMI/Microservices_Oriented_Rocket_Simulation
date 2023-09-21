@@ -1,9 +1,13 @@
 package fr.teama.telemetryservice.interfaces;
 
 import fr.teama.telemetryservice.entities.Notification;
-import org.springframework.http.ResponseEntity;
+import fr.teama.telemetryservice.entities.RocketData;
 
 public interface ITelemetryNotifier {
 
-    ResponseEntity<String> trackingNotify(Notification notification, String serviceToBeNotified);
+    void trackingNotify(Notification notification, String serviceToBeNotified);
+
+    void changeInData(RocketData rocketData);
+
+
 }
