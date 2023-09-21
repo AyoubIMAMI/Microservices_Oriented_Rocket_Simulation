@@ -11,8 +11,8 @@ public class RocketData {
     @Id
     @GeneratedValue
     private Long id;
-    private double altitude;
-    private double speed;
+    private Double altitude;
+    private Double speed;
     @OneToMany
     private List<StageData> stages;
 

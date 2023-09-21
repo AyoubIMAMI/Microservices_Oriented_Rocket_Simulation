@@ -1,5 +1,6 @@
 package fr.teama.missionservice.controllers;
 
+import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
 import fr.teama.missionservice.interfaces.IPollMaker;
@@ -22,7 +23,7 @@ public class MissionController {
     private IPollMaker pollMaker;
 
     @PostMapping("/start")
-    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException {
+    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException {
         return pollMaker.startMission();
     }
 }

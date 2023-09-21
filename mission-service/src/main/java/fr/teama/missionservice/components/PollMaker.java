@@ -1,8 +1,10 @@
 package fr.teama.missionservice.components;
 
+import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
 import fr.teama.missionservice.interfaces.IPollMaker;
+import fr.teama.missionservice.interfaces.proxy.IRocketHardwareProxy;
 import fr.teama.missionservice.interfaces.proxy.IRocketProxy;
 import fr.teama.missionservice.interfaces.proxy.IWeatherProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +20,15 @@ public class PollMaker implements IPollMaker {
     @Autowired
     IRocketProxy rocketProxy;
 
+    @Autowired
+    IRocketHardwareProxy rocketHardwareProxy;
+
     @Override
-    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException {
+    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException {
         System.out.println("Start Go/No Go poll");
+
+        System.out.println("Start rocket logging system");
+        rocketHardwareProxy.startLogging();
 
         boolean weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
         boolean rocketServiceReady = rocketProxy.getRocketStatus().equals("GO");

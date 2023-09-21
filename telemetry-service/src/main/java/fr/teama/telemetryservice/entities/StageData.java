@@ -12,15 +12,15 @@ public class StageData {
     @Id
     @GeneratedValue
     private Long id;
-    private int level;
-    private double fuel;
+    private int stageLevel;
+    private Double fuel;
 
     private boolean isActivated;
 
     private boolean isDetached;
 
-    public StageData(int stageId, int level, double fuel) {
-        this.level = level;
+    public StageData(int stageLevel, Double fuel) {
+        this.stageLevel = stageLevel;
         this.fuel = fuel;
         this.isActivated = false;
         this.isDetached = false;
@@ -30,8 +30,8 @@ public class StageData {
 
     }
 
-    public int getStageId() {
-        return level;
+    public int getStageLevel() {
+        return stageLevel;
     }
 
     public double getFuel() {
@@ -61,7 +61,7 @@ public class StageData {
     @Override
     public String toString() {
         return "Stage{" +
-                "stageId=" + level +
+                "stageLevel=" + stageLevel +
                 ", fuel=" + fuel +
                 ", isActivated=" + isActivated +
                 ", isDetached=" + isDetached +

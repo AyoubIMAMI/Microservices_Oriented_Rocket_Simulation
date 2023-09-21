@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/mission-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mission-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payload-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payload-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rocket-hardware-mock-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rocket-hardware-mock-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rocket-hardware-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rocket-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rocket-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/telemetry-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/telemetry-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weather-service/src/main/java" charset="UTF-8" />
   </component>
 </project>
