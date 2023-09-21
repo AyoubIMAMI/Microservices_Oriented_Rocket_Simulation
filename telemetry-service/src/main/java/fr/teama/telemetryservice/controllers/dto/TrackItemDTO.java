@@ -9,6 +9,9 @@ public class TrackItemDTO {
         this.fieldToTrack = fieldToTrack;
     }
 
+    public TrackItemDTO() {
+    }
+
     public String getFieldToTrack() {
         return fieldToTrack;
     }

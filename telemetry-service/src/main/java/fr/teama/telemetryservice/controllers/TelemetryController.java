@@ -16,7 +16,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = TelemetryController.BASE_URI, produces = APPLICATION_JSON_VALUE)
+@RequestMapping(path = TelemetryController.BASE_URI, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 public class TelemetryController {
     public static final String BASE_URI = "/api/telemetry";
 
@@ -42,7 +42,7 @@ public class TelemetryController {
 
 
     @PostMapping("/send-data")
-    public ResponseEntity<String> saveDataNewData(RocketDataDTO rocket) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
+    public ResponseEntity<String> saveDataNewData(@RequestBody RocketDataDTO rocket) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
         System.out.println("Saving data from rocket: " + rocket.toString());
         return this.dataSaver.saveData(new RocketData(rocket));
     }

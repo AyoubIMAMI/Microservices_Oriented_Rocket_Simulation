@@ -2,7 +2,7 @@ package fr.teama.telemetryservice.controllers.dto;
 
 public class StageDataDTO {
 
-    private final int stageLevel;
+    private int stageLevel;
 
     private Double fuel;
 
@@ -15,6 +15,13 @@ public class StageDataDTO {
         this.fuel = fuel;
         this.isActivated = false;
         this.isDetached = false;
+    }
+
+    public void setFuel(Double fuel) {
+        this.fuel = fuel;
+    }
+
+    public StageDataDTO() {
     }
 
     public int getStageLevel() {

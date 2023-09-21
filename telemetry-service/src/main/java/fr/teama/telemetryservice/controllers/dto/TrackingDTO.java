@@ -13,6 +13,9 @@ public class TrackingDTO {
         this.serviceToBeNotified = requestService;
     }
 
+    public TrackingDTO() {
+    }
+
     public List<TrackItemDTO> getData() {
         return data;
     }
