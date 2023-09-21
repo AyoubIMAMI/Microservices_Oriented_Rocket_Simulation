@@ -1,5 +1,6 @@
 package fr.teama.payloadservice.controllers;
 
+import fr.teama.payloadservice.interfaces.IDataAsker;
 import fr.teama.payloadservice.interfaces.IPayloadReleaser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,14 @@ public class PayloadController {
 
     @Autowired
     private IPayloadReleaser payloadReleaser;
+
+    @Autowired
+    private IDataAsker dataAsker;
+
+    @PostMapping
+    public ResponseEntity<String> missionStartWarning() {
+        return dataAsker.askOrbitToTelemetry();
+    }
 
     @PostMapping("/drop")
     public ResponseEntity<String> dropPayload() {
