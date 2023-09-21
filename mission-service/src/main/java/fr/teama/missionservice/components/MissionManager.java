@@ -56,7 +56,7 @@ public class MissionManager implements IMissionManager {
         System.out.println(serviceReady ? readyMessage : notReadyMessage);
     }
 
-    private void missionStartWarning() throws RocketServiceUnavailableException, PayloadServiceUnavailableException {
+    private void missionStartWarning() throws PayloadServiceUnavailableException {
         payloadProxy.missionStartNotify();
     }
 }

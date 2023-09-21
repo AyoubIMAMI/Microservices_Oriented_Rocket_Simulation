@@ -1,7 +1,6 @@
 package fr.teama.missionservice.connectors;
 
 import fr.teama.missionservice.exceptions.PayloadServiceUnavailableException;
-import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 import fr.teama.missionservice.interfaces.proxy.IPayloadProxy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
