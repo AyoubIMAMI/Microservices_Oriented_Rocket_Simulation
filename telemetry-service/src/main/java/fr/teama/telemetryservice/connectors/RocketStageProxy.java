@@ -15,6 +15,6 @@ public class RocketStageProxy implements IRocketStageProxy {
 
     @Override
     public void fuelLevelReached() {
-        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/start-logging", null, String.class);
+        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket/start-logging", null, String.class);
     }
 }
