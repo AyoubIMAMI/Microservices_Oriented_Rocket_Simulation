@@ -1,21 +1,29 @@
 package fr.teama.telemetryservice.entities;
 
-import fr.teama.telemetryservice.entities.Stage;
+import jakarta.persistence.*;
 
 import java.util.List;
 
-public class Rocket {
+@Entity
+@Table(name = "rocket_data")
+public class RocketData {
 
+    @Id
+    @GeneratedValue
+    private Long id;
     private double altitude;
-
     private double speed;
+    @OneToMany
+    private List<StageData> stages;
 
-    private List<Stage> stages;
-
-    public Rocket(List<Stage> stages) {
+    public RocketData(List<StageData> stages) {
         this.altitude = 0.0;
         this.speed = 0.0;
         this.stages = stages;
+    }
+
+    public RocketData() {
+
     }
 
     public double getAltitude() {
@@ -34,11 +42,11 @@ public class Rocket {
         this.speed = speed;
     }
 
-    public List<Stage> getStages() {
+    public List<StageData> getStages() {
         return stages;
     }
 
-    public void setStages(List<Stage> stages) {
+    public void setStages(List<StageData> stages) {
         this.stages = stages;
     }
 
