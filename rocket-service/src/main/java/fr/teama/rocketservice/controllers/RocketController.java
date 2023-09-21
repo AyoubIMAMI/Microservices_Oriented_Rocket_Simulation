@@ -1,7 +1,9 @@
 package fr.teama.rocketservice.controllers;
 
 import fr.teama.rocketservice.exceptions.TelemetryServiceUnavailableException;
+import fr.teama.rocketservice.interfaces.IDataAsker;
 import fr.teama.rocketservice.interfaces.IRocketAnalyzer;
+import fr.teama.rocketservice.interfaces.RocketSplitter;
 import fr.teama.rocketservice.interfaces.proxy.ITelemetryProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,10 @@ public class RocketController {
     private IRocketAnalyzer rocketAnalyzer;
 
     @Autowired
-    private ITelemetryProxy telemetryProxy;
+    private RocketSplitter rocketSplitter;
+
+    @Autowired
+    private IDataAsker dataAsker;
 
     @GetMapping("/status")
     public ResponseEntity<String> getRocketStatus() {
@@ -34,14 +39,13 @@ public class RocketController {
 
     @PostMapping("/wait-for-stage")
     public ResponseEntity<String> waitEmptyFuelForStageTheRocket() throws TelemetryServiceUnavailableException {
-        System.out.println("Wait for telemetry stage notification");
-        telemetryProxy.gettingNotifyWhenFuelIsEmpty();
+        dataAsker.waitEmptyFuelForStageTheRocket();
         return ResponseEntity.ok().body("Ok, wait for telemetry notification");
     }
 
     @PostMapping("/stage")
     public ResponseEntity<String> stageRocket() {
-        System.out.println("The rocket as been staged");
+        rocketSplitter.stageRocket();
         return ResponseEntity.ok().body("OK");
     }
 }
