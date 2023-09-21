@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TelemetryNotifier implements ITelemetryNotifier {
+public class TrackingHandler implements ITelemetryNotifier {
 
     @Override
     public ResponseEntity<String> trackingNotify(Notification notification, String serviceToBeNotified) {
