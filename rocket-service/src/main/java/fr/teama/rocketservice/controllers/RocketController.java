@@ -4,7 +4,6 @@ import fr.teama.rocketservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rocketservice.interfaces.IDataAsker;
 import fr.teama.rocketservice.interfaces.IRocketAnalyzer;
 import fr.teama.rocketservice.interfaces.RocketSplitter;
-import fr.teama.rocketservice.interfaces.proxy.ITelemetryProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
