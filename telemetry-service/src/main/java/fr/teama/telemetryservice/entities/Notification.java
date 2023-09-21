@@ -54,4 +54,13 @@ public class Notification {
     public Double getFuel() {
         return fuel;
     }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "serviceToBeNotified='" + serviceToBeNotified + '\'' +
+                ", height=" + height +
+                ", fuel=" + fuel +
+                '}';
+    }
 }

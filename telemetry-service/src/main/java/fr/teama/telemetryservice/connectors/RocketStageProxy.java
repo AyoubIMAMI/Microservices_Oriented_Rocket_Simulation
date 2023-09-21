@@ -14,11 +14,7 @@ public class RocketStageProxy implements IRocketStageProxy {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public void fuelLevelReached() throws PayloadServiceUnavailableException {
-        try {
-            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/start-logging", null, String.class);
-        } catch (Exception e) {
-            throw new PayloadServiceUnavailableException();
-        }
+    public void fuelLevelReached() {
+        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/start-logging", null, String.class);
     }
 }
