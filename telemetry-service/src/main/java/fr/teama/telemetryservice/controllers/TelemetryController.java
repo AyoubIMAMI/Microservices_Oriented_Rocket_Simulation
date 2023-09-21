@@ -3,7 +3,6 @@ package fr.teama.telemetryservice.controllers;
 import fr.teama.telemetryservice.controllers.dto.RocketDTO;
 import fr.teama.telemetryservice.controllers.dto.TrackingDTO;
 import fr.teama.telemetryservice.entities.Notification;
-import fr.teama.telemetryservice.entities.Rocket;
 import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
