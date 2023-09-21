@@ -1,9 +1,10 @@
 package fr.teama.missionservice.controllers;
 
+import fr.teama.missionservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
-import fr.teama.missionservice.interfaces.IPollMaker;
+import fr.teama.missionservice.interfaces.IMissionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,10 +21,10 @@ public class MissionController {
     public static final String BASE_URI = "/api/mission";
 
     @Autowired
-    private IPollMaker pollMaker;
+    private IMissionManager missionManager;
 
     @PostMapping("/start")
-    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException {
-        return pollMaker.startMission();
+    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException {
+        return missionManager.startMission();
     }
 }
