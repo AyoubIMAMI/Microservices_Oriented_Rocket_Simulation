@@ -25,7 +25,7 @@ public class RocketProxy implements IRocketProxy {
     }
 
     @Override
-    public void postLaunchOrder() throws RocketServiceUnavailableException {
+    public void launchRocket() throws RocketServiceUnavailableException {
         try {
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket/launch", null, String.class);
         } catch (Exception e) {

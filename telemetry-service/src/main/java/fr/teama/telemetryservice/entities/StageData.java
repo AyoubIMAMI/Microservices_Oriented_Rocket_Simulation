@@ -1,20 +1,33 @@
 package fr.teama.telemetryservice.entities;
 
-public class Stage {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-    private final int stageLevel;
+@Entity
+@Table(name = "stage_data")
+public class StageData {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+    private int stageLevel;
     private Double fuel;
 
     private boolean isActivated;
 
     private boolean isDetached;
 
-    public Stage(int stageLevel, double fuel) {
+    public StageData(int stageLevel, Double fuel) {
         this.stageLevel = stageLevel;
         this.fuel = fuel;
         this.isActivated = false;
         this.isDetached = false;
+    }
+
+    public StageData() {
+
     }
 
     public int getStageLevel() {
@@ -48,7 +61,7 @@ public class Stage {
     @Override
     public String toString() {
         return "Stage{" +
-                "stageId=" + stageLevel +
+                "stageLevel=" + stageLevel +
                 ", fuel=" + fuel +
                 ", isActivated=" + isActivated +
                 ", isDetached=" + isDetached +

@@ -6,5 +6,5 @@ public interface IRocketProxy {
 
     String getRocketStatus() throws RocketServiceUnavailableException;
 
-    void postLaunchOrder() throws RocketServiceUnavailableException;
+    void launchRocket() throws RocketServiceUnavailableException;
 }
