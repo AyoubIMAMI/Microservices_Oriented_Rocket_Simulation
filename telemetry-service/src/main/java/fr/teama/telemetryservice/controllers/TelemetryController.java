@@ -1,5 +1,6 @@
 package fr.teama.telemetryservice.controllers;
 
+import fr.teama.telemetryservice.controllers.dto.RocketDTO;
 import fr.teama.telemetryservice.controllers.dto.TrackingDTO;
 import fr.teama.telemetryservice.entities.Notification;
 import fr.teama.telemetryservice.entities.Rocket;
@@ -20,7 +21,7 @@ public class TelemetryController {
     private ITelemetryNotifier telemetryAnalyzer;
 
     @PostMapping("/tracking")
-    public ResponseEntity<String> whenTelemetryReachAltitude(TrackingDTO trackingDTO) {
+    public ResponseEntity<String> whenTelemetryReachConditions(TrackingDTO trackingDTO) {
         Notification notification=new Notification(trackingDTO.getServiceToBeNotified());
 
         trackingDTO.getData().forEach(data-> {
@@ -35,7 +36,7 @@ public class TelemetryController {
 
 
     @PostMapping("/send-data")
-    public ResponseEntity<String> saveDataNewData(Rocket rocket) {
+    public ResponseEntity<String> saveDataNewData(RocketDTO rocket) {
         System.out.println("Received data from rocket: " + rocket.toString());
         return ResponseEntity.ok().body("saved");
     }
