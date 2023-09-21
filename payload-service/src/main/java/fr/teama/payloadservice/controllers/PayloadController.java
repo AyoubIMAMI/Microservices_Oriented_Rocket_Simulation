@@ -1,5 +1,6 @@
 package fr.teama.payloadservice.controllers;
 
+import fr.teama.payloadservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.payloadservice.interfaces.IDataAsker;
 import fr.teama.payloadservice.interfaces.IPayloadReleaser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class PayloadController {
     private IDataAsker dataAsker;
 
     @PostMapping
-    public ResponseEntity<String> missionStartWarning() {
+    public ResponseEntity<String> missionStartWarning() throws TelemetryServiceUnavailableException {
         return dataAsker.askOrbitToTelemetry();
     }
 
