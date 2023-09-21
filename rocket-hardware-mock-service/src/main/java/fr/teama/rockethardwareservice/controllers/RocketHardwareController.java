@@ -24,7 +24,7 @@ public class RocketHardwareController {
     private IHardware hardware;
 
     @PostMapping("/start-logging")
-    public ResponseEntity<String> rocketLaunched() throws TelemetryServiceUnavailableException {
+    public ResponseEntity<String> startLogging() throws TelemetryServiceUnavailableException {
         hardware.startLogging();
         return ResponseEntity.status(HttpStatus.OK).body("Logging started successfully");
     }
