@@ -17,7 +17,7 @@ public class TelemetryProxy implements ITelemetryProxy {
     @Override
     public void sendRocketData(RocketData rocket) throws TelemetryServiceUnavailableException {
         try {
-            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/send-data", rocket, String.class);
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/send-data", rocket, String.class);
         } catch (Exception e) {
             throw new TelemetryServiceUnavailableException();
         }
