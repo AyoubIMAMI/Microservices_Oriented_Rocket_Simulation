@@ -1,11 +1,16 @@
 package fr.teama.payloadservice.connectors;
 
+import fr.teama.payloadservice.connectors.externalDTO.TrackItemDTO;
+import fr.teama.payloadservice.connectors.externalDTO.TrackingDTO;
 import fr.teama.payloadservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.payloadservice.interfaces.proxy.ITelemetryProxy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class TelemetryProxy implements ITelemetryProxy {
@@ -18,7 +23,12 @@ public class TelemetryProxy implements ITelemetryProxy {
     @Override
     public ResponseEntity<String> missionStartNotify() throws TelemetryServiceUnavailableException {
         try {
-            return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/tracking", null, String.class);
+            TrackItemDTO trackItemDTO = new TrackItemDTO("height", 3600000.0);
+            List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
+            trackItemDTOList.add(trackItemDTO);
+
+            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "payload");
+            return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/tracking", trackingDTO, String.class);
         } catch (Exception e) {
             throw new TelemetryServiceUnavailableException();
         }
