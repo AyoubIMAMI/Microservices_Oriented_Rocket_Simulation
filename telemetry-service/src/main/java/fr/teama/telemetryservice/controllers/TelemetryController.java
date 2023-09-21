@@ -1,6 +1,6 @@
 package fr.teama.telemetryservice.controllers;
 
-import fr.teama.telemetryservice.controllers.dto.RocketDTO;
+import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
 import fr.teama.telemetryservice.controllers.dto.TrackingDTO;
 import fr.teama.telemetryservice.entities.Notification;
 import fr.teama.telemetryservice.entities.RocketData;
@@ -42,7 +42,7 @@ public class TelemetryController {
 
 
     @PostMapping("/send-data")
-    public ResponseEntity<String> saveDataNewData(RocketDTO rocket) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
+    public ResponseEntity<String> saveDataNewData(RocketDataDTO rocket) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
         System.out.println("Saving data from rocket: " + rocket.toString());
         return this.dataSaver.saveData(new RocketData(rocket));
     }

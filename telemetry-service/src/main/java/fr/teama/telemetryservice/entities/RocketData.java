@@ -1,8 +1,9 @@
 package fr.teama.telemetryservice.entities;
 
-import fr.teama.telemetryservice.controllers.dto.RocketDTO;
+import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +19,15 @@ public class RocketData {
     @OneToMany
     private List<StageData> stages;
 
+    private LocalDateTime timestamp;
+
     public RocketData(List<StageData> stages) {
         this.altitude = 0.0;
         this.speed = 0.0;
         this.stages = stages;
     }
 
-    public RocketData(RocketDTO rocketDTO) {
+    public RocketData(RocketDataDTO rocketDTO) {
         this.altitude=rocketDTO.getAltitude();
         this.speed=rocketDTO.getSpeed();
         this.stages=new ArrayList<>();
@@ -69,10 +72,19 @@ public class RocketData {
 
     @Override
     public String toString() {
-        return "Rocket{" +
+        return "RocketData{" +
                 "altitude=" + altitude +
                 ", speed=" + speed +
                 ", stages=" + stages +
+                ", timestamp=" + timestamp +
                 '}';
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 }

@@ -1,6 +1,6 @@
-package fr.teama.telemetryservice.controllers.dto;
+package fr.teama.rockethardwareservice.models;
 
-public class StageDTO {
+public class StageData {
 
     private final int stageLevel;
 
@@ -10,7 +10,7 @@ public class StageDTO {
 
     private boolean isDetached;
 
-    public StageDTO(int stageLevel, double fuel) {
+    public StageData(int stageLevel, double fuel) {
         this.stageLevel = stageLevel;
         this.fuel = fuel;
         this.isActivated = false;
@@ -41,13 +41,9 @@ public class StageDTO {
         isDetached = detached;
     }
 
-    public boolean isDetached() {
-        return isDetached;
-    }
-
     @Override
     public String toString() {
-        return "Stage{" +
+        return "StageData{" +
                 "stageLevel=" + stageLevel +
                 ", fuel=" + fuel +
                 ", isActivated=" + isActivated +
