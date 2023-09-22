@@ -7,6 +7,7 @@ import fr.teama.telemetryservice.entities.RocketData;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
 import fr.teama.telemetryservice.interfaces.DataSaver;
+import fr.teama.telemetryservice.interfaces.ILoggerComponent;
 import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +26,13 @@ public class TelemetryController {
 
     @Autowired
     private DataSaver dataSaver;
+    @Autowired
+    ILoggerComponent logger;
 
     @PostMapping("/tracking")
     public ResponseEntity<String> whenTelemetryReachConditions(TrackingDTO trackingDTO) {
+        logger.logInfo("New tracking request received");
         Notification notification=new Notification(trackingDTO.getServiceToBeNotified());
-        System.out.println("New tracking begin:"+notification);
         trackingDTO.getData().forEach(data-> {
             if (data.getFieldToTrack().equals("height"))
                 notification.setHeight(data.getData());
@@ -43,7 +46,7 @@ public class TelemetryController {
 
     @PostMapping("/send-data")
     public ResponseEntity<String> saveDataNewData(@RequestBody RocketDataDTO rocket) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
-        System.out.println("Saving data from rocket: " + rocket.toString());
+        logger.logInfo("Saving data from rocket hardware : " + rocket.toString());
         return this.dataSaver.saveData(new RocketData(rocket));
     }
 }

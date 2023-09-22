@@ -4,6 +4,7 @@ import fr.teama.telemetryservice.entities.Notification;
 import fr.teama.telemetryservice.entities.RocketData;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
+import fr.teama.telemetryservice.interfaces.ILoggerComponent;
 import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
 import fr.teama.telemetryservice.interfaces.proxy.IPayloadProxy;
 import fr.teama.telemetryservice.interfaces.proxy.IRocketStageProxy;
@@ -19,9 +20,12 @@ public class TrackingHandler implements ITelemetryNotifier {
     IPayloadProxy payloadProxy;
     @Autowired
     IRocketStageProxy rocketStageProxy;
+    @Autowired
+    ILoggerComponent logger;
 
     @Override
     public void trackingNotify(Notification notification, String serviceToBeNotified) {
+        logger.logInfo("Tracking conditions save for " + serviceToBeNotified + " as " + notification.toString());
         notificationRepository.save(notification);
     }
 

@@ -1,6 +1,6 @@
-package fr.teama.rocketservice.components;
+package fr.teama.payloadservice.components;
 
-import fr.teama.rocketservice.interfaces.ILoggerComponent;
+import fr.teama.payloadservice.interfaces.ILoggerComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
