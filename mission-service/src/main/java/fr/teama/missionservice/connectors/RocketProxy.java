@@ -28,7 +28,7 @@ public class RocketProxy implements IRocketProxy {
             logger.logInfo("The rocket department replied \"" + response.getBody() + "\"");
             return response.getBody();
         } catch (Exception e) {
-            logger.logError("The rocket department is unavailable");
+            logger.logError("Rocket department is unavailable");
             throw new RocketServiceUnavailableException();
         }
     }
@@ -44,7 +44,7 @@ public class RocketProxy implements IRocketProxy {
                 logger.logWarn("The rocket department has not launch the rocket");
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket/launch", null, String.class);
         } catch (Exception e) {
-            logger.logError("The rocket department is unavailable");
+            logger.logError("Rocket department is unavailable");
             throw new RocketServiceUnavailableException();
         }
     }

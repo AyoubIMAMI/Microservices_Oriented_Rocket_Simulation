@@ -26,7 +26,7 @@ public class WeatherProxy implements IWeatherProxy {
             logger.logInfo("The weather service replied \"" + response.getBody() + "\"");
             return response.getBody();
         } catch (Exception e) {
-            logger.logError("The weather service is unavailable");
+            logger.logError("Weather service is unavailable");
             throw new WeatherServiceUnavailableException();
         }
     }

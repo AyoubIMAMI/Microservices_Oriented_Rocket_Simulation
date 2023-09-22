@@ -4,6 +4,7 @@ import fr.teama.missionservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
+import fr.teama.missionservice.interfaces.ILoggerComponent;
 import fr.teama.missionservice.interfaces.IMissionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,12 @@ public class MissionController {
 
     @Autowired
     private IMissionManager missionManager;
+    @Autowired
+    ILoggerComponent logger;
 
     @PostMapping("/start")
     public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException {
+        logger.logInfo("Request received to start the mission");
         return missionManager.startMission();
     }
 }

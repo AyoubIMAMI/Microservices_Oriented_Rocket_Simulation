@@ -1,5 +1,7 @@
 package fr.teama.missionservice.components;
 
+import fr.teama.missionservice.exceptions.PayloadServiceUnavailableException;
+import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
 import fr.teama.missionservice.interfaces.IMissionManager;
@@ -30,10 +32,9 @@ public class MissionManager implements IMissionManager {
     IRocketHardwareProxy rocketHardwareProxy;
 
     @Override
-    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException {
+    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException {
         logger.logInfo("The mission is starting");
 
-        System.out.println("Start rocket logging system");
         rocketHardwareProxy.startLogging();
 
         boolean weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
