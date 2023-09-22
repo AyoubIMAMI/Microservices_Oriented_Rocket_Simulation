@@ -1,23 +1,16 @@
 package fr.teama.telemetryservice.entities;
 
 import fr.teama.telemetryservice.controllers.dto.StageDataDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "stage_data")
+@Embeddable
 public class StageData {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+    @NotNull(message = "Stage must have a level")
     private int stageLevel;
     private Double fuel;
-
     private boolean isActivated;
-
     private boolean isDetached;
 
     public StageData(int stageLevel, Double fuel) {

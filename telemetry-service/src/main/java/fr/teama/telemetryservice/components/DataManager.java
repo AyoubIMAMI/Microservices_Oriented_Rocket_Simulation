@@ -11,13 +11,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DataManager implements DataSaver {
+
     @Autowired
     TrackingHandler trackingHandler;
+
     @Autowired
     RocketDataRepository rocketDataRepository;
+
     @Override
     public ResponseEntity<String> saveData(RocketData rocketData) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
         trackingHandler.changeInData(rocketData);
+        System.out.println("altitude: " + rocketData.getAltitude());
+        System.out.println("speed: " + rocketData.getSpeed());
+        System.out.println("timestamp: " + rocketData.getTimestamp());
+        rocketData.getStages().forEach(stage -> System.out.println("stage: " + stage));
         rocketDataRepository.save(rocketData);
         return ResponseEntity.ok().body("saved");
     }

@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "rocket_data")
 public class RocketData {
 
     @Id
     @GeneratedValue
     private Long id;
-    private Double altitude;
-    private Double speed;
-    @OneToMany
+
+    @ElementCollection
     private List<StageData> stages;
 
+    private Double altitude;
+    private Double speed;
     private LocalDateTime timestamp;
 
     public RocketData(List<StageData> stages) {
