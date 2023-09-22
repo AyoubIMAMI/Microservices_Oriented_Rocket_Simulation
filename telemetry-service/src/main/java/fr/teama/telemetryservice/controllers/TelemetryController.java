@@ -30,7 +30,7 @@ public class TelemetryController {
     ILoggerComponent logger;
 
     @PostMapping("/tracking")
-    public ResponseEntity<String> whenTelemetryReachConditions(TrackingDTO trackingDTO) {
+    public ResponseEntity<String> whenTelemetryReachConditions(@RequestBody TrackingDTO trackingDTO) {
         logger.logInfo("New tracking request received");
         Notification notification=new Notification(trackingDTO.getServiceToBeNotified());
         trackingDTO.getData().forEach(data-> {

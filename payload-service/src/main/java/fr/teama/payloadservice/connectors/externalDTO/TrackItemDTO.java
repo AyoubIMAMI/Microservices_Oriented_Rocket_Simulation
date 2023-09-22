@@ -10,6 +10,10 @@ public class TrackItemDTO {
         this.fieldToTrack = fieldToTrack;
     }
 
+    public String getFieldToTrack() {
+        return fieldToTrack;
+    }
+
     public Double getData() {
         return data;
     }

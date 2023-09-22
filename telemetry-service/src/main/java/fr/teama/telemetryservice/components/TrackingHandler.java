@@ -32,14 +32,19 @@ public class TrackingHandler implements ITelemetryNotifier {
     @Override
     public void changeInData(RocketData rocketData) throws PayloadServiceUnavailableException, RocketStageServiceUnavailableException {
         for (Notification notification:notificationRepository.findAll()){
-            if (notification.getFuel()!=null&& notification.getFuel()>rocketData.getStageByLevel(1).getFuel()){
-                System.out.println("Fuel condition reached:" );
-                System.out.println("Rocket infos: "+rocketData);
-                System.out.println("Condition to send notification: "+notification);
+            if (notification.getFuel()!=null&& rocketData.getStageByLevel(1).getFuel()<=notification.getFuel()){
+                logger.logInfo("Fuel condition reached:" );
+                logger.logInfo("Rocket infos: "+rocketData);
+                logger.logInfo("Condition to send notification: "+notification);
+                notificationRepository.delete(notification);
                 notifyService(notification.getServiceToBeNotified());
 
             }
-            else if (notification.getHeight()!=null&& notification.getHeight()>rocketData.getAltitude()){
+            else if (notification.getHeight()!=null&& rocketData.getAltitude()>= notification.getHeight()){
+                logger.logInfo("Altitude condition reached:" );
+                logger.logInfo("Rocket infos: "+rocketData);
+                logger.logInfo("Condition to send notification: "+notification);
+                notificationRepository.delete(notification);
                 notifyService(notification.getServiceToBeNotified());
             }
         }

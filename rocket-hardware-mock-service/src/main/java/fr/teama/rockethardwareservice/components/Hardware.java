@@ -20,10 +20,11 @@ public class Hardware implements IHardware {
     ITelemetryProxy telemetryProxy;
 
     private final long updateDelay = 1;
+    RocketData rocket = new RocketData(List.of(new StageData(1, 200), new StageData(2, 100)));
+
     @Autowired
     ILoggerComponent logger;
 
-    long updateDelay = 1;
 
     boolean sendLog = false;
 
@@ -31,7 +32,6 @@ public class Hardware implements IHardware {
     @Override
     public void startLogging() throws TelemetryServiceUnavailableException {
         logger.logInfo("Start logging");
-        RocketData rocket = new RocketData(List.of(new StageData(1, 200), new StageData(2, 100)));
 
         final int[] stageLevel = {1};
 

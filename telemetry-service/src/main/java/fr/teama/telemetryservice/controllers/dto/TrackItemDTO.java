@@ -20,4 +20,11 @@ public class TrackItemDTO {
         return data;
     }
 
+    public void setData(Double data) {
+        this.data = data;
+    }
+
+    public void setFieldToTrack(String fieldToTrack) {
+        this.fieldToTrack = fieldToTrack;
+    }
 }

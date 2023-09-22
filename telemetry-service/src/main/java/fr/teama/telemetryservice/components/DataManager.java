@@ -4,6 +4,7 @@ import fr.teama.telemetryservice.entities.RocketData;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
 import fr.teama.telemetryservice.interfaces.DataSaver;
+import fr.teama.telemetryservice.interfaces.ILoggerComponent;
 import fr.teama.telemetryservice.repository.RocketDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

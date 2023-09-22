@@ -28,7 +28,7 @@ public class TelemetryProxy implements ITelemetryProxy {
     @Override
     public ResponseEntity<String> missionStartNotify() throws TelemetryServiceUnavailableException {
         try {
-            TrackItemDTO trackItemDTO = new TrackItemDTO("height", 3600000.0);
+            TrackItemDTO trackItemDTO = new TrackItemDTO("height", 4500.0);
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
 
@@ -36,6 +36,7 @@ public class TelemetryProxy implements ITelemetryProxy {
             logger.logInfo("Ask telemetry to being notify when the rocket reach the height of " + trackItemDTO.getData());
             return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/tracking", trackingDTO, String.class);
         } catch (Exception e) {
+            System.out.println(e);
             throw new TelemetryServiceUnavailableException();
         }
     }

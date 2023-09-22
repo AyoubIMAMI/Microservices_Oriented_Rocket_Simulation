@@ -20,6 +20,6 @@ public class RocketStageProxy implements IRocketStageProxy {
     @Override
     public void fuelLevelReached() {
         logger.logInfo("Notify the rocket department that the fuel as reached a specific level");
-        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket/start-logging", null, String.class);
+        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket/stage", null, String.class);
     }
 }

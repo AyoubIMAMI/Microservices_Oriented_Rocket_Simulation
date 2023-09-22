@@ -13,4 +13,11 @@ public class TrackingDTO {
         this.serviceToBeNotified = requestService;
     }
 
+    public List<TrackItemDTO> getData() {
+        return data;
+    }
+
+    public String getServiceToBeNotified() {
+        return serviceToBeNotified;
+    }
 }

@@ -35,15 +35,10 @@ public class RocketController {
     }
 
     @PostMapping("/launch")
-    public ResponseEntity<String> startRocket() {
+    public ResponseEntity<String> startRocket() throws TelemetryServiceUnavailableException {
         logger.logInfo("Rocket launched");
-        return ResponseEntity.ok().body("OK");
-    }
-
-    @PostMapping("/wait-for-stage")
-    public ResponseEntity<String> waitEmptyFuelForStageTheRocket() throws TelemetryServiceUnavailableException {
         dataAsker.waitEmptyFuelForStageTheRocket();
-        return ResponseEntity.ok().body("Ok, wait for telemetry notification");
+        return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/stage")
