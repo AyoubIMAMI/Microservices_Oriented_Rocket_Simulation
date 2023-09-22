@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
@@ -24,8 +27,23 @@ public class RocketHardwareController {
     private IHardware hardware;
 
     @PostMapping("/start-logging")
-    public ResponseEntity<String> startLogging() throws TelemetryServiceUnavailableException {
-        hardware.startLogging();
+    public ResponseEntity<String> startLogging() {
+        // Create an ExecutorService with a fixed thread pool size
+        ExecutorService executorService = Executors.newFixedThreadPool(1); // You can adjust the pool size as needed
+
+        // Submit the hardware.startLogging() task to the executor
+        executorService.submit(() -> {
+            try {
+                hardware.startLogging();
+            } catch (TelemetryServiceUnavailableException e) {
+                // Handle the exception as needed
+                e.printStackTrace();
+            }
+        });
+
+        // Shutdown the executor when it's no longer needed
+        executorService.shutdown();
+
         return ResponseEntity.status(HttpStatus.OK).body("Logging started successfully");
     }
 

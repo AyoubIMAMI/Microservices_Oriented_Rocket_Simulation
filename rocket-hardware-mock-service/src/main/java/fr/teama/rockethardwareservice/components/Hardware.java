@@ -18,14 +18,14 @@ public class Hardware implements IHardware {
     @Autowired
     ITelemetryProxy telemetryProxy;
 
-    long updateDelay = 1;
+    private final long updateDelay = 1;
 
     boolean sendLog = false;
 
-    RocketData rocket = new RocketData(List.of(new StageData(1, 200), new StageData(2, 100)));
 
     @Override
     public void startLogging() throws TelemetryServiceUnavailableException {
+        RocketData rocket = new RocketData(List.of(new StageData(1, 200), new StageData(2, 100)));
 
         final int[] stageLevel = {1};
 
