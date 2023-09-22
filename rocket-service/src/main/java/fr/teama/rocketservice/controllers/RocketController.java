@@ -1,6 +1,5 @@
 package fr.teama.rocketservice.controllers;
 
-import fr.teama.rocketservice.components.LoggerComponent;
 import fr.teama.rocketservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rocketservice.interfaces.IDataAsker;
 import fr.teama.rocketservice.interfaces.ILoggerComponent;

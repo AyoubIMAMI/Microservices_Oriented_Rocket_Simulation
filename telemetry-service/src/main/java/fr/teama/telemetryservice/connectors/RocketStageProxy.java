@@ -1,6 +1,5 @@
 package fr.teama.telemetryservice.connectors;
 
-import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.interfaces.ILoggerComponent;
 import fr.teama.telemetryservice.interfaces.proxy.IRocketStageProxy;
 import org.springframework.beans.factory.annotation.Autowired;
