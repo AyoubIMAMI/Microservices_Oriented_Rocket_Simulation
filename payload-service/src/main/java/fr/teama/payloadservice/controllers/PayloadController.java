@@ -2,6 +2,7 @@ package fr.teama.payloadservice.controllers;
 
 import fr.teama.payloadservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.payloadservice.interfaces.IDataAsker;
+import fr.teama.payloadservice.interfaces.ILoggerComponent;
 import fr.teama.payloadservice.interfaces.IPayloadReleaser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +26,18 @@ public class PayloadController {
     @Autowired
     private IDataAsker dataAsker;
 
+    @Autowired
+    ILoggerComponent logger;
+
     @PostMapping
     public ResponseEntity<String> missionStartWarning() throws TelemetryServiceUnavailableException {
+        logger.logInfo("The mission as started");
         return dataAsker.askOrbitToTelemetry();
     }
 
     @PostMapping("/drop")
     public ResponseEntity<String> dropPayload() {
+        logger.logInfo("Request for dropping the payload");
         return payloadReleaser.dropPayload();
     }
 }

@@ -2,6 +2,7 @@ package fr.teama.rockethardwareservice.components;
 
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.interfaces.IHardware;
+import fr.teama.rockethardwareservice.interfaces.ILoggerComponent;
 import fr.teama.rockethardwareservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.rockethardwareservice.models.RocketData;
 import fr.teama.rockethardwareservice.models.StageData;
@@ -19,12 +20,17 @@ public class Hardware implements IHardware {
     ITelemetryProxy telemetryProxy;
 
     private final long updateDelay = 1;
+    @Autowired
+    ILoggerComponent logger;
+
+    long updateDelay = 1;
 
     boolean sendLog = false;
 
 
     @Override
     public void startLogging() throws TelemetryServiceUnavailableException {
+        logger.logInfo("Start logging");
         RocketData rocket = new RocketData(List.of(new StageData(1, 200), new StageData(2, 100)));
 
         final int[] stageLevel = {1};
@@ -61,6 +67,7 @@ public class Hardware implements IHardware {
 
     @Override
     public void stopLogging() {
+        logger.logInfo("Stop logging");
         sendLog = false;
     }
 }

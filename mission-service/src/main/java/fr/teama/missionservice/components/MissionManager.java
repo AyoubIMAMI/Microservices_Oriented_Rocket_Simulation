@@ -23,6 +23,9 @@ public class MissionManager implements IMissionManager {
     IRocketProxy rocketProxy;
 
     @Autowired
+    LoggerComponent logger;
+
+    @Autowired
     IPayloadProxy payloadProxy;
 
     @Autowired
@@ -30,18 +33,17 @@ public class MissionManager implements IMissionManager {
 
     @Override
     public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException {
-        System.out.println("Start Go/No Go poll");
+        logger.logInfo("The mission is starting");
 
-        System.out.println("Start rocket logging system");
         rocketHardwareProxy.startLogging();
 
         boolean weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
         boolean rocketServiceReady = rocketProxy.getRocketStatus().equals("GO");
         boolean missionReady = weatherServiceReady && rocketServiceReady;
 
-        printServiceMessage(weatherServiceReady, "Weather: GO", "Weather: NO GO");
-        printServiceMessage(rocketServiceReady, "Rocket: GO", "Rocket: NO GO");
-        printServiceMessage(missionReady, "Mission: GO", "Mission: NO GO");
+        logServiceMessage(weatherServiceReady, "Weather service");
+        logServiceMessage(rocketServiceReady, "Rocket department service");
+        logServiceMessage(missionReady, "Mission service");
 
         if (missionReady) {
             missionStartWarning();
@@ -52,8 +54,11 @@ public class MissionManager implements IMissionManager {
         }
     }
 
-    public void printServiceMessage(boolean serviceReady, String readyMessage, String notReadyMessage) {
-        System.out.println(serviceReady ? readyMessage : notReadyMessage);
+    public void logServiceMessage(boolean serviceReady, String serviceName) {
+        if (serviceReady)
+            logger.logInfo(serviceName + " is ready");
+        else
+            logger.logWarn(serviceName + " is not ready");
     }
 
     private void missionStartWarning() throws PayloadServiceUnavailableException {

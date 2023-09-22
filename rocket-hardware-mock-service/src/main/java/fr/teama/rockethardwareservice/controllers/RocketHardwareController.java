@@ -2,6 +2,7 @@ package fr.teama.rockethardwareservice.controllers;
 
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.interfaces.IHardware;
+import fr.teama.rockethardwareservice.interfaces.ILoggerComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,12 @@ public class RocketHardwareController {
     @Autowired
     private IHardware hardware;
 
+    @Autowired
+    ILoggerComponent logger;
+
     @PostMapping("/start-logging")
     public ResponseEntity<String> startLogging() {
+        logger.logInfo("Request received to start logging");
         // Create an ExecutorService with a fixed thread pool size
         ExecutorService executorService = Executors.newFixedThreadPool(1); // You can adjust the pool size as needed
 
@@ -49,6 +54,7 @@ public class RocketHardwareController {
 
     @PostMapping("/stop-logging")
     public ResponseEntity<String> stopLogging() {
+        logger.logInfo("Request received to stop logging");
         hardware.stopLogging();
         return ResponseEntity.status(HttpStatus.OK).body("Logging stopped successfully");
     }
