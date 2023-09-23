@@ -3,9 +3,8 @@ package fr.teama.rocketservice.connectors;
 import fr.teama.rocketservice.connectors.externalDTO.TrackItemDTO;
 import fr.teama.rocketservice.connectors.externalDTO.TrackingDTO;
 import fr.teama.rocketservice.exceptions.TelemetryServiceUnavailableException;
-import fr.teama.rocketservice.interfaces.ILoggerComponent;
+import fr.teama.rocketservice.helpers.LoggerHelper;
 import fr.teama.rocketservice.interfaces.proxy.ITelemetryProxy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -18,9 +17,6 @@ public class TelemetryProxy implements ITelemetryProxy {
     @Value("${telemetry.host.baseurl}")
     private String apiBaseUrlHostAndPort;
 
-    @Autowired
-    ILoggerComponent logger;
-
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
@@ -30,9 +26,10 @@ public class TelemetryProxy implements ITelemetryProxy {
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
             TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "rocket-department");
-            logger.logInfo("Ask telemetry to being notify when the rocket reach the fuel of " + trackItemDTO.getData());
+            LoggerHelper.logInfo("Ask telemetry to being notify when the rocket reach the fuel of " + trackItemDTO.getData());
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/tracking", trackingDTO, String.class);
         } catch (Exception e) {
+            LoggerHelper.logError(e.toString());
             throw new TelemetryServiceUnavailableException();
         }
     }

@@ -4,7 +4,7 @@ import fr.teama.telemetryservice.entities.Notification;
 import fr.teama.telemetryservice.entities.RocketData;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
-import fr.teama.telemetryservice.interfaces.ILoggerComponent;
+import fr.teama.telemetryservice.helpers.LoggerHelper;
 import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
 import fr.teama.telemetryservice.interfaces.proxy.IPayloadProxy;
 import fr.teama.telemetryservice.interfaces.proxy.IRocketStageProxy;
@@ -20,12 +20,10 @@ public class TrackingHandler implements ITelemetryNotifier {
     IPayloadProxy payloadProxy;
     @Autowired
     IRocketStageProxy rocketStageProxy;
-    @Autowired
-    ILoggerComponent logger;
 
     @Override
     public void trackingNotify(Notification notification, String serviceToBeNotified) {
-        logger.logInfo("Tracking conditions save for " + serviceToBeNotified + " as " + notification.toString());
+        LoggerHelper.logInfo("Tracking conditions save for " + serviceToBeNotified + " as " + notification.toString());
         notificationRepository.save(notification);
     }
 
@@ -33,17 +31,17 @@ public class TrackingHandler implements ITelemetryNotifier {
     public void changeInData(RocketData rocketData) throws PayloadServiceUnavailableException, RocketStageServiceUnavailableException {
         for (Notification notification:notificationRepository.findAll()){
             if (notification.getFuel()!=null&& rocketData.getStageByLevel(1).getFuel()<=notification.getFuel()){
-                logger.logInfo("Fuel condition reached:" );
-                logger.logInfo("Rocket infos: "+rocketData);
-                logger.logInfo("Condition to send notification: "+notification);
+                LoggerHelper.logInfo("Fuel condition reached:" );
+                LoggerHelper.logInfo("Rocket infos: "+rocketData);
+                LoggerHelper.logInfo("Condition to send notification: "+notification);
                 notificationRepository.delete(notification);
                 notifyService(notification.getServiceToBeNotified());
 
             }
             else if (notification.getHeight()!=null&& rocketData.getAltitude()>= notification.getHeight()){
-                logger.logInfo("Altitude condition reached:" );
-                logger.logInfo("Rocket infos: "+rocketData);
-                logger.logInfo("Condition to send notification: "+notification);
+                LoggerHelper.logInfo("Altitude condition reached:" );
+                LoggerHelper.logInfo("Rocket infos: "+rocketData);
+                LoggerHelper.logInfo("Condition to send notification: "+notification);
                 notificationRepository.delete(notification);
                 notifyService(notification.getServiceToBeNotified());
             }

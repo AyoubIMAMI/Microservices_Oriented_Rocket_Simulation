@@ -4,6 +4,7 @@ import fr.teama.missionservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
+import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.IMissionManager;
 import fr.teama.missionservice.interfaces.proxy.IPayloadProxy;
 import fr.teama.missionservice.interfaces.proxy.IRocketHardwareProxy;
@@ -23,9 +24,6 @@ public class MissionManager implements IMissionManager {
     IRocketProxy rocketProxy;
 
     @Autowired
-    LoggerComponent logger;
-
-    @Autowired
     IPayloadProxy payloadProxy;
 
     @Autowired
@@ -33,7 +31,7 @@ public class MissionManager implements IMissionManager {
 
     @Override
     public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException {
-        logger.logInfo("The mission is starting");
+        LoggerHelper.logInfo("The mission is starting");
 
         rocketHardwareProxy.startLogging();
 
@@ -56,9 +54,9 @@ public class MissionManager implements IMissionManager {
 
     public void logServiceMessage(boolean serviceReady, String serviceName) {
         if (serviceReady)
-            logger.logInfo(serviceName + " is ready");
+            LoggerHelper.logInfo(serviceName + " is ready");
         else
-            logger.logWarn(serviceName + " is not ready");
+            LoggerHelper.logWarn(serviceName + " is not ready");
     }
 
     private void missionStartWarning() throws PayloadServiceUnavailableException {
