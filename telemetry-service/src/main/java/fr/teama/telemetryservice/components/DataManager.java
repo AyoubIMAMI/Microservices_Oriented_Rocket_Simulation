@@ -4,7 +4,6 @@ import fr.teama.telemetryservice.entities.RocketData;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
 import fr.teama.telemetryservice.interfaces.DataSaver;
-import fr.teama.telemetryservice.interfaces.ILoggerComponent;
 import fr.teama.telemetryservice.repository.RocketDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +18,10 @@ public class DataManager implements DataSaver {
     @Autowired
     RocketDataRepository rocketDataRepository;
 
-    @Autowired
-    ILoggerComponent logger;
-
     @Override
     public ResponseEntity<String> saveData(RocketData rocketData) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
         trackingHandler.changeInData(rocketData);
-rocketData.getStages().forEach(stage -> System.out.println("stage: " + stage));
+        rocketData.getStages().forEach(stage -> System.out.println("stage: " + stage));
         rocketDataRepository.save(rocketData);
         return ResponseEntity.ok().body("saved");
     }
