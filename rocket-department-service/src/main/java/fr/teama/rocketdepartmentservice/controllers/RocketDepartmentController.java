@@ -28,11 +28,13 @@ public class RocketDepartmentController {
 
     @GetMapping("/status")
     public ResponseEntity<String> getRocketStatus() {
+        LoggerHelper.logInfo("Request received to send rocket status");
         return rocketAnalyzer.getRocketStatus();
     }
 
     @PostMapping("/launch")
     public ResponseEntity<String> startRocket() throws TelemetryServiceUnavailableException {
+        LoggerHelper.logInfo("Request received for start of mission");
         LoggerHelper.logInfo("Rocket launched");
         dataAsker.waitEmptyFuelForStageTheRocket();
         return ResponseEntity.ok().body("OK");
@@ -40,6 +42,7 @@ public class RocketDepartmentController {
 
     @PostMapping("/stage")
     public ResponseEntity<String> stageRocket() {
+        LoggerHelper.logInfo("Request received rocket staging");
         rocketSplitter.stageRocket();
         return ResponseEntity.ok().body("OK");
     }
