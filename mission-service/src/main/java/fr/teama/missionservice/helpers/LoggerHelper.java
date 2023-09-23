@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 public class LoggerHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggerHelper.class);
-    private static final String SERVICE_NAME = "weather-service";
+    private static final String SERVICE_NAME = "mission-service";
     private static final String SERVICE_COLOR = "\u001B[31m";
 
     public static void logInfo(String logging) {
