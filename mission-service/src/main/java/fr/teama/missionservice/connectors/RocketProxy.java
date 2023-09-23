@@ -38,7 +38,6 @@ public class RocketProxy implements IRocketProxy {
                 LoggerHelper.logInfo("The rocket department has launch the rocket");
             else
                 LoggerHelper.logWarn("The rocket department has not launch the rocket");
-            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket/launch", null, String.class);
         } catch (Exception e) {
             LoggerHelper.logError("Rocket department is unavailable");
             throw new RocketServiceUnavailableException();
