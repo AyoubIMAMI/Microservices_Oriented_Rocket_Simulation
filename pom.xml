@@ -28,7 +28,6 @@
         <module>mission-service</module>
         <module>payload-service</module>
         <module>rocket-hardware-mock-service</module>
-        <module>rocket-service</module>
         <module>telemetry-service</module>
         <module>weather-service</module>
         <module>rocket-department-service</module>

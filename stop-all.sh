@@ -6,6 +6,6 @@ docker-compose --file weather-service/docker-compose-weather.yml \
                --file telemetry-service/docker-compose-telemetry.yml \
                --file rocket-hardware-mock-service/docker-compose-rocket-hardware.yml \
                --file payload-service/docker-compose-payload.yml \
-               --file rocket-service/docker-compose-rocket.yml down
+               --file rocket-department-service/docker-compose-rocket.yml down
 
 echo "** All services stopped"

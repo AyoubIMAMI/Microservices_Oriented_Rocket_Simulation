@@ -6,7 +6,7 @@ docker-compose --file weather-service/docker-compose-weather.yml \
                --file telemetry-service/docker-compose-telemetry.yml \
                --file rocket-hardware-mock-service/docker-compose-rocket-hardware.yml \
                --file payload-service/docker-compose-payload.yml \
-               --file rocket-service/docker-compose-rocket.yml up
+               --file rocket-department-service/docker-compose-rocket.yml up
 
 # remove # to add pause in script execution
 read -p "Press any key to continue... "

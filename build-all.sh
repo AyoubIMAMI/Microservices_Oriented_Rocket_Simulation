@@ -13,7 +13,7 @@ compile_dir "weather-service"
 
 compile_dir "mission-service"
 
-compile_dir "rocket-service"
+compile_dir "rocket-department-service"
 
 compile_dir "telemetry-service"
 
