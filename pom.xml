@@ -31,6 +31,7 @@
         <module>rocket-service</module>
         <module>telemetry-service</module>
         <module>weather-service</module>
+        <module>rocket-department-service</module>
     </modules>
 
     <dependencyManagement>
