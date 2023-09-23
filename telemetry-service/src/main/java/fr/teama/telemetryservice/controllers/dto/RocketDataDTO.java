@@ -56,11 +56,9 @@ public class RocketDataDTO {
 
     @Override
     public String toString() {
-        return "RocketDataDTO{" +
+        return "RocketData{" +
                 "altitude=" + altitude +
-                ", speed=" + speed +
                 ", stages=" + stages +
-                ", timestamp=" + timestamp +
                 '}';
     }
 

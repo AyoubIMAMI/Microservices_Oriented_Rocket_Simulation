@@ -1,11 +1,13 @@
 package fr.teama.missionservice.controllers;
 
+import fr.teama.missionservice.connectors.RocketHardwareProxy;
 import fr.teama.missionservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
 import fr.teama.missionservice.interfaces.ILoggerComponent;
 import fr.teama.missionservice.interfaces.IMissionManager;
+import fr.teama.missionservice.interfaces.proxy.IRocketHardwareProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,10 +27,18 @@ public class MissionController {
     private IMissionManager missionManager;
     @Autowired
     ILoggerComponent logger;
+    @Autowired
+    IRocketHardwareProxy rocketHardwareProxy;
 
     @PostMapping("/start")
     public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException {
         logger.logInfo("Request received to start the mission");
         return missionManager.startMission();
+    }
+    @PostMapping("/success")
+    public ResponseEntity<String> endMission() throws RocketHardwareServiceUnavailableException {
+        logger.logInfo("The mission has succeed");
+        this.rocketHardwareProxy.stopLogging();
+        return ResponseEntity.ok().body("OK");
     }
 }

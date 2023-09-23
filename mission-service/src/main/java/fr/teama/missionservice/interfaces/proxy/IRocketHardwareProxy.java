@@ -5,4 +5,6 @@ import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableExcept
 public interface IRocketHardwareProxy {
 
     void startLogging() throws RocketHardwareServiceUnavailableException;
+    void stopLogging() throws RocketHardwareServiceUnavailableException;
+
 }

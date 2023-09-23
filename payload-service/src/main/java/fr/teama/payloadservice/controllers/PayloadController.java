@@ -31,12 +31,12 @@ public class PayloadController {
 
     @PostMapping
     public ResponseEntity<String> missionStartWarning() throws TelemetryServiceUnavailableException {
-        logger.logInfo("The mission as started");
+        logger.logInfo("The mission has started");
         return dataAsker.askOrbitToTelemetry();
     }
 
     @PostMapping("/drop")
-    public ResponseEntity<String> dropPayload() {
+    public ResponseEntity<String> dropPayload() throws TelemetryServiceUnavailableException {
         logger.logInfo("Request for dropping the payload");
         return payloadReleaser.dropPayload();
     }

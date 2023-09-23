@@ -54,11 +54,9 @@ public class StageDataDTO {
 
     @Override
     public String toString() {
-        return "StageDataDTO{" +
+        return "StageData{" +
                 "stageLevel=" + stageLevel +
                 ", fuel=" + fuel +
-                ", isActivated=" + isActivated +
-                ", isDetached=" + isDetached +
                 '}';
     }
 }

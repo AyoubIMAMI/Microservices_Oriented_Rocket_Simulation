@@ -28,7 +28,7 @@ public class TelemetryProxy implements ITelemetryProxy {
     @Override
     public ResponseEntity<String> missionStartNotify() throws TelemetryServiceUnavailableException {
         try {
-            TrackItemDTO trackItemDTO = new TrackItemDTO("height", 4500.0);
+            TrackItemDTO trackItemDTO = new TrackItemDTO("height", 3600.0);
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
 

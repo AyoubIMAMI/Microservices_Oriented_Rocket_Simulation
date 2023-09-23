@@ -46,7 +46,7 @@ public class TelemetryController {
 
     @PostMapping("/send-data")
     public ResponseEntity<String> saveDataNewData(@RequestBody RocketDataDTO rocket) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
-        logger.logInfo("Saving data from rocket hardware : " + rocket.toString());
+        logger.logInfo("Saving data from rocket hardware");
         return this.dataSaver.saveData(new RocketData(rocket));
     }
 }

@@ -46,8 +46,6 @@ public class StageData {
         return "StageData{" +
                 "stageLevel=" + stageLevel +
                 ", fuel=" + fuel +
-                ", isActivated=" + isActivated +
-                ", isDetached=" + isDetached +
                 '}';
     }
 }
