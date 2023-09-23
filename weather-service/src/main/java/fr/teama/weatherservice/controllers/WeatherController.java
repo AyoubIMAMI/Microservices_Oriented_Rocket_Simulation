@@ -1,5 +1,6 @@
 package fr.teama.weatherservice.controllers;
 
+import fr.teama.weatherservice.interfaces.ILoggerComponent;
 import fr.teama.weatherservice.interfaces.IWeatherAnalyzer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,13 @@ public class WeatherController {
     @Autowired
     private IWeatherAnalyzer weatherAnalyzer;
 
+    @Autowired
+    ILoggerComponent logger;
+
     @GetMapping
     public ResponseEntity<String> getWeatherStatus() {
-        return weatherAnalyzer.getWeatherStatus();
+        ResponseEntity<String> response = weatherAnalyzer.getWeatherStatus();
+        logger.logInfo("The weather status as been get with value : " + response.getBody());
+        return response;
     }
 }

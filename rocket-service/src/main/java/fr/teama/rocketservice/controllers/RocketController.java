@@ -1,6 +1,10 @@
 package fr.teama.rocketservice.controllers;
 
+import fr.teama.rocketservice.exceptions.TelemetryServiceUnavailableException;
+import fr.teama.rocketservice.interfaces.IDataAsker;
+import fr.teama.rocketservice.interfaces.ILoggerComponent;
 import fr.teama.rocketservice.interfaces.IRocketAnalyzer;
+import fr.teama.rocketservice.interfaces.RocketSplitter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +20,30 @@ public class RocketController {
     @Autowired
     private IRocketAnalyzer rocketAnalyzer;
 
+    @Autowired
+    private ILoggerComponent logger;
+
+    @Autowired
+    private RocketSplitter rocketSplitter;
+
+    @Autowired
+    private IDataAsker dataAsker;
+
     @GetMapping("/status")
     public ResponseEntity<String> getRocketStatus() {
         return rocketAnalyzer.getRocketStatus();
     }
 
     @PostMapping("/launch")
-    public ResponseEntity<String> startRocket() {
-        System.out.println("Rocket launched");
+    public ResponseEntity<String> startRocket() throws TelemetryServiceUnavailableException {
+        logger.logInfo("Rocket launched");
+        dataAsker.waitEmptyFuelForStageTheRocket();
+        return ResponseEntity.ok().body("OK");
+    }
+
+    @PostMapping("/stage")
+    public ResponseEntity<String> stageRocket() {
+        rocketSplitter.stageRocket();
         return ResponseEntity.ok().body("OK");
     }
 }

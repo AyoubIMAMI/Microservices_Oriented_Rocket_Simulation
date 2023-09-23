@@ -4,6 +4,13 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/weather-service/pom.xml" />
+        <option value="$PROJECT_DIR$/telemetry-service/pom.xml" />
+        <option value="$PROJECT_DIR$/rocket-service/pom.xml" />
+        <option value="$PROJECT_DIR$/rocket-hardware-service/pom.xml" />
+        <option value="$PROJECT_DIR$/payload-service/pom.xml" />
+        <option value="$PROJECT_DIR$/mission-service/pom.xml" />
+        <option value="$PROJECT_DIR$/rocket-hardware-mock-service/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>

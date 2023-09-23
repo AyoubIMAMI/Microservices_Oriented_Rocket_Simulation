@@ -15,6 +15,12 @@ compile_dir "mission-service"
 
 compile_dir "rocket-service"
 
+compile_dir "telemetry-service"
+
+compile_dir "rocket-hardware-mock-service"
+
+compile_dir "payload-service"
+
 # remove # to add pause in script execution
 read -p "Press any key to continue... "
 
