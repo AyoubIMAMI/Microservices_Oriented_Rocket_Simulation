@@ -23,7 +23,7 @@ public class WeatherController {
     @GetMapping
     public ResponseEntity<String> getWeatherStatus() {
         ResponseEntity<String> response = weatherAnalyzer.getWeatherStatus();
-        LoggerHelper.logInfo("The weather status as been get with value : " + response.getBody());
+        LoggerHelper.logInfo("The weather status has been get with value : " + response.getBody());
         return response;
     }
 }
