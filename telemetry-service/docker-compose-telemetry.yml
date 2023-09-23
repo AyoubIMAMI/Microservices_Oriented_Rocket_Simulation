@@ -15,11 +15,11 @@ services:
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
   postgres:
     image: postgres:15.2
-    container_name: telemetrydb
+    container_name: database-telemetry
     environment:
       - POSTGRES_PASSWORD=postgrespass
       - POSTGRES_USER=postgresuser
-      - POSTGRES_DB=telemetry-db
+      - POSTGRES_DB=database-telemetry
     ports:
       - "3006:5432"
 
