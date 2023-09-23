@@ -1,6 +1,6 @@
 package fr.teama.telemetryservice.components;
 
-import fr.teama.telemetryservice.entities.RocketData;
+import fr.teama.telemetryservice.models.RocketData;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
 import fr.teama.telemetryservice.interfaces.DataSaver;

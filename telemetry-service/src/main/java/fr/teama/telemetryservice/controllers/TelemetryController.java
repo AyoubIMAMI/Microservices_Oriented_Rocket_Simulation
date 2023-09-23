@@ -2,8 +2,8 @@ package fr.teama.telemetryservice.controllers;
 
 import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
 import fr.teama.telemetryservice.controllers.dto.TrackingDTO;
-import fr.teama.telemetryservice.entities.Notification;
-import fr.teama.telemetryservice.entities.RocketData;
+import fr.teama.telemetryservice.models.Notification;
+import fr.teama.telemetryservice.models.RocketData;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
 import fr.teama.telemetryservice.helpers.LoggerHelper;

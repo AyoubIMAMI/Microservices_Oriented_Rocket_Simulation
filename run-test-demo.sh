@@ -1,7 +1,6 @@
 #!/bin/bash
 
 function run_test() {
-  printf "Starting the full docker-compose in background\n"
 
   printf "## Asking Mission Commander to start the Rocket \n"
 
@@ -15,15 +14,14 @@ function run_test() {
     # Handle the error here
     echo "Error: The request did not succeed (HTTP status code: $ret_code)"
   fi
-  read -p "Press any key to continue... "
+  read -p "** Press any key to continue... "
   echo "Stopping the docker-compose gracefully"
-  ./stop-all.sh
 }
 
 
-echo "Running concurrency test WITH NO PRIOR BUILD"
-echo "through the gateway"
+# echo "Running concurrency test WITH NO PRIOR BUILD"
+# echo "through the gateway"
 run_test
 
 
-read -p "Press any key to continue... "
+read -p "** Press any key to continue... "

@@ -1,4 +1,4 @@
-package fr.teama.telemetryservice.entities;
+package fr.teama.telemetryservice.models;
 
 import fr.teama.telemetryservice.controllers.dto.StageDataDTO;
 import jakarta.persistence.*;

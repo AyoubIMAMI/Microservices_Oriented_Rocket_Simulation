@@ -3,7 +3,8 @@
 APP="${PWD##*/}"
 
 # Compiling and buildpacking docker image
-echo "Compiling $APP"
+echo "** Compiling $APP"
+./stop.sh
 docker image rm marsy/weather-service
 mvn clean spring-boot:build-image -Dspring-boot.build-image.imageName="marsy/$APP"
-echo "Done"
+echo "** Done"
