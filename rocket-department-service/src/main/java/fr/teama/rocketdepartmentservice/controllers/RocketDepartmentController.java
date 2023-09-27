@@ -36,7 +36,7 @@ public class RocketDepartmentController {
     public ResponseEntity<String> startRocket() throws TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("Request received for start of mission");
         LoggerHelper.logInfo("Rocket launched");
-        dataAsker.waitEmptyFuelForStageTheRocket();
+        dataAsker.getNotificationOnEvents();
         return ResponseEntity.ok().body("OK");
     }
 

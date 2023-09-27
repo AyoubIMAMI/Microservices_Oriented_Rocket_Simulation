@@ -20,13 +20,13 @@ public class TelemetryProxy implements ITelemetryProxy {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public void gettingNotifyWhenFuelIsEmpty() throws TelemetryServiceUnavailableException {
+    public void askWhenEventHappens(String fieldToTrack, Double data, String service, String log) throws TelemetryServiceUnavailableException {
         try {
-            TrackItemDTO trackItemDTO = new TrackItemDTO("fuel", 0.0);
+            TrackItemDTO trackItemDTO = new TrackItemDTO(fieldToTrack, data);
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
-            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "rocket-department");
-            LoggerHelper.logInfo("Ask telemetry to being notify when the rocket reach the fuel of " + trackItemDTO.getData());
+            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, service);
+            LoggerHelper.logInfo("Ask telemetry to being notify when " + log + trackItemDTO.getData());
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/tracking", trackingDTO, String.class);
         } catch (Exception e) {
             LoggerHelper.logError(e.toString());
