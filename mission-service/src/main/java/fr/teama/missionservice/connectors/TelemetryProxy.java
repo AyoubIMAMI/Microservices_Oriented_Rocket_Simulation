@@ -6,11 +6,13 @@ import fr.teama.missionservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.proxy.ITelemetryProxy;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TelemetryProxy implements ITelemetryProxy {
     @Value("${telemetry.host.baseurl}")
     private String apiBaseUrlHostAndPort;
