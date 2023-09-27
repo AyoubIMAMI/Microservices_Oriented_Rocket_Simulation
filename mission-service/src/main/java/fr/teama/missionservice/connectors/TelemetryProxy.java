@@ -5,6 +5,9 @@ import fr.teama.missionservice.connectors.externalDTO.TrackingDTO;
 import fr.teama.missionservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.proxy.ITelemetryProxy;
+import fr.teama.missionservice.models.OperationType;
+import fr.teama.missionservice.models.TrackingCategory;
+import fr.teama.missionservice.models.TrackingField;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -21,10 +24,10 @@ public class TelemetryProxy implements ITelemetryProxy {
     @Override
     public void gettingNotifyInCaseOfRocketAnomaly() throws TelemetryServiceUnavailableException {
         try {
-            TrackItemDTO trackItemDTO = new TrackItemDTO("status", 0.0);
+            TrackItemDTO trackItemDTO = new TrackItemDTO(TrackingField.STATUS, 0.0, OperationType.EQUAL);
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
-            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "mission");
+            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "mission", TrackingCategory.ROCKET);
             LoggerHelper.logInfo("Ask telemetry to being notify in case of rocket anomaly detection with rocket status : " + trackItemDTO.getData());
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/tracking", trackingDTO, String.class);
         } catch (Exception e) {

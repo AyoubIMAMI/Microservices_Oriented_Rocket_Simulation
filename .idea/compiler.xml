@@ -7,10 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="rocket-department-service" />
+        <module name="mission-service" />
         <module name="weather-service" />
         <module name="executive-service" />
         <module name="telemetry-service" />
-        <module name="mission-service" />
         <module name="payload-service" />
         <module name="rocket-hardware-mock-service" />
       </profile>
@@ -21,7 +21,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="executive-service" options="-parameters" />
+      <module name="executive-service" options="" />
       <module name="mission-service" options="-parameters" />
       <module name="payload-service" options="-parameters" />
       <module name="rocket-department-service" options="-parameters" />

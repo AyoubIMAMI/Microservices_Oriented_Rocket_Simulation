@@ -34,7 +34,7 @@ public class TrackingHandler implements ITelemetryNotifier {
     }
 
     @Override
-    public void verifyRocketData(RocketData rocketData) throws PayloadServiceUnavailableException, RocketStageServiceUnavailableException {
+    public void verifyRocketData(RocketData rocketData) throws PayloadServiceUnavailableException, RocketStageServiceUnavailableException, MissionServiceUnavailableException {
         for (Tracking tracking: trackingRepository.findByCategory(TrackingCategory.ROCKET)){
             boolean allConditionsReached = true;
 
@@ -54,19 +54,16 @@ public class TrackingHandler implements ITelemetryNotifier {
     }
 
     private Double getRocketDataToCheck(TrackingField fieldToTrack, RocketData rocketData) {
-        switch (fieldToTrack) {
-            case HEIGHT:
-                return rocketData.getAltitude();
-            case FUEL:
-                return rocketData.getStageByLevel(1).getFuel();
-            case SPEED:
-                return rocketData.getSpeed();
-            default:
-                return null;
-        }
+        return switch (fieldToTrack) {
+            case HEIGHT -> rocketData.getAltitude();
+            case FUEL -> rocketData.getStageByLevel(1).getFuel();
+            case SPEED -> rocketData.getSpeed();
+            case STATUS -> rocketData.getStatus();
+            default -> null;
+        };
     }
 
-    private void notifyService(Tracking tracking) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
+    private void notifyService(Tracking tracking) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException {
         switch (tracking.getServiceToBeNotified()) {
             case "rocket-department":
                 // TODO: Add inner switch to manage multiple route and make the call with the right proxy function
@@ -76,6 +73,8 @@ public class TrackingHandler implements ITelemetryNotifier {
                 // TODO: Add inner switch to manage multiple route and make the call with the right proxy function
                 payloadProxy.heightReached();
                 break;
+            case "mission":
+                missionProxy.specificStatusDetected();
             default:
                 break;
         }

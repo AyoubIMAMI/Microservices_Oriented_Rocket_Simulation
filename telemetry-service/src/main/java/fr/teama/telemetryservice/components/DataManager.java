@@ -21,7 +21,7 @@ public class DataManager implements DataSaver {
     RocketDataRepository rocketDataRepository;
 
     @Override
-    public ResponseEntity<String> saveData(RocketData rocketData) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
+    public ResponseEntity<String> saveData(RocketData rocketData) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException {
         trackingHandler.verifyRocketData(rocketData);
         rocketDataRepository.save(rocketData);
         return ResponseEntity.ok().body("Rocket data saved");

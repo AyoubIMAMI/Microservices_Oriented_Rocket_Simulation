@@ -1,16 +1,24 @@
 package fr.teama.missionservice.connectors.externalDTO;
 
+import fr.teama.missionservice.models.TrackingCategory;
 
 import java.util.List;
 
 public class TrackingDTO {
 
-    private final List<TrackItemDTO> data;
-    private final String serviceToBeNotified;
+    private List<TrackItemDTO> data;
 
-    public TrackingDTO(List<TrackItemDTO> data, String requestService) {
+    private String serviceToBeNotified;
+
+    private TrackingCategory category;
+
+    public TrackingDTO(List<TrackItemDTO> data, String requestService, TrackingCategory category) {
         this.data = data;
         this.serviceToBeNotified = requestService;
+        this.category = category;
+    }
+
+    public TrackingDTO() {
     }
 
     public List<TrackItemDTO> getData() {
@@ -20,4 +28,21 @@ public class TrackingDTO {
     public String getServiceToBeNotified() {
         return serviceToBeNotified;
     }
+
+    public void setData(List<TrackItemDTO> data) {
+        this.data = data;
+    }
+
+    public void setServiceToBeNotified(String serviceToBeNotified) {
+        this.serviceToBeNotified = serviceToBeNotified;
+    }
+
+    public TrackingCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(TrackingCategory category) {
+        this.category = category;
+    }
 }
+

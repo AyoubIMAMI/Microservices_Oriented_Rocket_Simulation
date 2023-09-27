@@ -4,4 +4,5 @@ public enum TrackingField {
     HEIGHT,
     SPEED,
     FUEL,
+    STATUS
 }
