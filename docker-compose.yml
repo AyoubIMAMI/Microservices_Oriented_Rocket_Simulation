@@ -7,27 +7,13 @@ services:
     restart: always
     ports:
       - 3001:8080
-
-  payload-service:
-    container_name: payload-service
-    image: "marsy/payload-service"
-    restart: always
-    ports:
-      - 3004:8080
-
-  rocket-department-service:
-    container_name: rocket-department-service
-    image: "marsy/rocket-department-service"
-    restart: always
-    ports:
-      - 3002:8080
-
-  rocket-hardware-mock-service:
-    container_name: rocket-hardware-mock-service
-    image: "marsy/rocket-hardware-mock-service"
-    restart: always
-    ports:
-      - 3005:8080
+    depends_on:
+      - weather-service
+      - rocket-department-service
+      - telemetry-service
+      - payload-service
+      - rocket-hardware-mock-service
+      - postgres
 
   weather-service:
     container_name: weather-service
@@ -35,6 +21,13 @@ services:
     restart: always
     ports:
       - 3000:8080
+
+  rocket-department-service:
+    container_name: rocket-department-service
+    image: "marsy/rocket-department-service"
+    restart: always
+    ports:
+      - 3002:8080
 
   telemetry-service:
     container_name: telemetry-service
@@ -46,6 +39,20 @@ services:
       - POSTGRES_HOST=postgres:5432
     depends_on:
       - postgres
+
+  payload-service:
+    container_name: payload-service
+    image: "marsy/payload-service"
+    restart: always
+    ports:
+      - 3004:8080
+
+  rocket-hardware-mock-service:
+    container_name: rocket-hardware-mock-service
+    image: "marsy/rocket-hardware-mock-service"
+    restart: always
+    ports:
+      - 3005:8080
 
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
   postgres:
