@@ -19,7 +19,7 @@ public class RocketData {
         this.altitude = 0.0;
         this.speed = 0.0;
         this.stages = stages;
-        status = 1;
+        this.status = 1.0;
     }
 
     public double getAltitude() {
@@ -63,7 +63,7 @@ public class RocketData {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(double status) {
         this.status = status;
     }
 }

@@ -13,10 +13,13 @@ public class RocketDataDTO {
 
     private LocalDateTime timestamp;
 
+    private double status;
+
     public RocketDataDTO(List<StageDataDTO> stages) {
         this.altitude = 0.0;
         this.speed = 0.0;
         this.stages = stages;
+        this.status = 0.0;
     }
 
     public void setAltitude(Double altitude) {
@@ -68,5 +71,13 @@ public class RocketDataDTO {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public double getStatus() {
+        return status;
+    }
+
+    public void setStatus(double status) {
+        this.status = status;
     }
 }
