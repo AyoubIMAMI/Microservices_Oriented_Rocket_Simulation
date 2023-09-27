@@ -1,9 +1,0 @@
-version: "3"
-
-services:
-  payload-service:
-    container_name: payload-service
-    image: "marsy/payload-service"
-    restart: always
-    ports:
-      - 3004:8080

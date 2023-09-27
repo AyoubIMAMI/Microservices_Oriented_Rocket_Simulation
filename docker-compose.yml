@@ -1,0 +1,59 @@
+version: "3"
+
+services:
+  mission-service:
+    container_name: mission-service
+    image: "marsy/mission-service"
+    restart: always
+    ports:
+      - 3001:8080
+
+  payload-service:
+    container_name: payload-service
+    image: "marsy/payload-service"
+    restart: always
+    ports:
+      - 3004:8080
+
+  rocket-department-service:
+    container_name: rocket-department-service
+    image: "marsy/rocket-department-service"
+    restart: always
+    ports:
+      - 3002:8080
+
+  rocket-hardware-mock-service:
+    container_name: rocket-hardware-mock-service
+    image: "marsy/rocket-hardware-mock-service"
+    restart: always
+    ports:
+      - 3005:8080
+
+  weather-service:
+    container_name: weather-service
+    image: "marsy/weather-service"
+    restart: always
+    ports:
+      - 3000:8080
+
+  telemetry-service:
+    container_name: telemetry-service
+    image: "marsy/telemetry-service"
+    restart: always
+    ports:
+      - 3003:8080
+    environment:
+      - POSTGRES_HOST=postgres:5432
+    depends_on:
+      - postgres
+
+  # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
+  postgres:
+    image: postgres:15.2
+    container_name: database-telemetry
+    environment:
+      - POSTGRES_PASSWORD=postgrespass
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_DB=database-telemetry
+    ports:
+      - "3006:5432"
