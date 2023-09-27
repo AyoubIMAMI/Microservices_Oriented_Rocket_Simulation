@@ -27,6 +27,11 @@ public class TelemetryController {
     @Autowired
     private DataSaver dataSaver;
 
+    @GetMapping("/service-status")
+    public ResponseEntity<String> telemetryStatus() {
+        return ResponseEntity.ok().body("Service controller started");
+    }
+
     @PostMapping("/tracking")
     public ResponseEntity<String> whenTelemetryReachConditions(@RequestBody TrackingDTO trackingDTO) {
         LoggerHelper.logInfo("New tracking request received");

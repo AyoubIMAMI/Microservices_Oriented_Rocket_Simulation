@@ -1,9 +1,0 @@
-version: "3"
-
-services:
-  weather-service:
-    container_name: weather-service
-    image: "marsy/weather-service"
-    restart: always
-    ports:
-      - 3000:8080
