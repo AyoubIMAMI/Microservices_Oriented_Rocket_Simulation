@@ -22,7 +22,7 @@ services:
     ports:
       - 3000:8080
 
-  rocket-service:
+  rocket-department-service:
     container_name: rocket-department-service
     image: "marsy/rocket-department-service"
     restart: always

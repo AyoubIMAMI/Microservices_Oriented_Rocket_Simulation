@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Component
 public class RocketProxy implements IRocketProxy {
-    @Value("${rocket.host.baseurl}")
+    @Value("${rocket-department.host.baseurl}")
     private String apiBaseUrlHostAndPort;
 
     private final RestTemplate restTemplate = new RestTemplate();
