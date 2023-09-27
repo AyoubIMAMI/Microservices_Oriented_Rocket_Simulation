@@ -1,7 +1,6 @@
 package fr.teama.telemetryservice.connectors;
 
 import fr.teama.telemetryservice.exceptions.MissionServiceUnavailableException;
-import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.helpers.LoggerHelper;
 import fr.teama.telemetryservice.interfaces.proxy.IMissionProxy;
 import org.springframework.beans.factory.annotation.Value;
