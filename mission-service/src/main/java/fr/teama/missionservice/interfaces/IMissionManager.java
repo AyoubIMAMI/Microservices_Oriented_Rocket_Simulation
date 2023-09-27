@@ -7,4 +7,5 @@ public interface IMissionManager {
     ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, TelemetryServiceUnavailableException;
     void missionFailed() throws RocketHardwareServiceUnavailableException;
     void missionSuccess() throws RocketHardwareServiceUnavailableException;
+    ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException;
 }

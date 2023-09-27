@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  executive-service:
+    container_name: executive-service
+    image: "marsy/executive-service"
+    restart: always
+    ports:
+      - 3008:8080

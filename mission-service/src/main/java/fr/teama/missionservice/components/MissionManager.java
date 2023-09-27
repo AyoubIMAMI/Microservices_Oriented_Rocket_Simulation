@@ -21,13 +21,16 @@ public class MissionManager implements IMissionManager {
     IPayloadProxy payloadProxy;
 
     @Autowired
+    IExecutiveProxy executiveProxy;
+
+    @Autowired
     IRocketHardwareProxy rocketHardwareProxy;
 
     @Autowired
     ITelemetryProxy telemetryProxy;
 
     @Override
-    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, TelemetryServiceUnavailableException {
+    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
         LoggerHelper.logInfo("The mission is starting");
 
         rocketHardwareProxy.startLogging();
@@ -41,8 +44,8 @@ public class MissionManager implements IMissionManager {
         logServiceMessage(missionReady, "Mission service");
 
         if (missionReady) {
+            NotifyMissionStart();
             gettingNotifyInCaseOfRocketAnomaly();
-            missionStartWarning();
             rocketProxy.launchRocket();
             return ResponseEntity.ok().body("GO");
         } else {
@@ -69,8 +72,9 @@ public class MissionManager implements IMissionManager {
             LoggerHelper.logWarn(serviceName + " is not ready");
     }
 
-    private void missionStartWarning() throws PayloadServiceUnavailableException {
-        payloadProxy.missionStartNotify();
+    private void NotifyMissionStart() throws PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
+        payloadProxy.missionStartNotification();
+        executiveProxy.missionStartNotification();
     }
 
     private void gettingNotifyInCaseOfRocketAnomaly() throws TelemetryServiceUnavailableException {

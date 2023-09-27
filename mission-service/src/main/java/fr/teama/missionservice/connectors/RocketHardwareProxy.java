@@ -21,7 +21,7 @@ public class RocketHardwareProxy implements IRocketHardwareProxy {
     @Override
     public void startLogging() throws RocketHardwareServiceUnavailableException {
         try {
-            LoggerHelper.logInfo("Warn the rocket hardware service to start logging");
+            LoggerHelper.logInfo("Inform the rocket hardware service to start logging");
             ResponseEntity<String> response = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket-hardware/start-logging", null, String.class);
         } catch (Exception e) {
             LoggerHelper.logError("Hardware service unavailable");
@@ -32,7 +32,7 @@ public class RocketHardwareProxy implements IRocketHardwareProxy {
     @Override
     public void stopLogging() throws RocketHardwareServiceUnavailableException {
         try {
-            LoggerHelper.logInfo("Warn the rocket hardware service to stop logging");
+            LoggerHelper.logInfo("Inform the rocket hardware service to stop logging");
             ResponseEntity<String> response = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket-hardware/stop-logging", null, String.class);
         } catch (Exception e) {
             LoggerHelper.logError("Hardware service unavailable");

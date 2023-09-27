@@ -1,10 +1,7 @@
 package fr.teama.missionservice.controllers;
 
 import fr.teama.missionservice.controllers.dto.ErrorDTO;
-import fr.teama.missionservice.exceptions.PayloadServiceUnavailableException;
-import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableException;
-import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
-import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
+import fr.teama.missionservice.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -46,6 +43,15 @@ public class MissionControllerAdvice {
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setError("Rocket hardware service unavailable.");
         errorDTO.setDetails("The rocket hardware service is currently unavailable. Please try again later.");
+        return errorDTO;
+    }
+
+    @ExceptionHandler({ExecutiveServiceUnavailableException.class})
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    public ErrorDTO handleExceptions(ExecutiveServiceUnavailableException e) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("Executive service unavailable.");
+        errorDTO.setDetails("The executive service is currently unavailable. Please try again later.");
         return errorDTO;
     }
 }
