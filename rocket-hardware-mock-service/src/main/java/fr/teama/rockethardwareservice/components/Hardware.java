@@ -19,12 +19,10 @@ public class Hardware implements IHardware {
     @Autowired
     ITelemetryProxy telemetryProxy;
 
+    private boolean sendLog = false;
+    private boolean slowingDown = false;
     private final long updateDelay = 1;
     RocketData rocket = new RocketData(List.of(new StageData(1, 200), new StageData(2, 100)));
-
-
-    boolean sendLog = false;
-
 
     @Override
     public void startLogging() throws TelemetryServiceUnavailableException {
@@ -35,8 +33,13 @@ public class Hardware implements IHardware {
         sendLog = true;
 
         while (sendLog) {
+            if (slowingDown) {
+                rocket.setSpeed(rocket.getSpeed() + new Random().nextDouble());
+            }
+            else {
+                rocket.setSpeed(rocket.getSpeed() + new Random().nextDouble() * 10);
+            }
             rocket.setAltitude(rocket.getAltitude() +  new Random().nextDouble() * 100);
-            rocket.setSpeed(rocket.getSpeed() + new Random().nextDouble() * 10);
             rocket.getStages().forEach(stage -> {
                 if (stage.getStageLevel() == stageLevel[0]) {
                     if (!stage.isActivated()) {
