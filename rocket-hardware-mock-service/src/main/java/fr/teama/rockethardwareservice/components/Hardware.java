@@ -70,4 +70,14 @@ public class Hardware implements IHardware {
         LoggerHelper.logInfo("Stop logging");
         sendLog = false;
     }
+
+    @Override
+    public void slowDown() {
+        this.slowingDown = true;
+    }
+
+    @Override
+    public void speedUp() {
+        this.slowingDown = false;
+    }
 }

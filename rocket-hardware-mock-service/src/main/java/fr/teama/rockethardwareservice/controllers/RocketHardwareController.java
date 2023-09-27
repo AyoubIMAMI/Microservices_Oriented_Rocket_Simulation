@@ -55,4 +55,18 @@ public class RocketHardwareController {
         hardware.stopLogging();
         return ResponseEntity.status(HttpStatus.OK).body("Logging stopped successfully");
     }
+
+    @PostMapping("/slow-down")
+    public ResponseEntity<String> rocketSlowDown() {
+        LoggerHelper.logInfo("Request received to slow down");
+        hardware.slowDown();
+        return ResponseEntity.status(HttpStatus.OK).body("Slowing down");
+    }
+
+    @PostMapping("/speed-up")
+    public ResponseEntity<String> rocketSpeedUp() {
+        LoggerHelper.logInfo("Request received to speed Up");
+        hardware.speedUp();
+        return ResponseEntity.status(HttpStatus.OK).body("Speeding up");
+    }
 }
