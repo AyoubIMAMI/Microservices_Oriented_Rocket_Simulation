@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/rocket-hardware-mock-service/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/rocket-department-service/pom.xml" />
+        <option value="$PROJECT_DIR$/payload-hadware-mock-service/pom.xml" />
       </list>
     </option>
   </component>
