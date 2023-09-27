@@ -24,8 +24,8 @@ public class TelemetryProxy implements ITelemetryProxy {
             TrackItemDTO trackItemDTO = new TrackItemDTO("status", 0.0);
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
-            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "mission-service");
-            LoggerHelper.logInfo("Ask telemetry to being notify in case of rocket server anomaly detection " + trackItemDTO.getData());
+            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "mission");
+            LoggerHelper.logInfo("Ask telemetry to being notify in case of rocket anomaly detection with rocket status : " + trackItemDTO.getData());
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/tracking", trackingDTO, String.class);
         } catch (Exception e) {
             LoggerHelper.logError(e.toString());
