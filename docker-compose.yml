@@ -54,6 +54,13 @@ services:
     ports:
       - 3005:8080
 
+  executive-service:
+    container_name: executive-service
+    image: "marsy/executive-service"
+    restart: always
+    ports:
+      - 3008:8080
+
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
   postgres:
     image: postgres:15.2

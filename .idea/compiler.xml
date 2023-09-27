@@ -21,7 +21,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="executive-service" options="" />
+      <module name="executive-service" options="-parameters" />
       <module name="mission-service" options="-parameters" />
       <module name="payload-service" options="-parameters" />
       <module name="rocket-department-service" options="-parameters" />

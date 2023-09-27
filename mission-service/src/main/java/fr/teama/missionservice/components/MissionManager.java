@@ -44,8 +44,8 @@ public class MissionManager implements IMissionManager {
         logServiceMessage(missionReady, "Mission service");
 
         if (missionReady) {
-            NotifyMissionStart();
             gettingNotifyInCaseOfRocketAnomaly();
+            NotifyMissionStart();
             rocketProxy.launchRocket();
             return ResponseEntity.ok().body("GO");
         } else {
