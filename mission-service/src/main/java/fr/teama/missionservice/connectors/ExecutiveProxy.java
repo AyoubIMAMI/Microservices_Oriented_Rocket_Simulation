@@ -1,27 +1,27 @@
 package fr.teama.missionservice.connectors;
 
-import fr.teama.missionservice.exceptions.PayloadServiceUnavailableException;
+import fr.teama.missionservice.exceptions.ExecutiveServiceUnavailableException;
 import fr.teama.missionservice.helpers.LoggerHelper;
-import fr.teama.missionservice.interfaces.proxy.IPayloadProxy;
+import fr.teama.missionservice.interfaces.proxy.IExecutiveProxy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class PayloadProxy implements IPayloadProxy {
+public class ExecutiveProxy implements IExecutiveProxy {
 
-    @Value("${payload.host.baseurl}")
+    @Value("${executive.host.baseurl}")
     private String apiBaseUrlHostAndPort;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public void missionStartNotification() throws PayloadServiceUnavailableException {
+    public void missionStartNotification() throws ExecutiveServiceUnavailableException {
         try {
             LoggerHelper.logInfo("Inform payload service that the mission has started");
-            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/payload", null, String.class);
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/executive", null, String.class);
         } catch (Exception e) {
-            throw new PayloadServiceUnavailableException();
+            throw new ExecutiveServiceUnavailableException();
         }
     }
 }

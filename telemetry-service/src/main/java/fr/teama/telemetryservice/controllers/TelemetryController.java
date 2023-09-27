@@ -2,7 +2,7 @@ package fr.teama.telemetryservice.controllers;
 
 import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
 import fr.teama.telemetryservice.controllers.dto.TrackingDTO;
-import fr.teama.telemetryservice.models.Notification;
+import fr.teama.telemetryservice.models.Tracking;
 import fr.teama.telemetryservice.models.RocketData;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
@@ -22,27 +22,19 @@ public class TelemetryController {
     public static final String BASE_URI = "/api/telemetry";
 
     @Autowired
-    private ITelemetryNotifier telemetryAnalyzer;
+    private ITelemetryNotifier telemetryNotifier;
 
     @Autowired
     private DataSaver dataSaver;
 
     @PostMapping("/tracking")
-    public ResponseEntity<String> whenTelemetryReachConditions(@RequestBody TrackingDTO trackingDTO) {
-        LoggerHelper.logInfo("New tracking request received");
-        Notification notification=new Notification(trackingDTO.getServiceToBeNotified());
-        trackingDTO.getData().forEach(data-> {
-            if (data.getFieldToTrack().equals("height"))
-                notification.setHeight(data.getData());
-            else if (data.getFieldToTrack().equals("fuel"))
-                notification.setFuel(data.getData());
-        });
-        telemetryAnalyzer.trackingNotify(notification,trackingDTO.getServiceToBeNotified());
-        return ResponseEntity.ok().body("Tracking condition saved");
+    public ResponseEntity<String> createTrackingNotification(@RequestBody TrackingDTO trackingDTO) {
+        LoggerHelper.logInfo("New tracking request received from " + trackingDTO.getServiceToBeNotified() + " service");
+        Tracking tracking = new Tracking(trackingDTO);
+        return ResponseEntity.ok().body("Tracking condition saved: " + telemetryNotifier.trackingNotify(tracking));
     }
 
-
-    @PostMapping("/send-data")
+    @PostMapping("/send-rocket-data")
     public ResponseEntity<String> saveDataNewData(@RequestBody RocketDataDTO rocket) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
         LoggerHelper.logInfo("Saving data from rocket hardware");
         return this.dataSaver.saveData(new RocketData(rocket));

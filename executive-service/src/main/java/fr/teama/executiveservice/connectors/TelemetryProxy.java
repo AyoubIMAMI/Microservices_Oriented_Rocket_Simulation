@@ -1,9 +1,9 @@
-package fr.teama.payloadservice.connectors;
+package fr.teama.executiveservice.connectors;
 
-import fr.teama.payloadservice.connectors.externalDTO.*;
-import fr.teama.payloadservice.exceptions.TelemetryServiceUnavailableException;
-import fr.teama.payloadservice.helpers.LoggerHelper;
-import fr.teama.payloadservice.interfaces.proxy.ITelemetryProxy;
+import fr.teama.executiveservice.connectors.externalDTO.*;
+import fr.teama.executiveservice.interfaces.proxy.ITelemetryProxy;
+import fr.teama.executiveservice.exceptions.TelemetryServiceUnavailableException;
+import fr.teama.executiveservice.helpers.LoggerHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -23,12 +23,12 @@ public class TelemetryProxy implements ITelemetryProxy {
     @Override
     public ResponseEntity<String> missionStartNotify() throws TelemetryServiceUnavailableException {
         try {
-            TrackItemDTO trackItemDTO = new TrackItemDTO(TrackingFieldDTO.HEIGHT, 3600.0, OperationTypeDTO.GREATER_OR_EQUAL);
+            TrackItemDTO trackItemDTO = new TrackItemDTO(TrackingFieldDTO.HEIGHT, 0.0, OperationTypeDTO.LESS_OR_EQUAL);
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
 
-            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "payload", TrackingCategoryDTO.ROCKET);
-            LoggerHelper.logInfo("Ask telemetry to being notify when the rocket reach the height of " + trackItemDTO.getData());
+            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "executive", TrackingCategoryDTO.STAGE);
+            LoggerHelper.logInfo("Ask telemetry to being notify when the stage 1 reach the height of " + trackItemDTO.getData());
             return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/tracking", trackingDTO, String.class);
         } catch (Exception e) {
             LoggerHelper.logError(e.toString());
