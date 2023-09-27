@@ -50,12 +50,14 @@ public class RocketDepartmentController {
     @PostMapping("/enters-q")
     public ResponseEntity<String> slowDownRocket() {
         LoggerHelper.logInfo("Request received rocket enters Max Q => slow down");
+        rocketManager.slowDownRocket();
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/leaves-q")
     public ResponseEntity<String> speedUpRocket() {
         LoggerHelper.logInfo("Request received rocket leaves Max Q => speed up");
+        rocketManager.speedUpRocket();
         return ResponseEntity.ok().body("OK");
     }
 }
