@@ -34,6 +34,7 @@ public class RocketData {
         this.altitude=rocketDTO.getAltitude();
         this.speed=rocketDTO.getSpeed();
         this.stages=new ArrayList<>();
+        this.status = rocketDTO.getStatus();
         rocketDTO.getStages().forEach(stageDTO -> this.stages.add(new StageData(stageDTO)));
     }
 

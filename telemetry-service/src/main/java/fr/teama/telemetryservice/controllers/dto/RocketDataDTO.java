@@ -19,7 +19,7 @@ public class RocketDataDTO {
         this.altitude = 0.0;
         this.speed = 0.0;
         this.stages = stages;
-        this.status = 0.0;
+        this.status = 1.0;
     }
 
     public void setAltitude(Double altitude) {
