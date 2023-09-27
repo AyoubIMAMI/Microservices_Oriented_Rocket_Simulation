@@ -20,9 +20,9 @@ public class TelemetryProxy implements ITelemetryProxy {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public void askWhenEventHappens(String fieldToTrack, Double data, String service, String log) throws TelemetryServiceUnavailableException {
+    public void askWhenEventHappens(String fieldToTrack, Double data, String service, String routeToNotify, String log) throws TelemetryServiceUnavailableException {
         try {
-            TrackItemDTO trackItemDTO = new TrackItemDTO(fieldToTrack, data);
+            TrackItemDTO trackItemDTO = new TrackItemDTO(fieldToTrack, data, routeToNotify);
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
             TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, service);

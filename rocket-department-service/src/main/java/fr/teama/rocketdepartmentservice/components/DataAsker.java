@@ -15,20 +15,20 @@ public class DataAsker implements IDataAsker {
     /*
      * Log template:
      * "the <service/hardware> <verb> <data tracked> of"
-     * example: "the rocket reach the fuel of"
+     * example: "the rocket reaches the fuel of"
      */
     @Override
     public void getNotificationOnEvents() throws TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("The rocket department wants the telemetry service to notify it when the fuel is empty");
         telemetryProxy.askWhenEventHappens("fuel", 0.0, "rocket-department",
-                "the rocket reach the fuel of");
+                "/rocket/stage", "the rocket reaches the fuel of");
 
         LoggerHelper.logInfo("The rocket department wants the telemetry service to notify it when the rocket enters the Max Q");
         telemetryProxy.askWhenEventHappens("altitude", 1200.0, "rocket-department",
-                "the rocket reach the altitude of");
+                "/rocket/enters-q", "the rocket reaches the altitude of");
 
         LoggerHelper.logInfo("The rocket department wants the telemetry service to notify it when the rocket leaves the Max Q");
         telemetryProxy.askWhenEventHappens("altitude", 1500.0, "rocket-department",
-                "the rocket reach the altitude of");
+                "/rocket/leaves-q","the rocket reaches the altitude of");
     }
 }

@@ -46,4 +46,16 @@ public class RocketDepartmentController {
         rocketSplitter.stageRocket();
         return ResponseEntity.ok().body("OK");
     }
+
+    @PostMapping("/enters-q")
+    public ResponseEntity<String> slowDownRocket() {
+        LoggerHelper.logInfo("Request received rocket enters Max Q => slow down");
+        return ResponseEntity.ok().body("OK");
+    }
+
+    @PostMapping("/leaves-q")
+    public ResponseEntity<String> speedUpRocket() {
+        LoggerHelper.logInfo("Request received rocket leaves Max Q => speed up");
+        return ResponseEntity.ok().body("OK");
+    }
 }
