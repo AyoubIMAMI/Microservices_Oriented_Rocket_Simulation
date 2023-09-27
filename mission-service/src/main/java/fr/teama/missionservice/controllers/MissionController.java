@@ -28,14 +28,14 @@ public class MissionController {
     }
     @PostMapping("/success")
     public ResponseEntity<String> endMission() throws RocketHardwareServiceUnavailableException {
-        LoggerHelper.logInfo("The mission has succeed");
-        this.rocketHardwareProxy.stopLogging();
+        missionManager.missionSuccess();
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/rocket-hardware-destruction")
     public ResponseEntity<String> rocketHardwareDestructionOrder() throws RocketHardwareServiceUnavailableException {
         rocketHardwareProxy.rocketDestruction();
+        missionManager.missionFailed();
         return ResponseEntity.ok("Destruction order sent");
     }
 }

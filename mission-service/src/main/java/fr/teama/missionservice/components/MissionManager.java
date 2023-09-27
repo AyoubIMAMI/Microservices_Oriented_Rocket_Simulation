@@ -50,6 +50,18 @@ public class MissionManager implements IMissionManager {
         }
     }
 
+    @Override
+    public void missionSuccess() throws RocketHardwareServiceUnavailableException {
+        LoggerHelper.logWarn("The mission has succeed !!!");
+        rocketHardwareProxy.stopLogging();
+    }
+
+    @Override
+    public void missionFailed() throws RocketHardwareServiceUnavailableException {
+        LoggerHelper.logWarn("The mission has failed due to unexpected events");
+        rocketHardwareProxy.stopLogging();
+    }
+
     private void logServiceMessage(boolean serviceReady, String serviceName) {
         if (serviceReady)
             LoggerHelper.logInfo(serviceName + " is ready");
