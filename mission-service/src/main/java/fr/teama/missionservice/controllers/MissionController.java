@@ -1,9 +1,6 @@
 package fr.teama.missionservice.controllers;
 
-import fr.teama.missionservice.exceptions.PayloadServiceUnavailableException;
-import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableException;
-import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
-import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
+import fr.teama.missionservice.exceptions.*;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.IMissionManager;
 import fr.teama.missionservice.interfaces.proxy.IRocketHardwareProxy;
@@ -25,7 +22,7 @@ public class MissionController {
     IRocketHardwareProxy rocketHardwareProxy;
 
     @PostMapping("/start")
-    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException {
+    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("Request received to start the mission");
         return missionManager.startMission();
     }
@@ -34,5 +31,11 @@ public class MissionController {
         LoggerHelper.logInfo("The mission has succeed");
         this.rocketHardwareProxy.stopLogging();
         return ResponseEntity.ok().body("OK");
+    }
+
+    @PostMapping("/rocket-hardware-destruction")
+    public ResponseEntity<String> rocketHardwareDestructionOrder() throws RocketHardwareServiceUnavailableException {
+        rocketHardwareProxy.rocketDestruction();
+        return ResponseEntity.ok("Destruction order sent");
     }
 }

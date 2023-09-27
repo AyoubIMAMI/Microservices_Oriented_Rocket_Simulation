@@ -63,4 +63,10 @@ public class RocketHardwareController {
         return ResponseEntity.ok("Sabotaging successful");
     }
 
+    @PostMapping("/rocket-destruction")
+    public ResponseEntity<String> rocketDestruction() {
+        LoggerHelper.logInfo("Request received for destroy the rocket hardware");
+        hardware.destroyHardware();
+        return ResponseEntity.ok().body("OK");
+    }
 }

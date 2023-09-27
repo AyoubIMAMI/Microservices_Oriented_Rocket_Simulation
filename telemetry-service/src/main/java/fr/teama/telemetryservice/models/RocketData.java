@@ -21,13 +21,13 @@ public class RocketData {
     private Double speed;
     private LocalDateTime timestamp;
 
-    private boolean isInNormalState;
+    private int status;
 
     public RocketData(List<StageData> stages) {
         this.altitude = 0.0;
         this.speed = 0.0;
         this.stages = stages;
-        this.isInNormalState = true;
+        this.status = 0;
     }
 
     public RocketData(RocketDataDTO rocketDTO) {
@@ -80,7 +80,7 @@ public class RocketData {
                 ", speed=" + speed +
                 ", stages=" + stages +
                 ", timestamp=" + timestamp +
-                ", isInNormalState=" + isInNormalState +
+                ", status=" + status +
                 '}';
     }
 
@@ -92,11 +92,11 @@ public class RocketData {
         this.timestamp = timestamp;
     }
 
-    public boolean isInNormalState() {
-        return isInNormalState;
+    public int getStatus() {
+        return status;
     }
 
-    public void setInNormalState(boolean inNormalState) {
-        isInNormalState = inNormalState;
+    public void setStatus(boolean status) {
+        status = status;
     }
 }

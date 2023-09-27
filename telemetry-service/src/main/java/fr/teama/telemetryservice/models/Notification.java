@@ -16,8 +16,10 @@ public class Notification {
     @Column(nullable = true)
     private Double height;
     @Column(nullable = true)
-
     private Double fuel;
+
+    @Column(nullable = true)
+    private Double status;
 
     public Notification( String serviceToBeNotified, Optional<Double> height, Optional<Double> fuel) {
         this.serviceToBeNotified = serviceToBeNotified;
@@ -62,6 +64,15 @@ public class Notification {
                 "serviceToBeNotified='" + serviceToBeNotified + '\'' +
                 ", height=" + height +
                 ", fuel=" + fuel +
+                ", status=" + status +
                 '}';
+    }
+
+    public void setStatus(Double status) {
+        this.status = status;
+    }
+
+    public Double getStatus() {
+        return status;
     }
 }

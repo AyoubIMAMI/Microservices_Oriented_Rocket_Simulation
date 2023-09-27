@@ -41,6 +41,8 @@ public class TelemetryController {
                 notification.setHeight(data.getData());
             else if (data.getFieldToTrack().equals("fuel"))
                 notification.setFuel(data.getData());
+            else if (data.getFieldToTrack().equals("status"))
+                notification.setStatus(data.getData());
         });
         telemetryAnalyzer.trackingNotify(notification,trackingDTO.getServiceToBeNotified());
         return ResponseEntity.ok().body("Tracking condition saved");

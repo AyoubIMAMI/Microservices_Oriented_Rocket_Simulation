@@ -3,10 +3,7 @@ package fr.teama.missionservice.components;
 import fr.teama.missionservice.exceptions.*;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.IMissionManager;
-import fr.teama.missionservice.interfaces.proxy.IPayloadProxy;
-import fr.teama.missionservice.interfaces.proxy.IRocketHardwareProxy;
-import fr.teama.missionservice.interfaces.proxy.IRocketProxy;
-import fr.teama.missionservice.interfaces.proxy.IWeatherProxy;
+import fr.teama.missionservice.interfaces.proxy.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -26,8 +23,11 @@ public class MissionManager implements IMissionManager {
     @Autowired
     IRocketHardwareProxy rocketHardwareProxy;
 
+    @Autowired
+    ITelemetryProxy telemetryProxy;
+
     @Override
-    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException {
+    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("The mission is starting");
 
         rocketHardwareProxy.startLogging();
@@ -41,6 +41,7 @@ public class MissionManager implements IMissionManager {
         logServiceMessage(missionReady, "Mission service");
 
         if (missionReady) {
+            gettingNotifyInCaseOfRocketAnomaly();
             missionStartWarning();
             rocketProxy.launchRocket();
             return ResponseEntity.ok().body("GO");
@@ -49,7 +50,7 @@ public class MissionManager implements IMissionManager {
         }
     }
 
-    public void logServiceMessage(boolean serviceReady, String serviceName) {
+    private void logServiceMessage(boolean serviceReady, String serviceName) {
         if (serviceReady)
             LoggerHelper.logInfo(serviceName + " is ready");
         else
@@ -60,7 +61,7 @@ public class MissionManager implements IMissionManager {
         payloadProxy.missionStartNotify();
     }
 
-    private void rocketDestructionInCaseOfSevereAnomaly() throws TelemetryServiceUnavailableException {
-        LoggerHelper.logInfo("Ask telemetry to destroy the rocket in case of severe anomaly detection");
+    private void gettingNotifyInCaseOfRocketAnomaly() throws TelemetryServiceUnavailableException {
+        telemetryProxy.gettingNotifyInCaseOfRocketAnomaly();
     }
 }

@@ -8,4 +8,6 @@ public interface IHardware {
     void stopLogging();
 
     void sabotageTheRocket();
+
+    void destroyHardware();
 }
