@@ -58,7 +58,7 @@ public class RocketHardwareController {
 
     @PostMapping("/sabotaging")
     public ResponseEntity<String> sabotagingTheRocket() {
-        LoggerHelper.logWarn("Elune Mars from SpaceY comes to sabotage the rocket Ψ (‘益’# )↝");
+        LoggerHelper.logWarn("Elune Mars from SpaceY comes to sabotage the rocket :(");
         hardware.sabotageTheRocket();
         return ResponseEntity.ok("Sabotaging successful");
     }

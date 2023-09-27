@@ -1,5 +1,7 @@
 package fr.teama.telemetryservice.components;
 
+import fr.teama.telemetryservice.exceptions.MissionServiceUnavailableException;
+import fr.teama.telemetryservice.interfaces.proxy.IMissionProxy;
 import fr.teama.telemetryservice.models.Notification;
 import fr.teama.telemetryservice.models.RocketData;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
@@ -20,6 +22,8 @@ public class TrackingHandler implements ITelemetryNotifier {
     IPayloadProxy payloadProxy;
     @Autowired
     IRocketStageProxy rocketStageProxy;
+    @Autowired
+    IMissionProxy missionProxy;
 
     @Override
     public void trackingNotify(Notification notification, String serviceToBeNotified) {
@@ -28,7 +32,7 @@ public class TrackingHandler implements ITelemetryNotifier {
     }
 
     @Override
-    public void changeInData(RocketData rocketData) throws PayloadServiceUnavailableException, RocketStageServiceUnavailableException {
+    public void changeInData(RocketData rocketData) throws PayloadServiceUnavailableException, RocketStageServiceUnavailableException, MissionServiceUnavailableException {
         for (Notification notification:notificationRepository.findAll()){
             if (notification.getFuel()!=null&& rocketData.getStageByLevel(1).getFuel()<=notification.getFuel()){
                 LoggerHelper.logInfo("Fuel condition reached:" );
@@ -45,14 +49,20 @@ public class TrackingHandler implements ITelemetryNotifier {
                 notificationRepository.delete(notification);
                 notifyService(notification.getServiceToBeNotified());
             }
+            else if (notification.getStatus() != null && rocketData.getStatus() == notification.getStatus()){
+                LoggerHelper.logInfo("Altitude condition reached:");
+                LoggerHelper.logInfo("Rocket infos: " + rocketData);
+                LoggerHelper.logInfo("Condition to send notification: " + notification);
+                notificationRepository.delete(notification);
+                notifyService(notification.getServiceToBeNotified());
+            }
         }
     }
-    private void notifyService(String serviceName) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
-        if (serviceName.equals("rocket-department")){
-            rocketStageProxy.fuelLevelReached();
-        }
-        else if(serviceName.equals("payload")){
-            payloadProxy.heightReached();
+    private void notifyService(String serviceName) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException {
+        switch (serviceName) {
+            case "rocket-department" -> rocketStageProxy.fuelLevelReached();
+            case "payload" -> payloadProxy.heightReached();
+            case "mission" -> missionProxy.specificStatusDetected();
         }
     }
 }

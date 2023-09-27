@@ -21,10 +21,11 @@ public class Notification {
     @Column(nullable = true)
     private Double status;
 
-    public Notification( String serviceToBeNotified, Optional<Double> height, Optional<Double> fuel) {
+    public Notification( String serviceToBeNotified, Optional<Double> height, Optional<Double> fuel, Optional<Double> status) {
         this.serviceToBeNotified = serviceToBeNotified;
         height.ifPresent(aDouble -> this.height = aDouble);
         fuel.ifPresent(aDouble -> this.fuel = aDouble);
+        status.ifPresent(aDouble -> this.status = aDouble);
     }
     public Notification( String serviceToBeNotified) {
         this.serviceToBeNotified = serviceToBeNotified;

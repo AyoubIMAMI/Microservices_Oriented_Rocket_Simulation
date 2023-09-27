@@ -4,8 +4,10 @@ import fr.teama.telemetryservice.exceptions.MissionServiceUnavailableException;
 import fr.teama.telemetryservice.helpers.LoggerHelper;
 import fr.teama.telemetryservice.interfaces.proxy.IMissionProxy;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+@Component
 public class MissionProxy implements IMissionProxy {
     @Value("${mission.host.baseurl}")
     private String apiBaseUrlHostAndPort;
