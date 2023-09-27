@@ -1,9 +1,0 @@
-version: "3"
-
-services:
-  rocket-department-service:
-    container_name: rocket-department-service
-    image: "marsy/rocket-department-service"
-    restart: always
-    ports:
-      - 3002:8080
