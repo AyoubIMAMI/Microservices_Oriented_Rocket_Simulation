@@ -67,4 +67,10 @@ public class Hardware implements IHardware {
         LoggerHelper.logInfo("Stop logging");
         sendLog = false;
     }
+
+    @Override
+    public void sabotageTheRocket() {
+        LoggerHelper.logWarn("Rocket successfully sabotaged");
+        rocket.setInNormalState(false);
+    }
 }

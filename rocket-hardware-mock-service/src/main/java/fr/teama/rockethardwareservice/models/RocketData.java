@@ -13,10 +13,13 @@ public class RocketData {
 
     private LocalDateTime timestamp;
 
+    private boolean isInNormalState;
+
     public RocketData(List<StageData> stages) {
         this.altitude = 0.0;
         this.speed = 0.0;
         this.stages = stages;
+        isInNormalState = true;
     }
 
     public double getAltitude() {
@@ -44,6 +47,7 @@ public class RocketData {
         return "RocketData{" +
                 "altitude=" + altitude +
                 ", stages=" + stages +
+                ", isInNormalState=" + isInNormalState +
                 '}';
     }
 
@@ -53,5 +57,13 @@ public class RocketData {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public boolean isInNormalState() {
+        return isInNormalState;
+    }
+
+    public void setInNormalState(boolean inNormalState) {
+        isInNormalState = inNormalState;
     }
 }

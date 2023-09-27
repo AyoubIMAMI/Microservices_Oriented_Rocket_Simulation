@@ -1,9 +1,6 @@
 package fr.teama.missionservice.components;
 
-import fr.teama.missionservice.exceptions.PayloadServiceUnavailableException;
-import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableException;
-import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
-import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
+import fr.teama.missionservice.exceptions.*;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.IMissionManager;
 import fr.teama.missionservice.interfaces.proxy.IPayloadProxy;
@@ -61,5 +58,9 @@ public class MissionManager implements IMissionManager {
 
     private void missionStartWarning() throws PayloadServiceUnavailableException {
         payloadProxy.missionStartNotify();
+    }
+
+    private void rocketDestructionInCaseOfSevereAnomaly() throws TelemetryServiceUnavailableException {
+        LoggerHelper.logInfo("Ask telemetry to destroy the rocket in case of severe anomaly detection");
     }
 }

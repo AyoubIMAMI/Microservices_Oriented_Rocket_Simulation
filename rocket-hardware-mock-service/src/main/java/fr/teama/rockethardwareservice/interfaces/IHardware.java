@@ -6,4 +6,6 @@ public interface IHardware {
     void startLogging() throws TelemetryServiceUnavailableException;
 
     void stopLogging();
+
+    void sabotageTheRocket();
 }

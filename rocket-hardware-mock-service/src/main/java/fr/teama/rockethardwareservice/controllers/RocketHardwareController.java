@@ -55,4 +55,12 @@ public class RocketHardwareController {
         hardware.stopLogging();
         return ResponseEntity.status(HttpStatus.OK).body("Logging stopped successfully");
     }
+
+    @PostMapping("/sabotaging")
+    public ResponseEntity<String> sabotagingTheRocket() {
+        LoggerHelper.logWarn("Elune Mars from SpaceY comes to sabotage the rocket Ψ (‘益’# )↝");
+        hardware.sabotageTheRocket();
+        return ResponseEntity.ok("Sabotaging successful");
+    }
+
 }
