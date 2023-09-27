@@ -50,7 +50,7 @@ public class TrackingHandler implements ITelemetryNotifier {
                 notifyService(notification.getServiceToBeNotified());
             }
             else if (notification.getStatus() != null && rocketData.getStatus() == notification.getStatus()){
-                LoggerHelper.logInfo("Altitude condition reached:");
+                LoggerHelper.logInfo("Status condition reached:");
                 LoggerHelper.logInfo("Rocket infos: " + rocketData);
                 LoggerHelper.logInfo("Condition to send notification: " + notification);
                 notificationRepository.delete(notification);

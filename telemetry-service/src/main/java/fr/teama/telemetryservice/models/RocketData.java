@@ -21,13 +21,13 @@ public class RocketData {
     private Double speed;
     private LocalDateTime timestamp;
 
-    private int status;
+    private double status;
 
     public RocketData(List<StageData> stages) {
         this.altitude = 0.0;
         this.speed = 0.0;
         this.stages = stages;
-        this.status = 0;
+        this.status = 0.0;
     }
 
     public RocketData(RocketDataDTO rocketDTO) {
@@ -92,11 +92,11 @@ public class RocketData {
         this.timestamp = timestamp;
     }
 
-    public int getStatus() {
+    public double getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
-        status = status;
+    public void setStatus(double status) {
+        this.status = status;
     }
 }
