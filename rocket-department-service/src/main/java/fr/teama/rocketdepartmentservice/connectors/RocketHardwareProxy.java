@@ -14,11 +14,11 @@ public class RocketHardwareProxy implements IRocketHardwareProxy {
 
     @Override
     public void slowDown() {
-        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/slow-down", null, String.class);
+        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket-hardware/slow-down", null, String.class);
     }
 
     @Override
     public void speedUp() {
-        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/speed-up", null, String.class);
+        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket-hardware/speed-up", null, String.class);
     }
 }
