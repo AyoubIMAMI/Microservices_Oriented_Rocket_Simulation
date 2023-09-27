@@ -8,9 +8,12 @@ public class TrackingDTO {
     private final List<TrackItemDTO> data;
     private final String serviceToBeNotified;
 
-    public TrackingDTO(List<TrackItemDTO> data, String requestService) {
+    private final String routeToNotify;
+
+    public TrackingDTO(List<TrackItemDTO> data, String requestService, String routeToNotify) {
         this.data = data;
         this.serviceToBeNotified = requestService;
+        this.routeToNotify = routeToNotify;
     }
 
     public List<TrackItemDTO> getData() {
@@ -19,5 +22,9 @@ public class TrackingDTO {
 
     public String getServiceToBeNotified() {
         return serviceToBeNotified;
+    }
+
+    public String getRouteToNotify() {
+        return routeToNotify;
     }
 }

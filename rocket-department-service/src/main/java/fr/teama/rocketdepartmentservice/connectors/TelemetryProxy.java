@@ -22,10 +22,10 @@ public class TelemetryProxy implements ITelemetryProxy {
     @Override
     public void askWhenEventHappens(String fieldToTrack, Double data, String service, String routeToNotify, String log) throws TelemetryServiceUnavailableException {
         try {
-            TrackItemDTO trackItemDTO = new TrackItemDTO(fieldToTrack, data, routeToNotify);
+            TrackItemDTO trackItemDTO = new TrackItemDTO(fieldToTrack, data);
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
-            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, service);
+            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, service, routeToNotify);
             LoggerHelper.logInfo("Ask telemetry to being notify when " + log + trackItemDTO.getData());
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/tracking", trackingDTO, String.class);
         } catch (Exception e) {
