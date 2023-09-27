@@ -77,6 +77,5 @@ public class Hardware implements IHardware {
     @Override
     public void destroyHardware() {
         LoggerHelper.logWarn("Rocket destroyed to prevent potential damage");
-        stopLogging();
     }
 }
