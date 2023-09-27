@@ -4,7 +4,7 @@ import fr.teama.rocketdepartmentservice.exceptions.TelemetryServiceUnavailableEx
 import fr.teama.rocketdepartmentservice.helpers.LoggerHelper;
 import fr.teama.rocketdepartmentservice.interfaces.IDataAsker;
 import fr.teama.rocketdepartmentservice.interfaces.IRocketAnalyzer;
-import fr.teama.rocketdepartmentservice.interfaces.RocketSplitter;
+import fr.teama.rocketdepartmentservice.interfaces.RocketManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class RocketDepartmentController {
     private IRocketAnalyzer rocketAnalyzer;
 
     @Autowired
-    private RocketSplitter rocketSplitter;
+    private RocketManager rocketManager;
 
     @Autowired
     private IDataAsker dataAsker;
@@ -43,7 +43,7 @@ public class RocketDepartmentController {
     @PostMapping("/stage")
     public ResponseEntity<String> stageRocket() {
         LoggerHelper.logInfo("Request received rocket staging");
-        rocketSplitter.stageRocket();
+        rocketManager.stageRocket();
         return ResponseEntity.ok().body("OK");
     }
 

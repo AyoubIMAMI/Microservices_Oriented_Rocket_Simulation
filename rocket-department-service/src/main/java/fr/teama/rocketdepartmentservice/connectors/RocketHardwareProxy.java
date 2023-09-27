@@ -7,8 +7,18 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class RocketHardwareProxy implements IRocketHardwareProxy {
-    @Value("${rocket-stage.host.baseurl}")
+    @Value("${rocket-hardware.host.baseurl}")
     private String apiBaseUrlHostAndPort;
 
     private final RestTemplate restTemplate = new RestTemplate();
+
+    @Override
+    public void slowDown() {
+        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/slow-down", null, String.class);
+    }
+
+    @Override
+    public void speedUp() {
+        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/speed-up", null, String.class);
+    }
 }
