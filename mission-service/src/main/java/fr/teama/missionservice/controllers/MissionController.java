@@ -9,10 +9,7 @@ import fr.teama.missionservice.interfaces.IMissionManager;
 import fr.teama.missionservice.interfaces.proxy.IRocketHardwareProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -26,6 +23,11 @@ public class MissionController {
     private IMissionManager missionManager;
     @Autowired
     IRocketHardwareProxy rocketHardwareProxy;
+
+    @GetMapping("/status")
+    public ResponseEntity<String> missionStatus() {
+        return ResponseEntity.ok().body("Mission controller started");
+    }
 
     @PostMapping("/start")
     public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException {

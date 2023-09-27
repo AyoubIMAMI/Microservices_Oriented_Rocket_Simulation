@@ -22,4 +22,4 @@ function run_test() {
 run_test
 
 
-read -p "** Press any key to continue... "
+#read -p "** Press any key to continue... "
