@@ -24,11 +24,6 @@ public class MissionController {
     @Autowired
     IRocketHardwareProxy rocketHardwareProxy;
 
-    @GetMapping("/status")
-    public ResponseEntity<String> missionStatus() {
-        return ResponseEntity.ok().body("Mission controller started");
-    }
-
     @PostMapping("/start")
     public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException {
         LoggerHelper.logInfo("Request received to start the mission");

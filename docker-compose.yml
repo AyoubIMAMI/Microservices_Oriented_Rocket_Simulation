@@ -9,7 +9,7 @@ services:
       - 3001:8080
     depends_on:
       - weather-service
-      - rocket-department-service
+      - rocket-service
       - telemetry-service
       - payload-service
       - rocket-hardware-mock-service
@@ -22,7 +22,7 @@ services:
     ports:
       - 3000:8080
 
-  rocket-department-service:
+  rocket-service:
     container_name: rocket-department-service
     image: "marsy/rocket-department-service"
     restart: always

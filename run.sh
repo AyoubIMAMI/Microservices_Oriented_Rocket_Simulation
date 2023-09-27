@@ -1,21 +1,22 @@
 #!/bin/bash
 
 function wait_mission_service() {
-    printf "## Waiting for mission service to be ready \n"
+    printf "## Waiting all services to be ready \n"
 
-    ret_code=0
-    while [ $ret_code -ne 200 ]; do
-        response=$(curl --write-out '%{http_code}' --silent --show-error --output /dev/null --location --request POST http://localhost:3001/api/mission/status)
+    ret_code=1
+    while [ $ret_code -ne 0 ]; do
+        response=$(curl --write-out '%{http_code}' --silent --show-error --output /dev/null --location --request POST http://localhost:3003/api/telemetry/service-status)
         ret_code=$?
 
         # Check the return code
-        if [ $ret_code -eq 200 ]; then
+        if [ $ret_code -eq 0 ]; then
           # Print the response body
           echo "$response"
         else
           # Handle the error here
-          echo "Error: Mission service not ready yet (HTTP status code: $ret_code)"
+          echo "Error: All services not ready yet (HTTP status code: $ret_code)"
         fi
+        sleep 1
     done
 }
 
