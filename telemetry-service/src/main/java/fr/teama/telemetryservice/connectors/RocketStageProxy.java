@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class RocketStageProxy implements IRocketStageProxy {
-    @Value("${rocket-stage.host.baseurl}")
+    @Value("${rocket-department.host.baseurl}")
     private String apiBaseUrlHostAndPort;
 
     private final RestTemplate restTemplate = new RestTemplate();
