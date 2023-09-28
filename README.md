@@ -2,22 +2,81 @@
 
 ## Team A
 
-### Authors - soa-marsy-marsy-23-24-team-a
+---
+### Authors
 - [Antoine Buquet](https://github.com/antoinebqt)
 - [Benoit Gaudet](https://github.com/BenoitGAUDET38)
 - [Ayoub IMAMI](https://github.com/AyoubIMAMI)
 - [Mourad Karrakchou](https://github.com/MouradKarrakchou)
-
-summarizing what we need to expect when running your project.
-o This README should also contain a distribution of points (100 points per
-member for a well-balanced team, 400 points total for a party of 4) in between
-the members of the group that describes the effort/implication of the members
-of the team. 
-
+---
 ## Requirements
-- Maven 
+- Maven 4.0.0
+- Spring 3.1.3
+- Java 17
+- JDK 19
+---
+## Demonstration
 
-## Services
+#### Commands to execute the project
+```
+$ git clone git@github.com:pns-si5-soa/marsy-23-24-team-a.git
+$ cd marsy-23-24-team-a
+$ git checkout tags/delivery-final
+$ ./prepare.sh
+$ ./run.sh
+```
+
+#### Scenarios
+- Mission successful
+- Mission could not start
+- Mission failed: rocket destroyed
+---
+## Services descriptions
+
+#### Departments
+- *weather-service*: check the weather status
+  - send a GO or NO GO answer to the *mission-service*
+
+  <br>
+- *mission-service*: overlook the whole mission
+  - perform a poll to *weather-service* and *rocket-service*
+  - send a GO or NO GO answer, after the poll, to the *rocket-department-service*
+  - destroy the flight hardware in case of a severe anomaly
+
+  <br>
+- *rocket-department-service*: overlooking the rocket and its
+  systems
+  - send a GO NO GO answer to the *mission-service*
+  - launch the rocket after receiving the GO answer from the *mission-service*
+  - ask the *telemetry-service* for warnings
+  - stage the rocket mid-flight
+  - slow down the rocket to go through Max Q
+
+  <br>
+- *telemetry-service*: handling the data
+  - receive, store and monitor data
+  - warn the *rocket-department-service* and the *payload-service*
+
+  <br>
+- *payload-service*: responsible for the payload orbit insertion
+  - ask the *telemetry-service* for warnings
+  - ask the *telemetry-service* for payload data
+  - deliver the payload on the right orbit or trajectory
+  
+  <br>
+- *executive-service*: strategically directing and driving the
+  company’s business and objectives
+  - ask the telemetry for warnings
+
+#### Hardware
+- *rocket-hardware-mock-service*: representation of the rocket
+- *payload-hardware-mock-service*: representation of the payload
+
+#### Database
+- *database-telemetry*: rocket database
+- *database-payload*: payload database
+
+#### Used ports
 |           Services            | Port |
 |:-----------------------------:|:----:|
 |        weather-service        | 3000 |
