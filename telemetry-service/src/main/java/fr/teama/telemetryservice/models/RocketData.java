@@ -21,16 +21,20 @@ public class RocketData {
     private Double speed;
     private LocalDateTime timestamp;
 
+    private double status;
+
     public RocketData(List<StageData> stages) {
         this.altitude = 0.0;
         this.speed = 0.0;
         this.stages = stages;
+        this.status = 0.0;
     }
 
     public RocketData(RocketDataDTO rocketDTO) {
         this.altitude=rocketDTO.getAltitude();
         this.speed=rocketDTO.getSpeed();
         this.stages=new ArrayList<>();
+        this.status = rocketDTO.getStatus();
         rocketDTO.getStages().forEach(stageDTO -> this.stages.add(new StageData(stageDTO)));
     }
 
@@ -77,6 +81,7 @@ public class RocketData {
                 ", speed=" + speed +
                 ", stages=" + stages +
                 ", timestamp=" + timestamp +
+                ", status=" + status +
                 '}';
     }
 
@@ -86,5 +91,13 @@ public class RocketData {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public double getStatus() {
+        return status;
+    }
+
+    public void setStatus(double status) {
+        this.status = status;
     }
 }

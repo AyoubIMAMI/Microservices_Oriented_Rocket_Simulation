@@ -1,5 +1,6 @@
 package fr.teama.telemetryservice.components;
 
+import fr.teama.telemetryservice.exceptions.MissionServiceUnavailableException;
 import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
 import fr.teama.telemetryservice.models.RocketData;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
@@ -20,7 +21,7 @@ public class DataManager implements DataSaver {
     RocketDataRepository rocketDataRepository;
 
     @Override
-    public ResponseEntity<String> saveData(RocketData rocketData) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
+    public ResponseEntity<String> saveData(RocketData rocketData) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException {
         trackingHandler.verifyRocketData(rocketData);
         rocketDataRepository.save(rocketData);
         return ResponseEntity.ok().body("Rocket data saved");

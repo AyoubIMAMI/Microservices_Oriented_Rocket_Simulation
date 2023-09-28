@@ -3,6 +3,7 @@ package fr.teama.telemetryservice.controllers;
 import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
 import fr.teama.telemetryservice.controllers.dto.TrackingDTO;
 import fr.teama.telemetryservice.models.Tracking;
+import fr.teama.telemetryservice.exceptions.MissionServiceUnavailableException;
 import fr.teama.telemetryservice.models.RocketData;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
@@ -27,6 +28,11 @@ public class TelemetryController {
     @Autowired
     private DataSaver dataSaver;
 
+    @GetMapping("/service-status")
+    public ResponseEntity<String> telemetryStatus() {
+        return ResponseEntity.ok().body("Service controller started");
+    }
+
     @PostMapping("/tracking")
     public ResponseEntity<String> createTrackingNotification(@RequestBody TrackingDTO trackingDTO) {
         LoggerHelper.logInfo("New tracking request received from " + trackingDTO.getServiceToBeNotified() + " service");
@@ -35,7 +41,7 @@ public class TelemetryController {
     }
 
     @PostMapping("/send-rocket-data")
-    public ResponseEntity<String> saveDataNewData(@RequestBody RocketDataDTO rocket) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
+    public ResponseEntity<String> saveDataNewData(@RequestBody RocketDataDTO rocket) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException {
         LoggerHelper.logInfo("Saving data from rocket hardware");
         return this.dataSaver.saveData(new RocketData(rocket));
     }

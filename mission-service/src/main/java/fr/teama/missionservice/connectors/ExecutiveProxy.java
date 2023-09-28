@@ -18,7 +18,7 @@ public class ExecutiveProxy implements IExecutiveProxy {
     @Override
     public void missionStartNotification() throws ExecutiveServiceUnavailableException {
         try {
-            LoggerHelper.logInfo("Inform payload service that the mission has started");
+            LoggerHelper.logInfo("Inform executive service that the mission has started");
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/executive", null, String.class);
         } catch (Exception e) {
             throw new ExecutiveServiceUnavailableException();

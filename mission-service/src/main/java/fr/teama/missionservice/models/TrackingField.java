@@ -1,4 +1,4 @@
-package fr.teama.telemetryservice.models;
+package fr.teama.missionservice.models;
 
 public enum TrackingField {
     HEIGHT,

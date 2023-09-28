@@ -6,10 +6,7 @@ import fr.teama.missionservice.interfaces.IMissionManager;
 import fr.teama.missionservice.interfaces.proxy.IRocketHardwareProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -25,14 +22,20 @@ public class MissionController {
     IRocketHardwareProxy rocketHardwareProxy;
 
     @PostMapping("/start")
-    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
+    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("Request received to start the mission");
         return missionManager.startMission();
     }
     @PostMapping("/success")
     public ResponseEntity<String> endMission() throws RocketHardwareServiceUnavailableException {
-        LoggerHelper.logInfo("The mission has succeed");
-        this.rocketHardwareProxy.stopLogging();
+        missionManager.missionSuccess();
         return ResponseEntity.ok().body("OK");
+    }
+
+    @PostMapping("/rocket-hardware-destruction")
+    public ResponseEntity<String> rocketHardwareDestructionOrder() throws RocketHardwareServiceUnavailableException {
+        rocketHardwareProxy.rocketDestruction();
+        missionManager.missionFailed();
+        return ResponseEntity.ok("Destruction order sent");
     }
 }
