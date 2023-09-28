@@ -54,6 +54,13 @@ services:
     ports:
       - 3005:8080
 
+  stage-hardware-mock-service:
+    container_name: stage-hardware-mock-service
+    image: "marsy/stage-hardware-mock-service"
+    restart: always
+    ports:
+      - 3010:8080
+
   executive-service:
     container_name: executive-service
     image: "marsy/executive-service"

@@ -2,7 +2,7 @@ package fr.teama.rockethardwareservice.components;
 
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.helpers.LoggerHelper;
-import fr.teama.rockethardwareservice.interfaces.IHardware;
+import fr.teama.rockethardwareservice.interfaces.IRocketHardware;
 import fr.teama.rockethardwareservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.rockethardwareservice.models.RocketData;
 import fr.teama.rockethardwareservice.models.StageData;
@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 import static java.lang.Math.max;
 
 @Component
-public class Hardware implements IHardware {
+public class RocketHardware implements IRocketHardware {
 
     @Autowired
     ITelemetryProxy telemetryProxy;

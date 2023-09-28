@@ -2,7 +2,7 @@ package fr.teama.rockethardwareservice.controllers;
 
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.helpers.LoggerHelper;
-import fr.teama.rockethardwareservice.interfaces.IHardware;
+import fr.teama.rockethardwareservice.interfaces.IRocketHardware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class RocketHardwareController {
     public static final String BASE_URI = "/api/rocket-hardware";
 
     @Autowired
-    private IHardware hardware;
+    private IRocketHardware hardware;
 
     @PostMapping("/start-logging")
     public ResponseEntity<String> startLogging() {
