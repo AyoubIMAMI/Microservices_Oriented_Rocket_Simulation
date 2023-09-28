@@ -13,10 +13,13 @@ public class RocketData {
 
     private LocalDateTime timestamp;
 
+    private double status;
+
     public RocketData(List<StageData> stages) {
         this.altitude = 0.0;
         this.speed = 0.0;
         this.stages = stages;
+        this.status = 1.0;
     }
 
     public double getAltitude() {
@@ -44,6 +47,7 @@ public class RocketData {
         return "RocketData{" +
                 "altitude=" + altitude +
                 ", stages=" + stages +
+                ", status=" + status +
                 '}';
     }
 
@@ -53,5 +57,13 @@ public class RocketData {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public double getStatus() {
+        return status;
+    }
+
+    public void setStatus(double status) {
+        this.status = status;
     }
 }

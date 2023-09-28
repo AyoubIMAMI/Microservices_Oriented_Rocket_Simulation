@@ -1,15 +1,9 @@
 package fr.teama.missionservice.components;
 
-import fr.teama.missionservice.exceptions.PayloadServiceUnavailableException;
-import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableException;
-import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
-import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
+import fr.teama.missionservice.exceptions.*;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.IMissionManager;
-import fr.teama.missionservice.interfaces.proxy.IPayloadProxy;
-import fr.teama.missionservice.interfaces.proxy.IRocketHardwareProxy;
-import fr.teama.missionservice.interfaces.proxy.IRocketProxy;
-import fr.teama.missionservice.interfaces.proxy.IWeatherProxy;
+import fr.teama.missionservice.interfaces.proxy.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -27,10 +21,16 @@ public class MissionManager implements IMissionManager {
     IPayloadProxy payloadProxy;
 
     @Autowired
+    IExecutiveProxy executiveProxy;
+
+    @Autowired
     IRocketHardwareProxy rocketHardwareProxy;
 
+    @Autowired
+    ITelemetryProxy telemetryProxy;
+
     @Override
-    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException {
+    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("The mission is starting");
 
         rocketHardwareProxy.startLogging();
@@ -44,7 +44,8 @@ public class MissionManager implements IMissionManager {
         logServiceMessage(missionReady, "Mission service");
 
         if (missionReady) {
-            missionStartWarning();
+            gettingNotifyInCaseOfRocketAnomaly();
+            NotifyMissionStart();
             rocketProxy.launchRocket();
             return ResponseEntity.ok().body("GO");
         } else {
@@ -52,14 +53,31 @@ public class MissionManager implements IMissionManager {
         }
     }
 
-    public void logServiceMessage(boolean serviceReady, String serviceName) {
+    @Override
+    public void missionSuccess() throws RocketHardwareServiceUnavailableException {
+        LoggerHelper.logWarn("The mission has succeed !!!");
+        rocketHardwareProxy.stopLogging();
+    }
+
+    @Override
+    public void missionFailed() throws RocketHardwareServiceUnavailableException {
+        LoggerHelper.logWarn("The mission has failed due to unexpected events");
+        rocketHardwareProxy.stopLogging();
+    }
+
+    private void logServiceMessage(boolean serviceReady, String serviceName) {
         if (serviceReady)
             LoggerHelper.logInfo(serviceName + " is ready");
         else
             LoggerHelper.logWarn(serviceName + " is not ready");
     }
 
-    private void missionStartWarning() throws PayloadServiceUnavailableException {
-        payloadProxy.missionStartNotify();
+    private void NotifyMissionStart() throws PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
+        payloadProxy.missionStartNotification();
+        executiveProxy.missionStartNotification();
+    }
+
+    private void gettingNotifyInCaseOfRocketAnomaly() throws TelemetryServiceUnavailableException {
+        telemetryProxy.gettingNotifyInCaseOfRocketAnomaly();
     }
 }

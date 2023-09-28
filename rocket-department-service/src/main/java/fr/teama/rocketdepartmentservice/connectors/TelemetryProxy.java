@@ -1,7 +1,6 @@
 package fr.teama.rocketdepartmentservice.connectors;
 
-import fr.teama.rocketdepartmentservice.connectors.externalDTO.TrackItemDTO;
-import fr.teama.rocketdepartmentservice.connectors.externalDTO.TrackingDTO;
+import fr.teama.rocketdepartmentservice.connectors.externalDTO.*;
 import fr.teama.rocketdepartmentservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.helpers.LoggerHelper;
 import fr.teama.rocketdepartmentservice.interfaces.proxy.ITelemetryProxy;
@@ -22,10 +21,10 @@ public class TelemetryProxy implements ITelemetryProxy {
     @Override
     public void gettingNotifyWhenFuelIsEmpty() throws TelemetryServiceUnavailableException {
         try {
-            TrackItemDTO trackItemDTO = new TrackItemDTO("fuel", 0.0);
+            TrackItemDTO trackItemDTO = new TrackItemDTO(TrackingFieldDTO.FUEL, 0.0, OperationTypeDTO.LESS_OR_EQUAL);
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
-            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "rocket-department");
+            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "rocket-department", TrackingCategoryDTO.ROCKET);
             LoggerHelper.logInfo("Ask telemetry to being notify when the rocket reach the fuel of " + trackItemDTO.getData());
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/tracking", trackingDTO, String.class);
         } catch (Exception e) {

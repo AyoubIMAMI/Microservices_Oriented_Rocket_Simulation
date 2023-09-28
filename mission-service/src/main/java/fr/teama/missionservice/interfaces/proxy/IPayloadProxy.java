@@ -4,5 +4,5 @@ import fr.teama.missionservice.exceptions.PayloadServiceUnavailableException;
 
 public interface IPayloadProxy {
 
-    void missionStartNotify() throws PayloadServiceUnavailableException;
+    void missionStartNotification() throws PayloadServiceUnavailableException;
 }

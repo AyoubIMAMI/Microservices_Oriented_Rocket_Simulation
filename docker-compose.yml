@@ -9,7 +9,7 @@ services:
       - 3001:8080
     depends_on:
       - weather-service
-      - rocket-service
+      - rocket-department-service
       - telemetry-service
       - payload-service
       - rocket-hardware-mock-service
@@ -53,6 +53,13 @@ services:
     restart: always
     ports:
       - 3005:8080
+
+  executive-service:
+    container_name: executive-service
+    image: "marsy/executive-service"
+    restart: always
+    ports:
+      - 3008:8080
 
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
   postgres:

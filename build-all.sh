@@ -21,6 +21,8 @@ compile_dir "rocket-hardware-mock-service"
 
 compile_dir "payload-service"
 
+compile_dir "executive-service"
+
 # remove # to add pause in script execution
 #read -p "** Press any key to continue... "
 
