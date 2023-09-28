@@ -1,11 +1,11 @@
-package fr.teama.payloadservice.controllers.dto;
+package fr.teama.payloadhardwaremockservice.models;
 
-public class PositionDTO {
+public class Position {
     Double x;
     Double y;
     Double altitude;
 
-    public PositionDTO() {
+    public Position() {
         this.x = 0.0;
         this.y = 0.0;
         this.altitude = 3600.0;

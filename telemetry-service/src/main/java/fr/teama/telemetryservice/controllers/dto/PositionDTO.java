@@ -34,4 +34,11 @@ public class PositionDTO {
     public void setAltitude(Double altitude) {
         this.altitude = altitude;
     }
+
+    @Override
+    public String toString() {
+        return "x=" + x +
+                ", y=" + y +
+                ", altitude=" + altitude ;
+    }
 }

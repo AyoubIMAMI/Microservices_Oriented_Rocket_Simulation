@@ -4,6 +4,7 @@ import fr.teama.telemetryservice.connectors.PayloadProxy;
 import fr.teama.telemetryservice.controllers.dto.PayloadDataDTO;
 import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
 import fr.teama.telemetryservice.controllers.dto.TrackingDTO;
+import fr.teama.telemetryservice.interfaces.proxy.IPayloadProxy;
 import fr.teama.telemetryservice.models.Tracking;
 import fr.teama.telemetryservice.exceptions.MissionServiceUnavailableException;
 import fr.teama.telemetryservice.models.RocketData;
@@ -28,7 +29,7 @@ public class TelemetryController {
     private ITelemetryNotifier telemetryNotifier;
 
     @Autowired
-    private PayloadProxy payloadProxy;
+    private IPayloadProxy payloadProxy;
 
     @Autowired
     private DataSaver dataSaver;
@@ -52,8 +53,7 @@ public class TelemetryController {
     }
 
     @PostMapping("/send-payload-data")
-    public ResponseEntity<PayloadDataDTO> transferPayloadData(@RequestBody PayloadDataDTO payloadDataDTO) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
-        LoggerHelper.logInfo("Transfering Data from Payload");
+    public ResponseEntity<String> transferPayloadData(@RequestBody PayloadDataDTO payloadDataDTO) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
         return this.payloadProxy.sendData(payloadDataDTO);
     }
 }

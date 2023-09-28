@@ -8,7 +8,6 @@ public class PayloadDataDTO {
     private LocalDateTime timestamp;
 
     public PayloadDataDTO() {
-        this.position=new PositionDTO();
     }
 
     public PositionDTO getPosition() {
@@ -25,5 +24,11 @@ public class PayloadDataDTO {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "PayloadData: " +
+                "position=" + position ;
     }
 }

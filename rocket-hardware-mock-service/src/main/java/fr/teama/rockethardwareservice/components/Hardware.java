@@ -19,7 +19,7 @@ public class Hardware implements IHardware {
     @Autowired
     ITelemetryProxy telemetryProxy;
 
-    private final long updateDelay = 1;
+    private final long updateDelay = 200;
     RocketData rocket = new RocketData(List.of(new StageData(1, 200), new StageData(2, 100)));
 
 
@@ -55,7 +55,7 @@ public class Hardware implements IHardware {
             try {
                 rocket.setTimestamp(java.time.LocalDateTime.now());
                 telemetryProxy.sendRocketData(rocket);
-                TimeUnit.SECONDS.sleep(updateDelay);
+                TimeUnit.MILLISECONDS.sleep(updateDelay);
             } catch (InterruptedException e) {
                 LoggerHelper.logError(e.toString());
             }

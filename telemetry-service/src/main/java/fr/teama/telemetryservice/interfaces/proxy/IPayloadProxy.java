@@ -10,5 +10,5 @@ public interface IPayloadProxy {
     void heightReached() throws PayloadServiceUnavailableException;
 
 
-    ResponseEntity<PayloadDataDTO> sendData(PayloadDataDTO payloadDataDTO) throws PayloadServiceUnavailableException;
+    ResponseEntity<String> sendData(PayloadDataDTO payloadDataDTO) throws PayloadServiceUnavailableException;
 }

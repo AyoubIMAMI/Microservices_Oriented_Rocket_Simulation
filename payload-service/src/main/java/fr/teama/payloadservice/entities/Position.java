@@ -1,5 +1,8 @@
 package fr.teama.payloadservice.entities;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class Position {
     Double x;
     Double y;
@@ -12,9 +15,6 @@ public class Position {
     }
 
     public Position() {
-        this.x = 0.0;
-        this.y = 0.0;
-        this.altitude = 3600.0;
     }
 
     public Double getX() {
@@ -39,5 +39,12 @@ public class Position {
 
     public void setAltitude(Double altitude) {
         this.altitude = altitude;
+    }
+
+    @Override
+    public String toString() {
+        return "x=" + x +
+                ", y=" + y +
+                ", altitude=" + altitude ;
     }
 }
