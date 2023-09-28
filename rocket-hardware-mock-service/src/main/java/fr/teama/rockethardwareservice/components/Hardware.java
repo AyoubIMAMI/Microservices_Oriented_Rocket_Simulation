@@ -20,15 +20,14 @@ public class Hardware implements IHardware {
     ITelemetryProxy telemetryProxy;
 
     private final long updateDelay = 1;
-    RocketData rocket = new RocketData(List.of(new StageData(1, 200), new StageData(2, 100)));
+    RocketData rocket;
 
-
-    boolean sendLog = false;
-
+    boolean sendLog;
 
     @Override
     public void startLogging() throws TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("Start logging");
+        rocket = new RocketData(List.of(new StageData(1, 200), new StageData(2, 100)));
 
         final int[] stageLevel = {1};
 
@@ -77,5 +76,6 @@ public class Hardware implements IHardware {
     @Override
     public void destroyHardware() {
         LoggerHelper.logWarn("Rocket destroyed to prevent potential damage");
+        sendLog = false;
     }
 }

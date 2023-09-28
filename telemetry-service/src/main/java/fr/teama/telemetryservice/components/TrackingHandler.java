@@ -29,7 +29,7 @@ public class TrackingHandler implements ITelemetryNotifier {
 
     @Override
     public Tracking trackingNotify(Tracking tracking) {
-        LoggerHelper.logInfo("Tracking conditions save for " + tracking.getServiceToBeNotified() + " as " + tracking.toString());
+        LoggerHelper.logInfo("Tracking conditions save for " + tracking.getServiceToBeNotified() + " service as " + tracking);
         return trackingRepository.save(tracking);
     }
 
@@ -46,7 +46,7 @@ public class TrackingHandler implements ITelemetryNotifier {
             }
 
             if (allConditionsReached) {
-                LoggerHelper.logInfo("All conditions reached for tracking:" + tracking.toString());
+                LoggerHelper.logInfo("All conditions reached for tracking:" + tracking);
                 notifyService(tracking);
                 trackingRepository.delete(tracking);
             }
@@ -59,7 +59,6 @@ public class TrackingHandler implements ITelemetryNotifier {
             case FUEL -> rocketData.getStageByLevel(1).getFuel();
             case SPEED -> rocketData.getSpeed();
             case STATUS -> rocketData.getStatus();
-            default -> null;
         };
     }
 
@@ -70,7 +69,6 @@ public class TrackingHandler implements ITelemetryNotifier {
                 rocketStageProxy.fuelLevelReached();
                 break;
             case "payload":
-                // TODO: Add inner switch to manage multiple route and make the call with the right proxy function
                 payloadProxy.heightReached();
                 break;
             case "mission":
