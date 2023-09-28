@@ -23,10 +23,8 @@ public class Hardware implements IHardware {
     boolean sendLog = false;
 
     @Override
-    public void startPosDispatch() throws TelemetryServiceUnavailableException {
-        LoggerHelper.logInfo("Start logging");
-
-        final int[] stageLevel = {1};
+    public void startOrbitalPosDispatch() throws TelemetryServiceUnavailableException {
+        LoggerHelper.logInfo("Start orbital position dispatch");
 
         sendLog = true;
 
@@ -48,8 +46,8 @@ public class Hardware implements IHardware {
     }
 
     @Override
-    public void stopPosDispatch() {
-        LoggerHelper.logInfo("Stop logging");
+    public void stopOrbitalPosDispatch() {
+        LoggerHelper.logInfo("Stop orbital position dispatch");
         sendLog = false;
     }
 }

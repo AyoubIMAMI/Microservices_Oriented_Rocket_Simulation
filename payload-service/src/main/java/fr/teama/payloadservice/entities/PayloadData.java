@@ -1,36 +1,37 @@
 package fr.teama.payloadservice.entities;
 
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
 
 @Entity
 public class PayloadData {
-    @GeneratedValue
+    private Position position;
+
+    private LocalDateTime timestamp;
     @Id
     private Long id;
-    private Double height;
-    private Double angle;
 
-    public PayloadData(String serviceToBeNotified, Double height, Double angle) {
-        this.height = height;
-        this.angle=angle;
+    public PayloadData(Position position, LocalDateTime timestamp) {
+        this.position=position;
+        this.timestamp=timestamp;
     }
 
-    public PayloadData() {
-
+    public Position getPosition() {
+        return position;
     }
 
-
-    public void setHeight(Double height) {
-        this.height = height;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
-    public Double getHeight() {
-        return height;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 
     public void setId(Long id) {

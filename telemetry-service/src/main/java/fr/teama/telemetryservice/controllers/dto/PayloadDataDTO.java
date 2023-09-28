@@ -1,4 +1,4 @@
-package fr.teama.payloadservice.controllers.dto;
+package fr.teama.telemetryservice.controllers.dto;
 
 import java.time.LocalDateTime;
 

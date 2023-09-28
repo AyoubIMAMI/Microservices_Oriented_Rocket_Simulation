@@ -27,16 +27,16 @@ public class PayloadHardwareController {
     @Autowired
     private IHardware hardware;
 
-    @PostMapping("/start-logging")
-    public ResponseEntity<String> startLogging() {
-        LoggerHelper.logInfo("Request received to start logging");
+    @PostMapping("/start-pos-dispatch")
+    public ResponseEntity<String> startOrbitalPosDispatch() {
+        LoggerHelper.logInfo("Start orbital position dispatch");
         // Create an ExecutorService with a fixed thread pool size
         ExecutorService executorService = Executors.newFixedThreadPool(1); // You can adjust the pool size as needed
 
         // Submit the hardware.startLogging() task to the executor
         executorService.submit(() -> {
             try {
-                hardware.startPosDispatch();
+                hardware.startOrbitalPosDispatch();
             } catch (TelemetryServiceUnavailableException e) {
                 // Handle the exception as needed
                 LoggerHelper.logError(e.toString());
@@ -46,13 +46,13 @@ public class PayloadHardwareController {
         // Shutdown the executor when it's no longer needed
         executorService.shutdown();
 
-        return ResponseEntity.status(HttpStatus.OK).body("Logging started successfully");
+        return ResponseEntity.status(HttpStatus.OK).body("Start orbital position dispatch");
     }
 
-    @PostMapping("/stop-logging")
-    public ResponseEntity<String> stopLogging() {
-        LoggerHelper.logInfo("Request received to stop logging");
-        hardware.stopPosDispatch();
-        return ResponseEntity.status(HttpStatus.OK).body("Logging stopped successfully");
+    @PostMapping("/stop-pos-dispatch")
+    public ResponseEntity<String> stopOrbitalPosDispatch() {
+        LoggerHelper.logInfo("Stop orbital position dispatch");
+        hardware.stopOrbitalPosDispatch();
+        return ResponseEntity.status(HttpStatus.OK).body("Stop orbital position dispatch");
     }
 }
