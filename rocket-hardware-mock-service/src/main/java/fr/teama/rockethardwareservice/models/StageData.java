@@ -41,6 +41,10 @@ public class StageData {
         isDetached = detached;
     }
 
+    public boolean isDetached() {
+        return isDetached;
+    }
+
     @Override
     public String toString() {
         return "StageData{" +

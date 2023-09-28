@@ -10,4 +10,10 @@ public interface IHardware {
     void sabotageTheRocket();
 
     void destroyHardware();
+
+    void stageRocket();
+
+    void activateStageRocket();
+
+    void deactivateStageRocket();
 }

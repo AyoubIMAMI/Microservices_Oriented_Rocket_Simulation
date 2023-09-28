@@ -65,8 +65,29 @@ public class RocketHardwareController {
 
     @PostMapping("/destroy")
     public ResponseEntity<String> rocketDestruction() {
-        LoggerHelper.logInfo("Request received for destroy the rocket hardware");
+        LoggerHelper.logInfo("Request received for destroy the rocket");
         hardware.destroyHardware();
+        return ResponseEntity.ok().body("OK");
+    }
+
+    @PostMapping("/stage")
+    public ResponseEntity<String> stageRocket() {
+        LoggerHelper.logInfo("Request received for stage the rocket");
+        hardware.stageRocket();
+        return ResponseEntity.ok().body("OK");
+    }
+
+    @PostMapping("/activate-stage")
+    public ResponseEntity<String> activeStageRocket() {
+        LoggerHelper.logInfo("Request received for activate lowest stage of the rocket");
+        hardware.activateStageRocket();
+        return ResponseEntity.ok().body("OK");
+    }
+
+    @PostMapping("/deactivate-stage")
+    public ResponseEntity<String> deactiveStageRocket() {
+        LoggerHelper.logInfo("Request received for deactivate lowest stage of the rocket");
+        hardware.deactivateStageRocket();
         return ResponseEntity.ok().body("OK");
     }
 }

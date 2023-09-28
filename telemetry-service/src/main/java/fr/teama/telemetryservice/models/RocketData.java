@@ -19,15 +19,18 @@ public class RocketData {
 
     private Double altitude;
     private Double speed;
+
+    private Double acceleration;
     private LocalDateTime timestamp;
 
-    private double status;
+    private Double status;
 
     public RocketData(List<StageData> stages) {
         this.altitude = 0.0;
         this.speed = 0.0;
         this.stages = stages;
-        this.status = 0.0;
+        this.status = 1.0;
+        this.acceleration = 0.0;
     }
 
     public RocketData(RocketDataDTO rocketDTO) {
@@ -74,11 +77,20 @@ public class RocketData {
         this.stages = stages;
     }
 
+    public Double getAcceleration() {
+        return acceleration;
+    }
+
+    public void setAcceleration(Double acceleration) {
+        this.acceleration = acceleration;
+    }
+
     @Override
     public String toString() {
         return "RocketData{" +
                 "altitude=" + altitude +
                 ", speed=" + speed +
+                ", acceleration=" + acceleration +
                 ", stages=" + stages +
                 ", timestamp=" + timestamp +
                 ", status=" + status +
@@ -97,7 +109,7 @@ public class RocketData {
         return status;
     }
 
-    public void setStatus(double status) {
+    public void setStatus(Double status) {
         this.status = status;
     }
 }
