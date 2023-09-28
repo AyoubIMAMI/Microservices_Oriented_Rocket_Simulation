@@ -2,9 +2,9 @@ package fr.teama.rocketdepartmentservice.connectors.externalDTO;
 
 public class TrackItemDTO {
 
-    private final Double data;
+    private Double data;
 
-    private final TrackingFieldDTO fieldToTrack;
+    private TrackingFieldDTO fieldToTrack;
 
     private OperationTypeDTO operationType;
 
