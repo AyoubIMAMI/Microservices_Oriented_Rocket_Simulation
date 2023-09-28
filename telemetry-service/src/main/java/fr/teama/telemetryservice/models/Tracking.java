@@ -18,12 +18,15 @@ public class Tracking {
 
     private String serviceToBeNotified;
 
+    private String routeToNotify;
+
     @Enumerated
     private TrackingCategory category;
 
-    public Tracking(List<TrackItem> data, String requestService, TrackingCategory category) {
+    public Tracking(List<TrackItem> data, String requestService, String routeToNotify, TrackingCategory category) {
         this.data = data;
-        this.serviceToBeNotified = serviceToBeNotified;
+        this.serviceToBeNotified = requestService;
+        this.routeToNotify = routeToNotify;
         this.category = category;
     }
 
@@ -60,6 +63,14 @@ public class Tracking {
 
     public void setCategory(TrackingCategory category) {
         this.category = category;
+    }
+
+    public String getRouteToNotify() {
+        return routeToNotify;
+    }
+
+    public void setRouteToNotify(String routeToNotify) {
+        this.routeToNotify = routeToNotify;
     }
 
     @Override

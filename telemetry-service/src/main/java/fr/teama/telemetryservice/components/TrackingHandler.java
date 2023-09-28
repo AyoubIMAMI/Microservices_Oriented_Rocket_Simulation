@@ -66,11 +66,16 @@ public class TrackingHandler implements ITelemetryNotifier {
     private void notifyService(Tracking tracking) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException {
         switch (tracking.getServiceToBeNotified()) {
             case "rocket-department":
-                // TODO: Add inner switch to manage multiple route and make the call with the right proxy function
-                rocketStageProxy.fuelLevelReached();
+                switch (tracking.getRouteToNotify()) {
+                    case "/rocket/stage":
+                        rocketStageProxy.fuelLevelReached();;
+                    case "/rocket/enters-q":
+                        rocketStageProxy.heightReached(tracking);
+                    case "/rocket/leaves-q":
+                        rocketStageProxy.heightReached(tracking);
+                }
                 break;
             case "payload":
-                // TODO: Add inner switch to manage multiple route and make the call with the right proxy function
                 payloadProxy.heightReached();
                 break;
             case "mission":
