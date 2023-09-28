@@ -16,9 +16,9 @@ public class PayloadProxy implements IPayloadProxy {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public void missionStartNotify() throws PayloadServiceUnavailableException {
+    public void missionStartNotification() throws PayloadServiceUnavailableException {
         try {
-            LoggerHelper.logInfo("Warn payload service that the mission has started");
+            LoggerHelper.logInfo("Inform payload service that the mission has started");
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/payload", null, String.class);
         } catch (Exception e) {
             throw new PayloadServiceUnavailableException();

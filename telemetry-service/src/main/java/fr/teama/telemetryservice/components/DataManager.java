@@ -1,5 +1,7 @@
 package fr.teama.telemetryservice.components;
 
+import fr.teama.telemetryservice.exceptions.MissionServiceUnavailableException;
+import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
 import fr.teama.telemetryservice.models.RocketData;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
@@ -13,15 +15,15 @@ import org.springframework.stereotype.Component;
 public class DataManager implements DataSaver {
 
     @Autowired
-    TrackingHandler trackingHandler;
+    ITelemetryNotifier trackingHandler;
 
     @Autowired
     RocketDataRepository rocketDataRepository;
 
     @Override
-    public ResponseEntity<String> saveData(RocketData rocketData) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
-        trackingHandler.changeInData(rocketData);
+    public ResponseEntity<String> saveData(RocketData rocketData) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException {
+        trackingHandler.verifyRocketData(rocketData);
         rocketDataRepository.save(rocketData);
-        return ResponseEntity.ok().body("saved");
+        return ResponseEntity.ok().body("Rocket data saved");
     }
 }

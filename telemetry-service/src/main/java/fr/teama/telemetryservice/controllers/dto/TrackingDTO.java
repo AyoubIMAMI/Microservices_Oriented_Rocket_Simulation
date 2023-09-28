@@ -1,16 +1,22 @@
 package fr.teama.telemetryservice.controllers.dto;
 
 
+import fr.teama.telemetryservice.models.TrackingCategory;
+
 import java.util.List;
 
 public class TrackingDTO {
 
     private List<TrackItemDTO> data;
+
     private String serviceToBeNotified;
 
-    public TrackingDTO(List<TrackItemDTO> data, String requestService) {
+    private TrackingCategory category;
+
+    public TrackingDTO(List<TrackItemDTO> data, String requestService, TrackingCategory category) {
         this.data = data;
         this.serviceToBeNotified = requestService;
+        this.category = category;
     }
 
     public TrackingDTO() {
@@ -30,6 +36,14 @@ public class TrackingDTO {
 
     public void setServiceToBeNotified(String serviceToBeNotified) {
         this.serviceToBeNotified = serviceToBeNotified;
+    }
+
+    public TrackingCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(TrackingCategory category) {
+        this.category = category;
     }
 }
 
