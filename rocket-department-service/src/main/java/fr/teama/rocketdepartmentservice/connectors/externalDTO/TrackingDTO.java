@@ -5,15 +5,23 @@ import java.util.List;
 
 public class TrackingDTO {
 
-    private final List<TrackItemDTO> data;
-    private final String serviceToBeNotified;
+    private List<TrackItemDTO> data;
+
+    private String serviceToBeNotified;
 
     private final String routeToNotify;
 
     public TrackingDTO(List<TrackItemDTO> data, String requestService, String routeToNotify) {
+    private TrackingCategoryDTO category;
+
+    public TrackingDTO(List<TrackItemDTO> data, String requestService, TrackingCategoryDTO category) {
         this.data = data;
         this.serviceToBeNotified = requestService;
         this.routeToNotify = routeToNotify;
+        this.category = category;
+    }
+
+    public TrackingDTO() {
     }
 
     public List<TrackItemDTO> getData() {
@@ -26,5 +34,21 @@ public class TrackingDTO {
 
     public String getRouteToNotify() {
         return routeToNotify;
+    }
+
+    public void setData(List<TrackItemDTO> data) {
+        this.data = data;
+    }
+
+    public void setServiceToBeNotified(String serviceToBeNotified) {
+        this.serviceToBeNotified = serviceToBeNotified;
+    }
+
+    public TrackingCategoryDTO getCategory() {
+        return category;
+    }
+
+    public void setCategory(TrackingCategoryDTO category) {
+        this.category = category;
     }
 }

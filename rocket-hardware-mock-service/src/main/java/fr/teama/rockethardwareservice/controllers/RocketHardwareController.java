@@ -69,4 +69,18 @@ public class RocketHardwareController {
         hardware.speedUp();
         return ResponseEntity.status(HttpStatus.OK).body("Speeding up");
     }
+
+    @PostMapping("/sabotaging")
+    public ResponseEntity<String> sabotagingTheRocket() {
+        LoggerHelper.logWarn("Elune Mars from SpaceY comes to sabotage the rocket :(");
+        hardware.sabotageTheRocket();
+        return ResponseEntity.ok("Sabotaging successful");
+    }
+
+    @PostMapping("/destroy")
+    public ResponseEntity<String> rocketDestruction() {
+        LoggerHelper.logInfo("Request received for destroy the rocket hardware");
+        hardware.destroyHardware();
+        return ResponseEntity.ok().body("OK");
+    }
 }

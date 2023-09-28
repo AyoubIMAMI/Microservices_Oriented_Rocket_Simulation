@@ -10,4 +10,8 @@ public interface IHardware {
     void slowDown();
 
     void speedUp();
+
+    void sabotageTheRocket();
+
+    void destroyHardware();
 }

@@ -1,7 +1,6 @@
 package fr.teama.rocketdepartmentservice.connectors;
 
-import fr.teama.rocketdepartmentservice.connectors.externalDTO.TrackItemDTO;
-import fr.teama.rocketdepartmentservice.connectors.externalDTO.TrackingDTO;
+import fr.teama.rocketdepartmentservice.connectors.externalDTO.*;
 import fr.teama.rocketdepartmentservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.helpers.LoggerHelper;
 import fr.teama.rocketdepartmentservice.interfaces.proxy.ITelemetryProxy;
@@ -22,10 +21,10 @@ public class TelemetryProxy implements ITelemetryProxy {
     @Override
     public void askWhenEventHappens(String fieldToTrack, Double data, String service, String routeToNotify, String log) throws TelemetryServiceUnavailableException {
         try {
-            TrackItemDTO trackItemDTO = new TrackItemDTO(fieldToTrack, data);
+            TrackItemDTO trackItemDTO = new TrackItemDTO(fieldToTrack, data, OperationTypeDTO.LESS_OR_EQUAL);
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
-            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, service, routeToNotify);
+            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, service, routeToNotify, TrackingCategoryDTO.ROCKET);
             LoggerHelper.logInfo("Ask telemetry to being notify when " + log + trackItemDTO.getData());
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/tracking", trackingDTO, String.class);
         } catch (Exception e) {
