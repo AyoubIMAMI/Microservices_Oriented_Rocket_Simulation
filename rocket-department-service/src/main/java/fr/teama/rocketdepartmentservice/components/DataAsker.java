@@ -1,5 +1,6 @@
 package fr.teama.rocketdepartmentservice.components;
 
+import fr.teama.rocketdepartmentservice.connectors.externalDTO.TrackingFieldDTO;
 import fr.teama.rocketdepartmentservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.helpers.LoggerHelper;
 import fr.teama.rocketdepartmentservice.interfaces.IDataAsker;
@@ -20,15 +21,15 @@ public class DataAsker implements IDataAsker {
     @Override
     public void getNotificationOnEvents() throws TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("The rocket department wants the telemetry service to notify it when the fuel is empty");
-        telemetryProxy.askWhenEventHappens("fuel", 0.0, "rocket-department",
+        telemetryProxy.askWhenEventHappens(TrackingFieldDTO.FUEL, 0.0, "rocket-department",
                 "/rocket/stage", "the rocket reaches the fuel of");
 
         LoggerHelper.logInfo("The rocket department wants the telemetry service to notify it when the rocket enters the Max Q");
-        telemetryProxy.askWhenEventHappens("altitude", 1200.0, "rocket-department",
+        telemetryProxy.askWhenEventHappens(TrackingFieldDTO.HEIGHT, 1200.0, "rocket-department",
                 "/rocket/enters-q", "the rocket reaches the altitude of");
 
         LoggerHelper.logInfo("The rocket department wants the telemetry service to notify it when the rocket leaves the Max Q");
-        telemetryProxy.askWhenEventHappens("altitude", 1500.0, "rocket-department",
+        telemetryProxy.askWhenEventHappens(TrackingFieldDTO.HEIGHT, 1500.0, "rocket-department",
                 "/rocket/leaves-q","the rocket reaches the altitude of");
     }
 }

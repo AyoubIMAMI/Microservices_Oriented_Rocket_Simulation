@@ -25,7 +25,7 @@ public class TelemetryProxy implements ITelemetryProxy {
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
             TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, service, routeToNotify, TrackingCategoryDTO.ROCKET);
-            LoggerHelper.logInfo("Ask telemetry to being notify when " + log + trackItemDTO.getData());
+            LoggerHelper.logInfo("Ask to the telemetry service to be notified when " + log + trackItemDTO.getData());
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/tracking", trackingDTO, String.class);
         } catch (Exception e) {
             LoggerHelper.logError(e.toString());
