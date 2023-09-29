@@ -45,6 +45,6 @@ public class Position {
     public String toString() {
         return "x=" + x +
                 ", y=" + y +
-                ", altitude=" + altitude ;
+                ", altitude=" + altitude;
     }
 }
