@@ -25,7 +25,7 @@ public class RocketHardware implements IRocketHardware {
     @Autowired
     IStageHardwareProxy stageHardwareProxy;
 
-    private final long updateDelay = 1;
+    private final long updateDelay = 500;
 
     RocketData rocket;
 
@@ -66,7 +66,7 @@ public class RocketHardware implements IRocketHardware {
             try {
                 rocket.setTimestamp(java.time.LocalDateTime.now());
                 telemetryProxy.sendRocketData(rocket);
-                TimeUnit.SECONDS.sleep(updateDelay);
+                TimeUnit.MILLISECONDS.sleep(updateDelay);
             } catch (InterruptedException e) {
                 LoggerHelper.logError(e.toString());
             }

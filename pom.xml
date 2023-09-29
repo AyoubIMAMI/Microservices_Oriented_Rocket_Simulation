@@ -33,6 +33,7 @@
         <module>rocket-department-service</module>
         <module>executive-service</module>
         <module>stage-hardware-mock-service</module>
+        <module>payload-hardware-mock-service</module>
     </modules>
 
     <dependencyManagement>
