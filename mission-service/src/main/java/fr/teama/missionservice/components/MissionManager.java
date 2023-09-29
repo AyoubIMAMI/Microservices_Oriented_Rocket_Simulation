@@ -67,9 +67,9 @@ public class MissionManager implements IMissionManager {
 
     private void logServiceMessage(boolean serviceReady, String serviceName) {
         if (serviceReady)
-            LoggerHelper.logInfo(serviceName + " is ready");
+            LoggerHelper.logInfo(serviceName + " is OK to launch rocket");
         else
-            LoggerHelper.logWarn(serviceName + " is not ready");
+            LoggerHelper.logWarn(serviceName + " is not OK to launch rocket");
     }
 
     private void NotifyMissionStart() throws PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
