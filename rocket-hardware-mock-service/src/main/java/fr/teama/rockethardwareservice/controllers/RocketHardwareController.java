@@ -56,20 +56,6 @@ public class RocketHardwareController {
         return ResponseEntity.status(HttpStatus.OK).body("Logging stopped successfully");
     }
 
-    @PostMapping("/slow-down")
-    public ResponseEntity<String> rocketSlowDown() {
-        LoggerHelper.logInfo("Request received to slow down");
-        hardware.slowDown();
-        return ResponseEntity.status(HttpStatus.OK).body("Slowing down");
-    }
-
-    @PostMapping("/speed-up")
-    public ResponseEntity<String> rocketSpeedUp() {
-        LoggerHelper.logInfo("Request received to speed Up");
-        hardware.speedUp();
-        return ResponseEntity.status(HttpStatus.OK).body("Speeding up");
-    }
-
     @PostMapping("/sabotaging")
     public ResponseEntity<String> sabotagingTheRocket() {
         LoggerHelper.logWarn("Elune Mars from SpaceY comes to sabotage the rocket :(");
@@ -92,14 +78,14 @@ public class RocketHardwareController {
     }
 
     @PostMapping("/activate-stage")
-    public ResponseEntity<String> activeStageRocket() {
+    public ResponseEntity<String> activateStageRocket() {
         LoggerHelper.logInfo("Request received for activate lowest stage of the rocket");
         rocketHardware.activateStageRocket();
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/deactivate-stage")
-    public ResponseEntity<String> deactiveStageRocket() {
+    public ResponseEntity<String> deactivateStageRocket() {
         LoggerHelper.logInfo("Request received for deactivate lowest stage of the rocket");
         rocketHardware.deactivateStageRocket();
         return ResponseEntity.ok().body("OK");

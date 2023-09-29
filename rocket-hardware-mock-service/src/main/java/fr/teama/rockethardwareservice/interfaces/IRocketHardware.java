@@ -8,10 +8,6 @@ public interface IRocketHardware {
 
     void stopLogging();
 
-    void slowDown();
-
-    void speedUp();
-
     void sabotageTheRocket();
 
     void destroyHardware();

@@ -28,6 +28,18 @@ public class RocketAction implements IRocketAction {
     public void launchRocket() throws TelemetryServiceUnavailableException, RocketHardwareServiceUnavailableException {
         rocketHardwareProxy.activateCurrentStage();
         LoggerHelper.logInfo("The rocket is launching");
-        dataAsker.waitEmptyFuelForStageTheRocket();
+        dataAsker.getNotificationOnEvents();
+    }
+
+    @Override
+    public void slowDownRocket() throws RocketHardwareServiceUnavailableException {
+        rocketHardwareProxy.slowDown();
+        LoggerHelper.logInfo("Ask rocket-hardware to slow down");
+    }
+
+    @Override
+    public void activeStage() throws RocketHardwareServiceUnavailableException {
+        rocketHardwareProxy.activateCurrentStage();
+        LoggerHelper.logInfo("Ask rocket-hardware to speed up");
     }
 }

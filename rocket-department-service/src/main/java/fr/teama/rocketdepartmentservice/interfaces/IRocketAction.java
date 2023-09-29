@@ -7,4 +7,8 @@ public interface IRocketAction {
     void stageRocket() throws RocketHardwareServiceUnavailableException;
 
     void launchRocket() throws TelemetryServiceUnavailableException, RocketHardwareServiceUnavailableException;
+
+    void slowDownRocket() throws RocketHardwareServiceUnavailableException;
+
+    void activeStage() throws RocketHardwareServiceUnavailableException;
 }

@@ -37,7 +37,6 @@ public class RocketDepartmentController {
     public ResponseEntity<String> startRocket() throws TelemetryServiceUnavailableException, RocketHardwareServiceUnavailableException {
         LoggerHelper.logInfo("Request received for start of mission");
         rocketAction.launchRocket();
-        dataAsker.getNotificationOnEvents();
         return ResponseEntity.ok().body("OK");
     }
 
@@ -49,16 +48,16 @@ public class RocketDepartmentController {
     }
 
     @PostMapping("/enters-q")
-    public ResponseEntity<String> slowDownRocket() {
+    public ResponseEntity<String> slowDownRocket() throws RocketHardwareServiceUnavailableException {
         LoggerHelper.logInfo("Request received rocket enters Max Q => slow down");
-        rocketManager.slowDownRocket();
+        rocketAction.slowDownRocket();
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/leaves-q")
-    public ResponseEntity<String> speedUpRocket() {
+    public ResponseEntity<String> speedUpRocket() throws RocketHardwareServiceUnavailableException {
         LoggerHelper.logInfo("Request received rocket leaves Max Q => speed up");
-        rocketManager.speedUpRocket();
+        rocketAction.activeStage();
         return ResponseEntity.ok().body("OK");
     }
 }

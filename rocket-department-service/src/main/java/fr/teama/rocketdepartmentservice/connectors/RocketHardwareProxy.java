@@ -36,13 +36,16 @@ public class RocketHardwareProxy implements IRocketHardwareProxy {
             LoggerHelper.logError("Hardware service unavailable");
             throw new RocketHardwareServiceUnavailableException();
         }
-    @Override
-    public void slowDown() {
-        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket-hardware/slow-down", null, String.class);
     }
 
     @Override
-    public void speedUp() {
-        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket-hardware/speed-up", null, String.class);
+    public void slowDown() throws RocketHardwareServiceUnavailableException {
+        try {
+            LoggerHelper.logInfo("Inform the rocket hardware service to activate the slow down");
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket-hardware/deactivate-stage", null, String.class);
+        } catch (Exception e) {
+            LoggerHelper.logError("Hardware service unavailable");
+            throw new RocketHardwareServiceUnavailableException();
+        }
     }
 }
