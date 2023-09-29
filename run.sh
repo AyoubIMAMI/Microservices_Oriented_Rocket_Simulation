@@ -21,8 +21,7 @@ function wait_mission_service() {
 }
 
 function run_test() {
-
-  echo "                                                                                                                                                                                                
+  text="                                                                                                                                                                                                
                                                      ****************** ++++                                                                                                                            
                                                 **********************++++++++++++                                                                                                                      
                                             +************************++++++++++++++++                                                                                                                   
@@ -71,15 +70,28 @@ function run_test() {
                                                       **+ ++++++++++++++++++
   "
 
+  IFS=$'\n' read -r -d '' -a lines <<< "$text"
+  for line in "${lines[@]}"; do
+      echo "$line"
+      sleep 0.01
+  done
+
+
   printf "\n\n\n"
 
-  echo "                                                                                                                                                                                                                       
+  text="                                                                                                                                                                                                                       
       __  ___              __  __
      /  |/  /___ __________\ \/ /
     / /|_/ / __ \`/ ___/ ___/\  / 
    / /  / / /_/ / /  (__  ) / /  
   /_/  /_/\__,_/_/  /____/ /_/
   "
+
+  IFS=$'\n' read -r -d '' -a lines <<< "$text"
+  for line in "${lines[@]}"; do
+      echo "$line"
+      sleep 0.01
+  done
 
   printf "\n\n\n"
 
