@@ -18,17 +18,14 @@ public class RocketData {
     private List<StageData> stages;
 
     private Double altitude;
+
     private Double speed;
+
+    private Double acceleration;
+
     private LocalDateTime timestamp;
 
-    private double status;
-
-    public RocketData(List<StageData> stages) {
-        this.altitude = 0.0;
-        this.speed = 0.0;
-        this.stages = stages;
-        this.status = 0.0;
-    }
+    private Double status;
 
     public RocketData(RocketDataDTO rocketDTO) {
         this.altitude=rocketDTO.getAltitude();
@@ -50,20 +47,16 @@ public class RocketData {
         return null;
     }
 
-    public double getAltitude() {
-        return altitude;
-    }
-
-    public void setAltitude(double altitude) {
-        this.altitude = altitude;
-    }
-
-    public double getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    @Override
+    public String toString() {
+        return "RocketData{" +
+                "stages=" + stages +
+                ", altitude=" + altitude +
+                ", speed=" + speed +
+                ", acceleration=" + acceleration +
+                ", timestamp=" + timestamp +
+                ", status=" + status +
+                '}';
     }
 
     public List<StageData> getStages() {
@@ -74,15 +67,28 @@ public class RocketData {
         this.stages = stages;
     }
 
-    @Override
-    public String toString() {
-        return "RocketData{" +
-                "altitude=" + altitude +
-                ", speed=" + speed +
-                ", stages=" + stages +
-                ", timestamp=" + timestamp +
-                ", status=" + status +
-                '}';
+    public Double getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(Double altitude) {
+        this.altitude = altitude;
+    }
+
+    public Double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(Double speed) {
+        this.speed = speed;
+    }
+
+    public Double getAcceleration() {
+        return acceleration;
+    }
+
+    public void setAcceleration(Double acceleration) {
+        this.acceleration = acceleration;
     }
 
     public LocalDateTime getTimestamp() {
@@ -93,11 +99,11 @@ public class RocketData {
         this.timestamp = timestamp;
     }
 
-    public double getStatus() {
+    public Double getStatus() {
         return status;
     }
 
-    public void setStatus(double status) {
+    public void setStatus(Double status) {
         this.status = status;
     }
 }

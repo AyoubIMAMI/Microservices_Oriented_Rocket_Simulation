@@ -3,8 +3,11 @@ package fr.teama.telemetryservice.controllers;
 import fr.teama.telemetryservice.connectors.PayloadProxy;
 import fr.teama.telemetryservice.controllers.dto.PayloadDataDTO;
 import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
+import fr.teama.telemetryservice.controllers.dto.StageDataDTO;
 import fr.teama.telemetryservice.controllers.dto.TrackingDTO;
 import fr.teama.telemetryservice.interfaces.proxy.IPayloadProxy;
+import fr.teama.telemetryservice.exceptions.ExecutiveServiceUnavailableException;
+import fr.teama.telemetryservice.models.StageData;
 import fr.teama.telemetryservice.models.Tracking;
 import fr.teama.telemetryservice.exceptions.MissionServiceUnavailableException;
 import fr.teama.telemetryservice.models.RocketData;
@@ -47,9 +50,15 @@ public class TelemetryController {
     }
 
     @PostMapping("/send-rocket-data")
-    public ResponseEntity<String> saveDataNewData(@RequestBody RocketDataDTO rocket) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException {
+    public ResponseEntity<String> saveNewRocketData(@RequestBody RocketDataDTO rocket) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException {
         LoggerHelper.logInfo("Saving data from rocket hardware");
-        return this.dataSaver.saveData(new RocketData(rocket));
+        return this.dataSaver.saveRocketData(new RocketData(rocket));
+    }
+
+    @PostMapping("/send-stage-data")
+    public ResponseEntity<String> saveNewStageData(@RequestBody StageDataDTO stage) throws RocketStageServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
+        LoggerHelper.logInfo("Saving data from stage hardware");
+        return this.dataSaver.saveStageData(new StageData(stage));
     }
 
     @PostMapping("/send-payload-data")

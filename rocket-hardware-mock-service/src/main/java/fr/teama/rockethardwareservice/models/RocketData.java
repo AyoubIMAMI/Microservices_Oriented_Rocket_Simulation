@@ -9,37 +9,20 @@ public class RocketData {
 
     private Double speed;
 
+    private Double acceleration;
+
     private List<StageData> stages;
 
     private LocalDateTime timestamp;
 
-    private double status;
+    private Double status;
 
     public RocketData(List<StageData> stages) {
         this.altitude = 0.0;
         this.speed = 0.0;
         this.stages = stages;
         this.status = 1.0;
-    }
-
-    public double getAltitude() {
-        return altitude;
-    }
-
-    public void setAltitude(double altitude) {
-        this.altitude = altitude;
-    }
-
-    public double getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
-
-    public List<StageData> getStages() {
-        return stages;
+        this.acceleration = 0.0;
     }
 
     @Override
@@ -51,6 +34,38 @@ public class RocketData {
                 '}';
     }
 
+    public Double getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(Double altitude) {
+        this.altitude = altitude;
+    }
+
+    public Double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(Double speed) {
+        this.speed = speed;
+    }
+
+    public Double getAcceleration() {
+        return acceleration;
+    }
+
+    public void setAcceleration(Double acceleration) {
+        this.acceleration = acceleration;
+    }
+
+    public List<StageData> getStages() {
+        return stages;
+    }
+
+    public void setStages(List<StageData> stages) {
+        this.stages = stages;
+    }
+
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
@@ -59,11 +74,11 @@ public class RocketData {
         this.timestamp = timestamp;
     }
 
-    public double getStatus() {
+    public Double getStatus() {
         return status;
     }
 
-    public void setStatus(double status) {
+    public void setStatus(Double status) {
         this.status = status;
     }
 }

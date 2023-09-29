@@ -28,4 +28,10 @@ public class ExecutiveController {
         return dataAsker.askStageHeightToTelemetry();
     }
 
+    @PostMapping("/stage-landed")
+    public ResponseEntity<String> stageLanded() {
+        LoggerHelper.logInfo("The stage has successfully landed");
+        return ResponseEntity.ok("The stage has successfully landed");
+    }
+
 }

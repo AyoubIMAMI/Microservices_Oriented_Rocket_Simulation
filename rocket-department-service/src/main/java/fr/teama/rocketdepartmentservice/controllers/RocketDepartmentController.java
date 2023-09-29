@@ -1,10 +1,11 @@
 package fr.teama.rocketdepartmentservice.controllers;
 
+import fr.teama.rocketdepartmentservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.helpers.LoggerHelper;
 import fr.teama.rocketdepartmentservice.interfaces.IDataAsker;
 import fr.teama.rocketdepartmentservice.interfaces.IRocketAnalyzer;
-import fr.teama.rocketdepartmentservice.interfaces.RocketSplitter;
+import fr.teama.rocketdepartmentservice.interfaces.IRocketAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class RocketDepartmentController {
     private IRocketAnalyzer rocketAnalyzer;
 
     @Autowired
-    private RocketSplitter rocketSplitter;
+    private IRocketAction rocketAction;
 
     @Autowired
     private IDataAsker dataAsker;
@@ -33,17 +34,16 @@ public class RocketDepartmentController {
     }
 
     @PostMapping("/launch")
-    public ResponseEntity<String> startRocket() throws TelemetryServiceUnavailableException {
+    public ResponseEntity<String> startRocket() throws TelemetryServiceUnavailableException, RocketHardwareServiceUnavailableException {
         LoggerHelper.logInfo("Request received for start of mission");
-        LoggerHelper.logInfo("Rocket launched");
-        dataAsker.waitEmptyFuelForStageTheRocket();
+        rocketAction.launchRocket();
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/stage")
-    public ResponseEntity<String> stageRocket() {
+    public ResponseEntity<String> stageRocket() throws RocketHardwareServiceUnavailableException {
         LoggerHelper.logInfo("Request received rocket staging");
-        rocketSplitter.stageRocket();
+        rocketAction.stageRocket();
         return ResponseEntity.ok().body("OK");
     }
 }

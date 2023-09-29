@@ -1,5 +1,6 @@
 package fr.teama.telemetryservice.connectors;
 
+import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
 import fr.teama.telemetryservice.helpers.LoggerHelper;
 import fr.teama.telemetryservice.interfaces.proxy.IRocketStageProxy;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,8 +15,14 @@ public class RocketStageProxy implements IRocketStageProxy {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public void fuelLevelReached() {
-        LoggerHelper.logInfo("Notify the rocket department that the fuel as reached a specific level");
-        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket/stage", null, String.class);
+    public void fuelLevelReached() throws RocketStageServiceUnavailableException {
+        try {
+            LoggerHelper.logInfo("Notify the rocket department that the fuel as reached a specific level");
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket/stage", null, String.class);
+        } catch (Exception e) {
+            LoggerHelper.logError(e.toString());
+            throw new RocketStageServiceUnavailableException();
+        }
+
     }
 }

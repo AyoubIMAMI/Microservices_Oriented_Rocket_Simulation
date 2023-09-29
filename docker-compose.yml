@@ -13,6 +13,8 @@ services:
       - telemetry-service
       - payload-service
       - rocket-hardware-mock-service
+      - stage-hardware-mock-service
+      - executive-service
       - postgres
 
   weather-service:
@@ -57,6 +59,13 @@ services:
     restart: always
     ports:
       - 3005:8080
+
+  stage-hardware-mock-service:
+    container_name: stage-hardware-mock-service
+    image: "marsy/stage-hardware-mock-service"
+    restart: always
+    ports:
+      - 3010:8080
 
   payload-hardware-mock-service:
     container_name: payload-hardware-mock-service

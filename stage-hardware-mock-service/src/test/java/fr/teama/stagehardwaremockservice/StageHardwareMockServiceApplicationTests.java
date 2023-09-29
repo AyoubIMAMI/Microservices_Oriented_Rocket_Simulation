@@ -1,10 +1,10 @@
-package fr.teama.rockethardwareservice;
+package fr.teama.stagehardwaremockservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RocketDataHardwareServiceApplicationTests {
+class StageHardwareMockServiceApplicationTests {
 
     @Test
     void contextLoads() {

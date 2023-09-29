@@ -29,8 +29,8 @@ public class PayloadData {
 
     @Override
     public String toString() {
-        return "PayloadData: " +
-                "position=" + position ;
+        return "PayloadData{" +
+                "position=" + position +
+                '}';
     }
-
 }
