@@ -19,9 +19,13 @@ compile_dir "telemetry-service"
 
 compile_dir "rocket-hardware-mock-service"
 
+compile_dir "payload-hardware-mock-service"
+
 compile_dir "payload-service"
 
 compile_dir "executive-service"
+
+compile_dir "stage-hardware-mock-service"
 
 # remove # to add pause in script execution
 #read -p "** Press any key to continue... "

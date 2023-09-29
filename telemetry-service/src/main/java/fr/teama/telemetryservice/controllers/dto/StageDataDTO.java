@@ -1,5 +1,7 @@
 package fr.teama.telemetryservice.controllers.dto;
 
+import java.time.LocalDateTime;
+
 public class StageDataDTO {
 
     private int stageLevel;
@@ -8,32 +10,40 @@ public class StageDataDTO {
 
     private boolean isActivated;
 
-    private boolean isDetached;
+    private Double altitude;
 
-    public StageDataDTO(int stageLevel, double fuel) {
-        this.stageLevel = stageLevel;
-        this.fuel = fuel;
-        this.isActivated = false;
-        this.isDetached = false;
+    private Double speed;
+
+    private Double acceleration;
+
+    private LocalDateTime timestamp;
+
+    public StageDataDTO() {
+    }
+
+    @Override
+    public String toString() {
+        return "StageDataDTO{" +
+                "stageLevel=" + stageLevel +
+                ", fuel=" + fuel +
+                ", isActivated=" + isActivated +
+                ", altitude=" + altitude +
+                ", speed=" + speed +
+                ", acceleration=" + acceleration +
+                ", timestamp=" + timestamp +
+                '}';
     }
 
     public void setFuel(Double fuel) {
         this.fuel = fuel;
     }
 
-    public StageDataDTO() {
-    }
-
     public int getStageLevel() {
         return stageLevel;
     }
 
-    public double getFuel() {
+    public Double getFuel() {
         return fuel;
-    }
-
-    public void setFuel(double fuel) {
-        this.fuel = fuel;
     }
 
     public boolean isActivated() {
@@ -44,19 +54,39 @@ public class StageDataDTO {
         isActivated = activated;
     }
 
-    public void setDetached(boolean detached) {
-        isDetached = detached;
+    public void setStageLevel(int stageLevel) {
+        this.stageLevel = stageLevel;
     }
 
-    public boolean isDetached() {
-        return isDetached;
+    public Double getAltitude() {
+        return altitude;
     }
 
-    @Override
-    public String toString() {
-        return "StageData{" +
-                "stageLevel=" + stageLevel +
-                ", fuel=" + fuel +
-                '}';
+    public void setAltitude(Double altitude) {
+        this.altitude = altitude;
+    }
+
+    public Double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(Double speed) {
+        this.speed = speed;
+    }
+
+    public Double getAcceleration() {
+        return acceleration;
+    }
+
+    public void setAcceleration(Double acceleration) {
+        this.acceleration = acceleration;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 }

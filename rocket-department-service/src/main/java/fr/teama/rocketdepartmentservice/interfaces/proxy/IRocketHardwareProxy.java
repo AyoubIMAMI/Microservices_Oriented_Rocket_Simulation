@@ -2,8 +2,7 @@ package fr.teama.rocketdepartmentservice.interfaces.proxy;
 
 public interface IRocketHardwareProxy {
 
-    void slowDown();
+    void stageRocket() throws RocketHardwareServiceUnavailableException;
 
-    void speedUp();
-
+    void activateCurrentStage() throws RocketHardwareServiceUnavailableException;
 }

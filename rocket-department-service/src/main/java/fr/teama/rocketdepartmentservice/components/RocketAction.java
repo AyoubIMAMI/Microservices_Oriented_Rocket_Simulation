@@ -1,31 +1,33 @@
 package fr.teama.rocketdepartmentservice.components;
 
+import fr.teama.rocketdepartmentservice.exceptions.RocketHardwareServiceUnavailableException;
+import fr.teama.rocketdepartmentservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.helpers.LoggerHelper;
-import fr.teama.rocketdepartmentservice.interfaces.RocketManager;
+import fr.teama.rocketdepartmentservice.interfaces.IDataAsker;
+import fr.teama.rocketdepartmentservice.interfaces.IRocketAction;
 import fr.teama.rocketdepartmentservice.interfaces.proxy.IRocketHardwareProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RocketAction implements RocketManager {
+public class RocketAction implements IRocketAction {
 
     @Autowired
     private IRocketHardwareProxy rocketHardwareProxy;
 
+    @Autowired
+    private IDataAsker dataAsker;
+
     @Override
-    public void stageRocket() {
-        LoggerHelper.logInfo("The rocket has been staged");
+    public void stageRocket() throws RocketHardwareServiceUnavailableException {
+        rocketHardwareProxy.stageRocket();
+        rocketHardwareProxy.activateCurrentStage();
     }
 
     @Override
-    public void slowDownRocket() {
-        LoggerHelper.logInfo("The rocket is slowing down");
-        rocketHardwareProxy.slowDown();
-    }
-
-    @Override
-    public void speedUpRocket() {
-        LoggerHelper.logInfo("The rocket is speeding up");
-        rocketHardwareProxy.speedUp();
+    public void launchRocket() throws TelemetryServiceUnavailableException, RocketHardwareServiceUnavailableException {
+        rocketHardwareProxy.activateCurrentStage();
+        LoggerHelper.logInfo("The rocket is launching");
+        dataAsker.waitEmptyFuelForStageTheRocket();
     }
 }

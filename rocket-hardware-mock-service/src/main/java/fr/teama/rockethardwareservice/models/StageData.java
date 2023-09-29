@@ -2,30 +2,27 @@ package fr.teama.rockethardwareservice.models;
 
 public class StageData {
 
-    private final int stageLevel;
+    private int stageLevel;
 
     private Double fuel;
 
     private boolean isActivated;
 
-    private boolean isDetached;
-
-    public StageData(int stageLevel, double fuel) {
+    public StageData(int stageLevel, Double fuel) {
         this.stageLevel = stageLevel;
         this.fuel = fuel;
         this.isActivated = false;
-        this.isDetached = false;
     }
 
     public int getStageLevel() {
         return stageLevel;
     }
 
-    public double getFuel() {
+    public Double getFuel() {
         return fuel;
     }
 
-    public void setFuel(double fuel) {
+    public void setFuel(Double fuel) {
         this.fuel = fuel;
     }
 
@@ -35,10 +32,6 @@ public class StageData {
 
     public void setActivated(boolean activated) {
         isActivated = activated;
-    }
-
-    public void setDetached(boolean detached) {
-        isDetached = detached;
     }
 
     @Override

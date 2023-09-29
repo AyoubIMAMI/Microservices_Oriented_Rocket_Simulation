@@ -27,7 +27,7 @@ public class TelemetryProxy implements ITelemetryProxy {
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
 
-            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "executive", TrackingCategoryDTO.STAGE);
+            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "executive", TrackingCategoryDTO.INDEPENDENT_STAGE);
             LoggerHelper.logInfo("Ask telemetry to being notify when the stage 1 reach the height of " + trackItemDTO.getData());
             return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/tracking", trackingDTO, String.class);
         } catch (Exception e) {
