@@ -26,7 +26,6 @@ public class Tracking {
     public Tracking(List<TrackItem> data, String requestService, String routeToNotify, TrackingCategory category) {
         this.data = data;
         this.serviceToBeNotified = requestService;
-        this.routeToNotify = routeToNotify;
         this.category = category;
     }
 
@@ -35,6 +34,7 @@ public class Tracking {
         trackingDTO.getData().forEach(trackItemDTO -> this.data.add(new TrackItem(trackItemDTO)));
         this.serviceToBeNotified = trackingDTO.getServiceToBeNotified();
         this.category = trackingDTO.getCategory();
+        this.routeToNotify = trackingDTO.getRouteToNotify();
     }
 
     public Tracking() {

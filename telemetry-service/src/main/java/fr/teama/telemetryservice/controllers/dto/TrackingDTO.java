@@ -13,10 +13,13 @@ public class TrackingDTO {
 
     private TrackingCategory category;
 
-    public TrackingDTO(List<TrackItemDTO> data, String requestService, TrackingCategory category) {
+    private String routeToNotify;
+
+    public TrackingDTO(List<TrackItemDTO> data, String requestService, String routeToNotify, TrackingCategory category) {
         this.data = data;
         this.serviceToBeNotified = requestService;
         this.category = category;
+        this.routeToNotify = routeToNotify;
     }
 
     public TrackingDTO() {
@@ -44,6 +47,14 @@ public class TrackingDTO {
 
     public void setCategory(TrackingCategory category) {
         this.category = category;
+    }
+
+    public String getRouteToNotify() {
+        return routeToNotify;
+    }
+
+    public void setRouteToNotify(String routeToNotify) {
+        this.routeToNotify = routeToNotify;
     }
 }
 
