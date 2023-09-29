@@ -31,7 +31,7 @@ $ ./run.sh
 - Mission successful
   - Poll
   - Rocket launch
-  - Stage splitting
+  - Stage splitting and returning to Earth
   - Speed variation through Max Q
   - Payload dropped
 
@@ -63,7 +63,7 @@ $ ./run.sh
 
 - *telemetry-service*: handling the data
   - receive, store and monitor data
-  - warn the *rocket-department-service* and the *payload-service*
+  - warn the *rocket-department-service*, *executive-service* and the *payload-service*
 
 
 - *payload-service*: responsible for the payload orbit insertion
@@ -74,10 +74,11 @@ $ ./run.sh
 
 - *executive-service*: strategically directing and driving the
   company’s business and objectives
-  - ask the telemetry for warnings
+  - ask telemetry to be informed when the stage returns to earth
 
 #### Hardware
 - *rocket-hardware-mock-service*: representation of the rocket
+- *stage-hardware-mock-service*: representation of the stages
 - *payload-hardware-mock-service*: representation of the payload
 
 #### Database
@@ -97,6 +98,7 @@ $ ./run.sh
 |       database-payload        | 3007 |
 |       executive-service       | 3008 |
 | payload-hardware-mock-service | 3009 |
+|  stage-hardware-mock-service  | 3010 |
 
 ## Team members implication
 |      Members      |  Points  |
