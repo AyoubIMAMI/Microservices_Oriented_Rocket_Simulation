@@ -5,10 +5,10 @@
 
 ---
 ### Authors
-- [Antoine Buquet](https://github.com/antoinebqt)
-- [Benoit Gaudet](https://github.com/BenoitGAUDET38)
+- [Antoine BUQUET](https://github.com/antoinebqt)
+- [Benoit GAUDET](https://github.com/BenoitGAUDET38)
 - [Ayoub IMAMI](https://github.com/AyoubIMAMI)
-- [Mourad Karrakchou](https://github.com/MouradKarrakchou)
+- [Mourad KARRAKCHOU](https://github.com/MouradKarrakchou)
 ---
 ## Requirements
 - Maven 4.0.0
