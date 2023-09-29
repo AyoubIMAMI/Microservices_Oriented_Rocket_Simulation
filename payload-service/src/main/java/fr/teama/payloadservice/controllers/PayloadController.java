@@ -10,7 +10,6 @@ import fr.teama.payloadservice.helpers.LoggerHelper;
 import fr.teama.payloadservice.interfaces.IDataAsker;
 import fr.teama.payloadservice.interfaces.IPayloadReleaser;
 import fr.teama.payloadservice.interfaces.PayloadDataHandler;
-import fr.teama.payloadservice.repository.PayloadDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +48,12 @@ public class PayloadController {
         PositionDTO position= payloadDataDTO.getPosition();
         payloadDataHandler.saveDataPayload(new PayloadData(new Position(position.getX(), position.getY(),position.getAltitude()),payloadDataDTO.getTimestamp()));
         return ResponseEntity.status(HttpStatus.OK).body("Save successful");
+    }
+
+    @PostMapping("/reset-db")
+    public ResponseEntity<String> resetDb() {
+        LoggerHelper.logInfo("Resetting database");
+        return this.payloadDataHandler.resetDB();
     }
 
 }

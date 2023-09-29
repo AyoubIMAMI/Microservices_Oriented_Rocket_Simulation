@@ -24,7 +24,7 @@ public class StageHardware implements IStageHardware {
 
     private final Double PARACHUTE_SPEED = 30.0;
 
-    private Double DEPLOY_PARACHUTE_HEIGHT = 500.0;
+    private Double DEPLOY_PARACHUTE_HEIGHT = 300.0;
 
     boolean sendLog;
 
@@ -53,6 +53,7 @@ public class StageHardware implements IStageHardware {
                 stageData.setSpeed(0.0);
                 stageData.setAcceleration(0.0);
                 sendLog = false;
+                parachuteDeployed = false;
             }
 
             try {

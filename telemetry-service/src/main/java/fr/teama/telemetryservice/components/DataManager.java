@@ -10,6 +10,7 @@ import fr.teama.telemetryservice.interfaces.DataSaver;
 import fr.teama.telemetryservice.models.StageData;
 import fr.teama.telemetryservice.repository.RocketDataRepository;
 import fr.teama.telemetryservice.repository.StageDataRepository;
+import fr.teama.telemetryservice.repository.TrackingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,9 @@ public class DataManager implements DataSaver {
     @Autowired
     StageDataRepository stageDataRepository;
 
+    @Autowired
+    TrackingRepository trackingRepository;
+
     @Override
     public ResponseEntity<String> saveRocketData(RocketData rocketData) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException {
         trackingHandler.verifyRocketData(rocketData);
@@ -39,5 +43,13 @@ public class DataManager implements DataSaver {
         trackingHandler.verifyStageData(stageData);
         stageDataRepository.save(stageData);
         return ResponseEntity.ok().body("Stage data saved");
+    }
+
+    @Override
+    public ResponseEntity<String> resetDB() {
+        rocketDataRepository.deleteAll();
+        stageDataRepository.deleteAll();
+        trackingRepository.deleteAll();
+        return ResponseEntity.ok().body("Database reset");
     }
 }
