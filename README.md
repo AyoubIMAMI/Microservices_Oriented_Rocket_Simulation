@@ -1,6 +1,6 @@
 # Mars Y, to the space and beyond
 
-![](/ressource/marsy-logo.png)
+![](/ressource/marsy.png)
 ## Team A
 
 ---
