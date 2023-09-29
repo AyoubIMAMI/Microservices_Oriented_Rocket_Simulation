@@ -29,8 +29,15 @@ $ ./run.sh
 
 #### Scenarios
 - Mission successful
-- Mission could not start
-- Mission failed: rocket destroyed
+  - Poll
+  - Rocket launch
+  - Stage splitting
+  - Speed variation through Max Q
+  - Payload dropped
+
+
+- Mission failed
+  - Rocket destroyed
 ---
 ## Services descriptions
 
@@ -38,13 +45,13 @@ $ ./run.sh
 - *weather-service*: check the weather status
   - send a GO or NO GO answer to the *mission-service*
 
-  <br>
+
 - *mission-service*: overlook the whole mission
   - perform a poll to *weather-service* and *rocket-service*
   - send a GO or NO GO answer, after the poll, to the *rocket-department-service*
   - destroy the flight hardware in case of a severe anomaly
 
-  <br>
+
 - *rocket-department-service*: overlooking the rocket and its
   systems
   - send a GO NO GO answer to the *mission-service*
@@ -53,18 +60,18 @@ $ ./run.sh
   - stage the rocket mid-flight
   - slow down the rocket to go through Max Q
 
-  <br>
+
 - *telemetry-service*: handling the data
   - receive, store and monitor data
   - warn the *rocket-department-service* and the *payload-service*
 
-  <br>
+
 - *payload-service*: responsible for the payload orbit insertion
   - ask the *telemetry-service* for warnings
   - ask the *telemetry-service* for payload data
   - deliver the payload on the right orbit or trajectory
   
-  <br>
+
 - *executive-service*: strategically directing and driving the
   company’s business and objectives
   - ask the telemetry for warnings
