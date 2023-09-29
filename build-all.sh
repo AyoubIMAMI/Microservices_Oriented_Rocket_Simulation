@@ -19,6 +19,8 @@ compile_dir "telemetry-service"
 
 compile_dir "rocket-hardware-mock-service"
 
+compile_dir "payload-hardware-mock-service"
+
 compile_dir "payload-service"
 
 compile_dir "executive-service"
