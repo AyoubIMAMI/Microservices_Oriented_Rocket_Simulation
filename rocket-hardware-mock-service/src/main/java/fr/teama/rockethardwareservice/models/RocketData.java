@@ -46,6 +46,7 @@ public class RocketData {
     public String toString() {
         return "RocketData{" +
                 "altitude=" + altitude +
+                ", speed=" + speed +
                 ", stages=" + stages +
                 ", status=" + status +
                 '}';
