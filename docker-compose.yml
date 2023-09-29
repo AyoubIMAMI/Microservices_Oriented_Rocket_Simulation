@@ -13,6 +13,8 @@ services:
       - telemetry-service
       - payload-service
       - rocket-hardware-mock-service
+      - stage-hardware-mock-service
+      - executive-service
       - postgres
 
   weather-service:

@@ -1,5 +1,6 @@
 package fr.teama.rockethardwareservice.interfaces;
 
+import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 
 public interface IRocketHardware {
@@ -11,7 +12,7 @@ public interface IRocketHardware {
 
     void destroyHardware();
 
-    void stageRocket();
+    void stageRocket() throws StageHardwareServiceUnavailableException;
 
     void activateStageRocket();
 

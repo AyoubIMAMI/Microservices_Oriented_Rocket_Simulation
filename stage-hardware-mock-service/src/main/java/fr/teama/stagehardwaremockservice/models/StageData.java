@@ -1,31 +1,48 @@
 package fr.teama.stagehardwaremockservice.models;
 
+import fr.teama.stagehardwaremockservice.controllers.dto.StageDataDTO;
+import fr.teama.stagehardwaremockservice.controllers.dto.StageFullStateDTO;
+
+import java.time.LocalDateTime;
+
 public class StageData {
 
-    private final int stageLevel;
+    private int stageLevel;
 
     private Double fuel;
 
     private boolean isActivated;
 
-    private boolean isDetached;
+    private Double altitude;
 
-    public StageData(int stageLevel, double fuel) {
-        this.stageLevel = stageLevel;
-        this.fuel = fuel;
-        this.isActivated = false;
-        this.isDetached = false;
+    private Double speed;
+
+    private Double acceleration;
+
+    private LocalDateTime timestamp;
+
+    public StageData(StageFullStateDTO fullStage) {
+        StageDataDTO stageData = fullStage.getStageData();
+        this.stageLevel = stageData.getStageLevel();
+        this.fuel = stageData.getFuel();
+        this.isActivated = stageData.isActivated();
+        this.altitude = fullStage.getAltitude();
+        this.speed = fullStage.getSpeed() * 0.6; // Loss of speed due to staging
+    }
+
+    public StageData() {
+
     }
 
     public int getStageLevel() {
         return stageLevel;
     }
 
-    public double getFuel() {
+    public Double getFuel() {
         return fuel;
     }
 
-    public void setFuel(double fuel) {
+    public void setFuel(Double fuel) {
         this.fuel = fuel;
     }
 
@@ -37,19 +54,44 @@ public class StageData {
         isActivated = activated;
     }
 
-    public void setDetached(boolean detached) {
-        isDetached = detached;
+    public Double getAltitude() {
+        return altitude;
     }
 
-    public boolean isDetached() {
-        return isDetached;
+    public void setAltitude(Double altitude) {
+        this.altitude = altitude;
+    }
+
+    public Double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(Double speed) {
+        this.speed = speed;
+    }
+
+    public Double getAcceleration() {
+        return acceleration;
+    }
+
+    public void setAcceleration(Double acceleration) {
+        this.acceleration = acceleration;
     }
 
     @Override
     public String toString() {
         return "StageData{" +
                 "stageLevel=" + stageLevel +
-                ", fuel=" + fuel +
+                ", altitude=" + altitude +
+                ", speed=" + speed +
                 '}';
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 }

@@ -1,6 +1,6 @@
-package fr.teama.rockethardwareservice.models;
+package fr.teama.stagehardwaremockservice.controllers.dto;
 
-public class StageData {
+public class StageDataDTO {
 
     private int stageLevel;
 
@@ -8,7 +8,7 @@ public class StageData {
 
     private boolean isActivated;
 
-    public StageData(int stageLevel, Double fuel) {
+    public StageDataDTO(int stageLevel, Double fuel) {
         this.stageLevel = stageLevel;
         this.fuel = fuel;
         this.isActivated = false;

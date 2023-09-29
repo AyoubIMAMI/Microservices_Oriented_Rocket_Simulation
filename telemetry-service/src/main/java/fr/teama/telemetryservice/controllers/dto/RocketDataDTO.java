@@ -17,55 +17,52 @@ public class RocketDataDTO {
 
     private Double status;
 
-    public RocketDataDTO(List<StageDataDTO> stages) {
-        this.altitude = 0.0;
-        this.speed = 0.0;
-        this.stages = stages;
-        this.status = 1.0;
-        this.acceleration = 0.0;
+    public RocketDataDTO() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "RocketDataDTO{" +
+                "altitude=" + altitude +
+                ", speed=" + speed +
+                ", acceleration=" + acceleration +
+                ", stages=" + stages +
+                ", timestamp=" + timestamp +
+                ", status=" + status +
+                '}';
+    }
+
+    public Double getAltitude() {
+        return altitude;
     }
 
     public void setAltitude(Double altitude) {
         this.altitude = altitude;
     }
 
+    public Double getSpeed() {
+        return speed;
+    }
+
     public void setSpeed(Double speed) {
         this.speed = speed;
     }
 
-    public void setStages(List<StageDataDTO> stages) {
-        this.stages = stages;
+    public Double getAcceleration() {
+        return acceleration;
     }
 
-    public RocketDataDTO() {
-    }
-
-    public double getAltitude() {
-        return altitude;
-    }
-
-    public void setAltitude(double altitude) {
-        this.altitude = altitude;
-    }
-
-    public double getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    public void setAcceleration(Double acceleration) {
+        this.acceleration = acceleration;
     }
 
     public List<StageDataDTO> getStages() {
         return stages;
     }
 
-    @Override
-    public String toString() {
-        return "RocketData{" +
-                "altitude=" + altitude +
-                ", stages=" + stages +
-                '}';
+    public void setStages(List<StageDataDTO> stages) {
+        this.stages = stages;
     }
 
     public LocalDateTime getTimestamp() {
@@ -76,19 +73,11 @@ public class RocketDataDTO {
         this.timestamp = timestamp;
     }
 
-    public double getStatus() {
+    public Double getStatus() {
         return status;
     }
 
     public void setStatus(Double status) {
         this.status = status;
-    }
-
-    public Double getAcceleration() {
-        return acceleration;
-    }
-
-    public void setAcceleration(Double acceleration) {
-        this.acceleration = acceleration;
     }
 }

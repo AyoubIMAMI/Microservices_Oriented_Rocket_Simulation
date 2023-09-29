@@ -1,8 +1,10 @@
 package fr.teama.rockethardwareservice.components;
 
+import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.helpers.LoggerHelper;
 import fr.teama.rockethardwareservice.interfaces.IRocketHardware;
+import fr.teama.rockethardwareservice.interfaces.proxy.IStageHardwareProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.rockethardwareservice.models.RocketData;
 import fr.teama.rockethardwareservice.models.StageData;
@@ -10,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Math.max;
@@ -21,17 +22,23 @@ public class RocketHardware implements IRocketHardware {
     @Autowired
     ITelemetryProxy telemetryProxy;
 
+    @Autowired
+    IStageHardwareProxy stageHardwareProxy;
+
     private final long updateDelay = 1;
+
     RocketData rocket;
 
-    private final Double ACCELERATION = 1.5;
+    private final Double ACCELERATION = 20.0;
+
+    private final Double EARTH_GRAVITY = 10.0;
 
     boolean sendLog;
 
     @Override
     public void startLogging() throws TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("Start logging");
-        rocket = new RocketData(List.of(new StageData(1, 100), new StageData(2, 250)));
+        rocket = new RocketData(List.of(new StageData(1, 100.0), new StageData(2, 250.0)));
 
         sendLog = true;
 
@@ -39,21 +46,21 @@ public class RocketHardware implements IRocketHardware {
             if (rocket.getStages().get(0) != null) {
                 StageData lowestStageOnRocket = rocket.getStages().get(0);
                 if (lowestStageOnRocket.isActivated() && lowestStageOnRocket.getFuel() > 0) {
-                    lowestStageOnRocket.setFuel(max(lowestStageOnRocket.getFuel() - new Random().nextDouble() * 15, 0));
-                    this.rocket.setAcceleration(rocket.getAcceleration() + new Random().nextDouble() * ACCELERATION);
-                } else if (lowestStageOnRocket.getFuel() <= 0) {
+                    lowestStageOnRocket.setFuel(max(lowestStageOnRocket.getFuel() - 10, 0));
+                    this.rocket.setAcceleration(ACCELERATION);
+                } else if (lowestStageOnRocket.getFuel() <= 0 && rocket.getAltitude() > 0) {
                     LoggerHelper.logWarn("No more fuel in stage " + lowestStageOnRocket.getStageLevel() + ". Waiting for stage to be detached");
-                    this.rocket.setAcceleration(max(this.rocket.getAcceleration() - new Random().nextDouble() * ACCELERATION, 0));
-                } else if (!lowestStageOnRocket.isActivated()) {
+                    this.rocket.setAcceleration(-EARTH_GRAVITY);
+                } else if (!lowestStageOnRocket.isActivated() && rocket.getAltitude() > 0) {
                     LoggerHelper.logWarn("Stage " + lowestStageOnRocket.getStageLevel() + " is not activated. Waiting for stage to be activated");
-                    this.rocket.setAcceleration(max(this.rocket.getAcceleration() - new Random().nextDouble() * ACCELERATION, 0));
+                    this.rocket.setAcceleration(-EARTH_GRAVITY);
                 }
 
                 rocket.setSpeed(rocket.getSpeed() + rocket.getAcceleration());
                 rocket.setAltitude(rocket.getAltitude() + rocket.getSpeed());
             } else {
                 //LoggerHelper.logWarn("No more stages on rocket");
-                this.rocket.setAcceleration(max(this.rocket.getAcceleration() - new Random().nextDouble() * ACCELERATION, 0));
+                this.rocket.setAcceleration(-EARTH_GRAVITY);
             }
 
             try {
@@ -85,24 +92,23 @@ public class RocketHardware implements IRocketHardware {
     }
 
     @Override
-    public void stageRocket() {
+    public void stageRocket() throws StageHardwareServiceUnavailableException {
         LoggerHelper.logInfo("Stage rocket physically");
         StageData stageToDetach = rocket.getStages().get(0);
         rocket.setStages(rocket.getStages().subList(1, rocket.getStages().size()));
         stageToDetach.setActivated(false);
-        stageToDetach.setDetached(true);
-        //TODO: Send stage to stage mock service
+        stageHardwareProxy.startLogging(stageToDetach, rocket.getAltitude(), rocket.getSpeed());
     }
 
     @Override
     public void activateStageRocket() {
-        LoggerHelper.logInfo("Activate lowest stage of the rocket, acceleration will increase");
+        LoggerHelper.logInfo("Activate lowest stage of the rocket, speed will increase");
         this.rocket.getStages().get(0).setActivated(true);
     }
 
     @Override
     public void deactivateStageRocket() {
-        LoggerHelper.logInfo("Deactivate lowest stage of the rocket, acceleration will decrease");
+        LoggerHelper.logInfo("Deactivate lowest stage of the rocket, speed will decrease");
         this.rocket.getStages().get(0).setActivated(false);
     }
 }

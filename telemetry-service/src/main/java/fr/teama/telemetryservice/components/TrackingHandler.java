@@ -1,5 +1,7 @@
 package fr.teama.telemetryservice.components;
 
+import fr.teama.telemetryservice.exceptions.ExecutiveServiceUnavailableException;
+import fr.teama.telemetryservice.interfaces.proxy.IExecutiveProxy;
 import fr.teama.telemetryservice.models.*;
 import fr.teama.telemetryservice.exceptions.MissionServiceUnavailableException;
 import fr.teama.telemetryservice.interfaces.proxy.IMissionProxy;
@@ -24,8 +26,12 @@ public class TrackingHandler implements ITelemetryNotifier {
 
     @Autowired
     IRocketStageProxy rocketStageProxy;
+
     @Autowired
     IMissionProxy missionProxy;
+
+    @Autowired
+    IExecutiveProxy executiveProxy;
 
     @Override
     public Tracking trackingNotify(Tracking tracking) {
@@ -34,12 +40,32 @@ public class TrackingHandler implements ITelemetryNotifier {
     }
 
     @Override
-    public void verifyRocketData(RocketData rocketData) throws PayloadServiceUnavailableException, RocketStageServiceUnavailableException, MissionServiceUnavailableException {
+    public void verifyRocketData(RocketData rocketData) throws PayloadServiceUnavailableException, RocketStageServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException {
         for (Tracking tracking: trackingRepository.findByCategory(TrackingCategory.ROCKET)){
             boolean allConditionsReached = true;
 
             for (TrackItem trackItem: tracking.getData()) {
                 Double dataToCheck = getRocketDataToCheck(trackItem.getFieldToTrack(), rocketData);
+                if (!trackItem.verifyCondition(dataToCheck)) {
+                    allConditionsReached = false;
+                }
+            }
+
+            if (allConditionsReached) {
+                LoggerHelper.logInfo("All conditions reached for tracking:" + tracking);
+                notifyService(tracking);
+                trackingRepository.delete(tracking);
+            }
+        }
+    }
+
+    @Override
+    public void verifyStageData(StageData stageData) throws RocketStageServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
+        for (Tracking tracking: trackingRepository.findByCategory(TrackingCategory.INDEPENDENT_STAGE)){
+            boolean allConditionsReached = true;
+
+            for (TrackItem trackItem: tracking.getData()) {
+                Double dataToCheck = getStageDataToCheck(trackItem.getFieldToTrack(), stageData);
                 if (!trackItem.verifyCondition(dataToCheck)) {
                     allConditionsReached = false;
                 }
@@ -62,7 +88,16 @@ public class TrackingHandler implements ITelemetryNotifier {
         };
     }
 
-    private void notifyService(Tracking tracking) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException {
+    private Double getStageDataToCheck(TrackingField fieldToTrack, StageData stageData) {
+        return switch (fieldToTrack) {
+            case HEIGHT -> stageData.getAltitude();
+            case FUEL -> stageData.getFuel();
+            case SPEED -> stageData.getSpeed();
+            default -> 0.0;
+        };
+    }
+
+    private void notifyService(Tracking tracking) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException {
         switch (tracking.getServiceToBeNotified()) {
             case "rocket-department":
                 // TODO: Add inner switch to manage multiple route and make the call with the right proxy function
@@ -73,6 +108,10 @@ public class TrackingHandler implements ITelemetryNotifier {
                 break;
             case "mission":
                 missionProxy.specificStatusDetected();
+                break;
+            case "executive":
+                executiveProxy.notifyStageLanded();
+                break;
             default:
                 break;
         }
