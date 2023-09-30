@@ -11,7 +11,7 @@ import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableExcepti
 import fr.teama.telemetryservice.helpers.LoggerHelper;
 import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
 import fr.teama.telemetryservice.interfaces.proxy.IPayloadProxy;
-import fr.teama.telemetryservice.interfaces.proxy.IRocketStageProxy;
+import fr.teama.telemetryservice.interfaces.proxy.IRocketDepartmentProxy;
 import fr.teama.telemetryservice.repository.TrackingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,7 @@ public class TrackingHandler implements ITelemetryNotifier {
     IPayloadProxy payloadProxy;
 
     @Autowired
-    IRocketStageProxy rocketStageProxy;
+    IRocketDepartmentProxy rocketDepartmentProxy;
 
     @Autowired
     IMissionProxy missionProxy;
@@ -102,13 +102,13 @@ public class TrackingHandler implements ITelemetryNotifier {
             case "rocket-department":
                 switch (tracking.getRouteToNotify()) {
                     case "/rocket/stage":
-                        rocketStageProxy.fuelLevelReached();
+                        rocketDepartmentProxy.fuelLevelReached();
                         break;
                     case "/rocket/enters-q":
-                        rocketStageProxy.heightReached(tracking);
+                        rocketDepartmentProxy.heightReached(tracking);
                         break;
                     case "/rocket/leaves-q":
-                        rocketStageProxy.heightReached(tracking);
+                        rocketDepartmentProxy.heightReached(tracking);
                         break;
                 }
                 break;

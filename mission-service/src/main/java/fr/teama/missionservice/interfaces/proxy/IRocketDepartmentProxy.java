@@ -2,7 +2,7 @@ package fr.teama.missionservice.interfaces.proxy;
 
 import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 
-public interface IRocketProxy {
+public interface IRocketDepartmentProxy {
 
     String getRocketStatus() throws RocketServiceUnavailableException;
 

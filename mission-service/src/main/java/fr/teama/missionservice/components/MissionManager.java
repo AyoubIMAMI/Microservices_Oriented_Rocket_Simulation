@@ -15,7 +15,7 @@ public class MissionManager implements IMissionManager {
     IWeatherProxy weatherProxy;
 
     @Autowired
-    IRocketProxy rocketProxy;
+    IRocketDepartmentProxy rocketDepartmentProxy;
 
     @Autowired
     IPayloadProxy payloadProxy;
@@ -36,7 +36,7 @@ public class MissionManager implements IMissionManager {
         rocketHardwareProxy.startLogging();
 
         boolean weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
-        boolean rocketServiceReady = rocketProxy.getRocketStatus().equals("GO");
+        boolean rocketServiceReady = rocketDepartmentProxy.getRocketStatus().equals("GO");
         boolean missionReady = weatherServiceReady && rocketServiceReady;
 
         logServiceMessage(weatherServiceReady, "Weather service");
@@ -46,7 +46,7 @@ public class MissionManager implements IMissionManager {
         if (missionReady) {
             gettingNotifyInCaseOfRocketAnomaly();
             NotifyMissionStart();
-            rocketProxy.launchRocket();
+            rocketDepartmentProxy.launchRocket();
             return ResponseEntity.ok().body("GO");
         } else {
             return ResponseEntity.ok().body("NO GO");

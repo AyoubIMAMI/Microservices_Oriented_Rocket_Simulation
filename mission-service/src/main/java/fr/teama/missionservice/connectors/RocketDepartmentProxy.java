@@ -2,7 +2,7 @@ package fr.teama.missionservice.connectors;
 
 import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 import fr.teama.missionservice.helpers.LoggerHelper;
-import fr.teama.missionservice.interfaces.proxy.IRocketProxy;
+import fr.teama.missionservice.interfaces.proxy.IRocketDepartmentProxy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Objects;
 
 @Component
-public class RocketProxy implements IRocketProxy {
+public class RocketDepartmentProxy implements IRocketDepartmentProxy {
     @Value("${rocket-department.host.baseurl}")
     private String apiBaseUrlHostAndPort;
 

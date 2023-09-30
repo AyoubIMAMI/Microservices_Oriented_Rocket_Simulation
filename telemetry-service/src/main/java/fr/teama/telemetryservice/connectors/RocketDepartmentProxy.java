@@ -2,14 +2,14 @@ package fr.teama.telemetryservice.connectors;
 
 import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
 import fr.teama.telemetryservice.helpers.LoggerHelper;
-import fr.teama.telemetryservice.interfaces.proxy.IRocketStageProxy;
+import fr.teama.telemetryservice.interfaces.proxy.IRocketDepartmentProxy;
 import fr.teama.telemetryservice.models.Tracking;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class RocketStageProxy implements IRocketStageProxy {
+public class RocketDepartmentProxy implements IRocketDepartmentProxy {
     @Value("${rocket-department.host.baseurl}")
     private String apiBaseUrlHostAndPort;
 
