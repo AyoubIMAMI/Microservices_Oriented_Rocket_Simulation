@@ -104,7 +104,7 @@ The two scenarios will automatically be run in sequence using the run.sh script
 	- Save notification requests received by other services
 
 
-- *database-payload*: payload database
+- *database-payload*:
 	- Save the payload data received by the *payload-hardware-mock-service*
 
 
