@@ -51,7 +51,6 @@ public class PayloadHardwareController {
 
     @PostMapping("/stop-pos-dispatch")
     public ResponseEntity<String> stopOrbitalPosDispatch() {
-        LoggerHelper.logInfo("Stop orbital position dispatch");
         hardware.stopOrbitalPosDispatch();
         return ResponseEntity.status(HttpStatus.OK).body("Stop orbital position dispatch");
     }

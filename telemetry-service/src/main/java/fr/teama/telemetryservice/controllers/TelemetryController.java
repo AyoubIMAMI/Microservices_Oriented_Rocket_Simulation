@@ -1,6 +1,5 @@
 package fr.teama.telemetryservice.controllers;
 
-import fr.teama.telemetryservice.connectors.PayloadProxy;
 import fr.teama.telemetryservice.controllers.dto.PayloadDataDTO;
 import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
 import fr.teama.telemetryservice.controllers.dto.StageDataDTO;
@@ -24,7 +23,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = TelemetryController.BASE_URI, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+@RequestMapping(path = TelemetryController.BASE_URI, produces = APPLICATION_JSON_VALUE)
 public class TelemetryController {
     public static final String BASE_URI = "/api/telemetry";
 
@@ -64,5 +63,11 @@ public class TelemetryController {
     @PostMapping("/send-payload-data")
     public ResponseEntity<String> transferPayloadData(@RequestBody PayloadDataDTO payloadDataDTO) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
         return this.payloadProxy.sendData(payloadDataDTO);
+    }
+
+    @PostMapping("/reset-db")
+    public ResponseEntity<String> resetDb() {
+        LoggerHelper.logInfo("Resetting database");
+        return this.dataSaver.resetDB();
     }
 }

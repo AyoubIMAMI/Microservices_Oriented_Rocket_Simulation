@@ -19,13 +19,14 @@ public class Hardware implements IHardware {
     ITelemetryProxy telemetryProxy;
 
     private final long updateDelay = 1;
-    PayloadData payload = new PayloadData();
+    PayloadData payload;
     boolean sendLog = false;
 
     @Override
     public void startOrbitalPosDispatch() throws TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("Start orbital position dispatch");
 
+        payload = new PayloadData();
         sendLog = true;
 
         while (sendLog) {

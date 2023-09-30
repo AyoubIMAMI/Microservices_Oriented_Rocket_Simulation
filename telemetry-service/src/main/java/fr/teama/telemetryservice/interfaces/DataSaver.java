@@ -12,4 +12,6 @@ public interface DataSaver {
     ResponseEntity<String> saveRocketData(RocketData rocketData) throws PayloadServiceUnavailableException, RocketStageServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException;
 
     ResponseEntity<String> saveStageData(StageData stageData) throws RocketStageServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException;
+
+    ResponseEntity<String> resetDB();
 }
