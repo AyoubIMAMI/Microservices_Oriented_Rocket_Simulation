@@ -39,6 +39,9 @@ $ ./run.sh
 - Mission failed
   - Rocket damaged by sabotage
   - Rocket destroyed to avoid potential ground damage
+
+The two scenarios will be run in sequence using the run.sh script
+
 ---
 ## Services descriptions
 
