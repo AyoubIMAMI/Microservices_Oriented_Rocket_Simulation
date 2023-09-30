@@ -23,14 +23,14 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="executive-service" options="-parameters" />
+      <module name="executive-service" options="" />
       <module name="mission-service" options="-parameters" />
-      <module name="payload-hardware-mock-service" options="-parameters" />
+      <module name="payload-hardware-mock-service" options="" />
       <module name="payload-service" options="-parameters" />
       <module name="rocket-department-service" options="-parameters" />
       <module name="rocket-hardware-mock-service" options="-parameters" />
       <module name="rocket-service" options="-parameters" />
-      <module name="stage-hardware-mock-service" options="-parameters" />
+      <module name="stage-hardware-mock-service" options="" />
       <module name="telemetry-service" options="-parameters" />
       <module name="weather-service" options="-parameters" />
     </option>

@@ -102,11 +102,14 @@ public class TrackingHandler implements ITelemetryNotifier {
             case "rocket-department":
                 switch (tracking.getRouteToNotify()) {
                     case "/rocket/stage":
-                        rocketStageProxy.fuelLevelReached();;
+                        rocketStageProxy.fuelLevelReached();
+                        break;
                     case "/rocket/enters-q":
                         rocketStageProxy.heightReached(tracking);
+                        break;
                     case "/rocket/leaves-q":
                         rocketStageProxy.heightReached(tracking);
+                        break;
                 }
                 break;
             case "payload":
