@@ -18,7 +18,7 @@
 ---
 ## Demonstration
 
-#### Commands to execute the project
+#### Commands to execute the project on Linux
 ```
 $ git clone git@github.com:pns-si5-soa/marsy-23-24-team-a.git
 $ cd marsy-23-24-team-a
@@ -29,15 +29,16 @@ $ ./run.sh
 
 #### Scenarios
 - Mission successful
-  - Poll
+  - Poll to weather and rocket services
   - Rocket launch
   - Stage splitting and returning to Earth
   - Speed variation through Max Q
-  - Payload dropped
+  - Payload dropped and monitored
 
 
 - Mission failed
-  - Rocket destroyed
+  - Rocket damaged by sabotage
+  - Rocket destroyed to avoid potential ground damage
 ---
 ## Services descriptions
 
