@@ -28,7 +28,7 @@ Scenario 2: Mission failed due to a severe anomaly and the destruction of the ro
 sleep 5
 
 function wait_telemetry_service() {
-    printf "\033[1;33m## Waiting for all services to be ready \n\033[0m"
+    printf "\033[0;33m## Waiting for all services to be ready \n\033[0m"
 
     ret_code=1
     while [ $ret_code -ne 0 ]; do
@@ -59,7 +59,8 @@ Start of scenario 1: Mission successful with passage through Max Q, payload deli
 }
 
 function scenario2() {
-  printf "\033[1;33m## Reset databases and mock hardware for the next scenario\n\033[0m\n"
+  printf "\n\033[0m========================================\033[0m\n"
+  printf "\n\033[0;33m## Reset databases and mock hardware for the next scenario\n\033[0m\n"
   curl --silent --show-error --output /dev/null --location --request POST http://localhost:3003/api/telemetry/reset-db
   curl --silent --show-error --output /dev/null --location --request POST http://localhost:3004/api/payload/reset-db
 
@@ -74,7 +75,7 @@ Start of scenario 2: Mission failed due to a severe anomaly and the destruction 
 }
 
 function sabotageRocket() {
-  printf "\033[1;33m## Sabotage the rocket\n\033[0m\n"
+  printf "\n\033[1;33m## Sabotage the rocket\n\033[0m\n"
   curl --silent --show-error --output /dev/null --location --request POST http://localhost:3005/api/rocket-hardware/sabotaging
 }
 
