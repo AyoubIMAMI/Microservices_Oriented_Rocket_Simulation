@@ -84,6 +84,7 @@ The two scenarios will be run in sequence using the run.sh script
 - *rocket-hardware-mock-service*: representation of the rocket
 - *stage-hardware-mock-service*: representation of the stages
 - *payload-hardware-mock-service*: representation of the payload
+  
   - start sending data when the payload is delivered
   - send data on the current position of the payload to telemetry service each second 
   
