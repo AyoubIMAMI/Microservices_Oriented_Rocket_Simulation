@@ -26,11 +26,11 @@ public class DataAsker implements IDataAsker {
                 "/rocket/stage", OperationTypeDTO.LESS_OR_EQUAL, "the rocket reaches the fuel of ");
 
         LoggerHelper.logInfo("The rocket department wants the telemetry service to notify it when the rocket enters the Max Q");
-        telemetryProxy.askWhenEventHappens(TrackingFieldDTO.HEIGHT, 1200.0, "rocket-department",
+        telemetryProxy.askWhenEventHappens(TrackingFieldDTO.HEIGHT, 1300.0, "rocket-department",
                 "/rocket/enters-q", OperationTypeDTO.GREATER_OR_EQUAL, "the rocket reaches the altitude of ");
 
         LoggerHelper.logInfo("The rocket department wants the telemetry service to notify it when the rocket leaves the Max Q");
-        telemetryProxy.askWhenEventHappens(TrackingFieldDTO.HEIGHT, 1500.0, "rocket-department",
+        telemetryProxy.askWhenEventHappens(TrackingFieldDTO.HEIGHT, 1800.0, "rocket-department",
                 "/rocket/leaves-q", OperationTypeDTO.GREATER_OR_EQUAL, "the rocket reaches the altitude of ");
     }
 }
