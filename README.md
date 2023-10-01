@@ -10,6 +10,9 @@
 - [Mourad KARRAKCHOU](https://github.com/MouradKarrakchou)
 ---
 ## Requirements
+- Docker
+---
+## This project uses
 - Maven 4.0.0
 - Spring 3.1.3
 - Java 17
