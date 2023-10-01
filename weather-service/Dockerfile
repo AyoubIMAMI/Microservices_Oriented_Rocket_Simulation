@@ -8,4 +8,4 @@ RUN mvn clean package
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "weather-service/target/weather-service-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/weather-service-0.0.1-SNAPSHOT.jar"]
