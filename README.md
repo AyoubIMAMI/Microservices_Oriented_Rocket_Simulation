@@ -9,6 +9,8 @@
 - [Ayoub IMAMI](https://github.com/AyoubIMAMI)
 - [Mourad KARRAKCHOU](https://github.com/MouradKarrakchou)
 ---
+### The [report](https://github.com/pns-si5-al-course/soa-marsy-marsy-23-24-team-a/blob/main/deliverables/Report.pdf) is available in the `deliverables` folder
+---
 ## Requirements
 - Docker
 ---
