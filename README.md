@@ -19,11 +19,11 @@
 
 #### Commands to execute the project on Linux
 ```
-$ git clone git@github.com:pns-si5-soa/marsy-23-24-team-a.git
-$ cd marsy-23-24-team-a
-$ git checkout tags/delivery-final
-$ ./prepare.sh
-$ ./run.sh
+git clone git@github.com:pns-si5-al-course/soa-marsy-marsy-23-24-team-a.git
+cd soa-marsy-marsy-23-24-team-a
+checkout tags/delivery-final
+./prepare.sh
+./run.sh
 ```
 
 #### Scenarios
