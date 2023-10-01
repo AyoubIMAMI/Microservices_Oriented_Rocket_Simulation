@@ -4,11 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>fr.teama</groupId>
-        <artifactId>marsy</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.1.3</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <properties>
+        <java.version>17</java.version>
+        <springdoc.version>2.1.0</springdoc.version>
+    </properties>
     <artifactId>stage-hardware-mock-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
