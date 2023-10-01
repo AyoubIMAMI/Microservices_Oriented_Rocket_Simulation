@@ -24,7 +24,7 @@
 ```
 git clone git@github.com:pns-si5-al-course/soa-marsy-marsy-23-24-team-a.git
 cd soa-marsy-marsy-23-24-team-a
-checkout tags/delivery-final
+checkout tags/MVP
 ./prepare.sh
 ./run.sh
 ```
