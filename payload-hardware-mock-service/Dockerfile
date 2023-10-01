@@ -8,4 +8,4 @@ RUN mvn clean package
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "message-publisher-service/target/message-publisher-service-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "payload-hardware-mock-service/target/payload-hardware-mock-service-0.0.1-SNAPSHOT.jar"]
