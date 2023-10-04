@@ -68,13 +68,16 @@ public class RocketHardwareProxy implements IRocketHardwareProxy {
             assert rocketData != null;
 
             // fuel level infos
-            LoggerHelper.logInfo("Check rocket stages fuel level");
+            LoggerHelper.logInfo("Ask to the rocket hardware the stages fuel level");
             stagesDataLoggers(rocketData.getStages());
             LoggerHelper.logInfo("Fueling the rocket stages in progress");
-            rocketData = restTemplate.postForEntity(apiBaseUrlHostAndPort +
+            restTemplate.postForEntity(apiBaseUrlHostAndPort +
                     "/rocket-hardware/fueling", null, RocketData.class).getBody();
-            assert rocketData != null;
             LoggerHelper.logInfo("Fueling complete");
+            LoggerHelper.logInfo("Ask to the rocket hardware the stages fuel level");
+            rocketData = restTemplate.postForEntity(apiBaseUrlHostAndPort +
+                    "/rocket-hardware/preparation", null, RocketData.class).getBody();
+            assert rocketData != null;
             stagesDataLoggers(rocketData.getStages());
 
             // payload installation
