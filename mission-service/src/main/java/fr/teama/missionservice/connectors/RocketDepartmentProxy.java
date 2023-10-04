@@ -32,7 +32,7 @@ public class RocketDepartmentProxy implements IRocketDepartmentProxy {
     @Override
     public void launchRocket() throws RocketServiceUnavailableException {
         try {
-            LoggerHelper.logInfo("Order the rocket department to launch the rocket");
+            LoggerHelper.logInfo("Order the rocket department to launch the rocket in 60 seconds");
             ResponseEntity<String> response = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket/launch", null, String.class);
             if (Objects.equals(response.getBody(), "OK"))
                 LoggerHelper.logInfo("The rocket department has launch the rocket");
