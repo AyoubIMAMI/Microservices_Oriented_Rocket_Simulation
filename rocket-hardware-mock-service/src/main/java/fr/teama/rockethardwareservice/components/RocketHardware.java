@@ -111,4 +111,17 @@ public class RocketHardware implements IRocketHardware {
         LoggerHelper.logInfo("Deactivate lowest stage of the rocket, speed will decrease");
         this.rocket.getStages().get(0).setActivated(false);
     }
+
+    public RocketData getRocketData() {
+        return this.rocket;
+    }
+
+    @Override
+    public void fuelingTheRocket() {
+        double fuelLevel = 120.0;
+        for (StageData stage : rocket.getStages()) {
+            stage.setFuel(fuelLevel);
+            fuelLevel += 150.0;
+        }
+    }
 }

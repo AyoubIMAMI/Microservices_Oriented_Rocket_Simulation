@@ -1,16 +1,15 @@
 package fr.teama.rockethardwareservice.controllers;
 
+import fr.teama.rockethardwareservice.controllers.dto.RocketDataDTO;
 import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.helpers.LoggerHelper;
 import fr.teama.rockethardwareservice.interfaces.IRocketHardware;
+import fr.teama.rockethardwareservice.models.RocketData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -54,6 +53,22 @@ public class RocketHardwareController {
         LoggerHelper.logInfo("Request received to stop logging");
         rocketHardware.stopLogging();
         return ResponseEntity.status(HttpStatus.OK).body("Logging stopped successfully");
+    }
+
+    @GetMapping("/preparation")
+    public ResponseEntity<RocketDataDTO> getRocketData() {
+        LoggerHelper.logInfo("Request received to send stages fuel level");
+        RocketData rocketData = rocketHardware.getRocketData();
+        RocketDataDTO rocketDataDTO = new RocketDataDTO();
+        rocketDataDTO.setStages(rocketData.getStages());
+        rocketDataDTO.setStatus(rocketData.getStatus());
+        return ResponseEntity.ok().body(rocketDataDTO);
+    }
+
+    @PostMapping("/fueling")
+    public ResponseEntity<String> fuelingTheRocket() {
+        rocketHardware.fuelingTheRocket();
+        return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/sabotaging")
