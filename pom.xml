@@ -34,6 +34,7 @@
         <module>executive-service</module>
         <module>stage-hardware-mock-service</module>
         <module>payload-hardware-mock-service</module>
+        <module>logs-service</module>
     </modules>
 
     <dependencyManagement>
