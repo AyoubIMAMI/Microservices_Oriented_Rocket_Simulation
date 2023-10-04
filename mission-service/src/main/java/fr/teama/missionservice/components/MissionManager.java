@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import static java.lang.Thread.sleep;
+
 @Component
 public class MissionManager implements IMissionManager {
 
@@ -32,23 +34,29 @@ public class MissionManager implements IMissionManager {
     @Override
     public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("The mission is starting");
-
         rocketHardwareProxy.startLogging();
+
+        LoggerHelper.logInfo("Rocket preparation:");
+        Double rocketStatus = rocketHardwareProxy.checkRocket();
 
         boolean weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
         boolean rocketServiceReady = rocketDepartmentProxy.getRocketStatus().equals("GO");
-        boolean missionReady = weatherServiceReady && rocketServiceReady;
+        boolean missionReady = rocketStatus == 1.0 && weatherServiceReady && rocketServiceReady;
 
         logServiceMessage(weatherServiceReady, "Weather service");
         logServiceMessage(rocketServiceReady, "Rocket department service");
         logServiceMessage(missionReady, "Mission service");
 
+        LoggerHelper.logInfo("Rocket preparation complete");
+
         if (missionReady) {
+            LoggerHelper.logInfo("Rocket is on Internal Power");
             gettingNotifyInCaseOfRocketAnomaly();
             NotifyMissionStart();
             rocketDepartmentProxy.launchRocket();
             return ResponseEntity.ok().body("GO");
         } else {
+            LoggerHelper.logWarn("CANNOT LAUNCH ROCKET");
             return ResponseEntity.ok().body("NO GO");
         }
     }
