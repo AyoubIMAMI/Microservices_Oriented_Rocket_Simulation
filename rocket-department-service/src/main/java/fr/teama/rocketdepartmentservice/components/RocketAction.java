@@ -9,6 +9,8 @@ import fr.teama.rocketdepartmentservice.interfaces.proxy.IRocketHardwareProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static java.lang.Thread.sleep;
+
 @Component
 public class RocketAction implements IRocketAction {
 
@@ -25,9 +27,23 @@ public class RocketAction implements IRocketAction {
     }
 
     @Override
-    public void launchRocket() throws TelemetryServiceUnavailableException, RocketHardwareServiceUnavailableException {
-        rocketHardwareProxy.activateCurrentStage();
-        LoggerHelper.logInfo("The rocket is launching");
+    public void launchRocket() throws TelemetryServiceUnavailableException, RocketHardwareServiceUnavailableException,
+            InterruptedException {
+        for (int i = 60; i > 10; i-=10) {
+            LoggerHelper.logInfo("The mission will start in " + i + " seconds");
+            sleep(500);
+        }
+
+        for (int i = 10; i >= 0; i--) {
+            String unit = i > 1 ? " seconds" : " second";
+            LoggerHelper.logInfo("The mission will start in " + i + unit);
+            if (i == 3) {
+                LoggerHelper.logInfo("Main engine starting");
+                rocketHardwareProxy.activateCurrentStage();
+            }
+            sleep(500);
+        }
+        LoggerHelper.logInfo("Rocket launched");
         dataAsker.getNotificationOnEvents();
     }
 

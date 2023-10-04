@@ -6,7 +6,7 @@ import fr.teama.rocketdepartmentservice.exceptions.TelemetryServiceUnavailableEx
 public interface IRocketAction {
     void stageRocket() throws RocketHardwareServiceUnavailableException;
 
-    void launchRocket() throws TelemetryServiceUnavailableException, RocketHardwareServiceUnavailableException;
+    void launchRocket() throws TelemetryServiceUnavailableException, RocketHardwareServiceUnavailableException, InterruptedException;
 
     void slowDownRocket() throws RocketHardwareServiceUnavailableException;
 
