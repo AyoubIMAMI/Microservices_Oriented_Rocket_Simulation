@@ -81,6 +81,13 @@ services:
     ports:
       - 3008:8080
 
+  webcaster-service:
+    container_name: webcaster-service
+    image: "marsy/webcaster-service"
+    restart: always
+    ports:
+      - 3011:8080
+
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
   postgres:
     image: postgres:15.2

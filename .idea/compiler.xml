@@ -12,6 +12,7 @@
         <module name="executive-service" />
         <module name="payload-hardware-mock-service" />
         <module name="telemetry-service" />
+        <module name="webcaster-service" />
         <module name="stage-hardware-mock-service" />
         <module name="payload-service" />
         <module name="rocket-hardware-mock-service" />
@@ -33,6 +34,7 @@
       <module name="stage-hardware-mock-service" options="-parameters" />
       <module name="telemetry-service" options="-parameters" />
       <module name="weather-service" options="-parameters" />
+      <module name="webcaster-service" options="-parameters" />
     </option>
   </component>
 </project>
