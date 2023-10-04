@@ -1,15 +1,19 @@
 package fr.teama.missionservice.connectors;
 
 import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableException;
-import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.proxy.IRocketHardwareProxy;
+import fr.teama.missionservice.models.RocketData;
+import fr.teama.missionservice.models.StageData;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Objects;
+
+import static java.lang.Thread.sleep;
 
 @Component
 public class RocketHardwareProxy implements IRocketHardwareProxy {
@@ -54,4 +58,49 @@ public class RocketHardwareProxy implements IRocketHardwareProxy {
             throw new RocketHardwareServiceUnavailableException();
         }
     }
+
+    @Override
+    public Double checkRocket() throws RocketHardwareServiceUnavailableException {
+        try {
+            ResponseEntity<RocketData> response = restTemplate.getForEntity(apiBaseUrlHostAndPort +
+                    "/rocket-hardware/preparation", RocketData.class);
+            RocketData rocketData = response.getBody();
+            assert rocketData != null;
+
+            // fuel level infos
+            LoggerHelper.logInfo("Check rocket stages fuel level");
+            stagesDataLoggers(rocketData.getStages());
+            LoggerHelper.logInfo("Fueling the rocket stages in progress");
+            rocketData = restTemplate.postForEntity(apiBaseUrlHostAndPort +
+                    "/rocket-hardware/fueling", null, RocketData.class).getBody();
+            assert rocketData != null;
+            LoggerHelper.logInfo("Fueling complete");
+            stagesDataLoggers(rocketData.getStages());
+
+            // payload installation
+            LoggerHelper.logInfo("Payload installation in progress");
+            sleep(1000);
+            LoggerHelper.logInfo("Payload installation complete");
+
+            // status info
+            Double rocketStatus = rocketData.getStatus();
+            if (rocketStatus == 1.0) {
+                LoggerHelper.logInfo("Rocket status " + rocketData.getStatus() + " - OK");
+            } else {
+                LoggerHelper.logWarn("Rocket status " + rocketData.getStatus() + " - NOT OK");
+            }
+
+            return rocketStatus;
+        } catch (Exception e) {
+            LoggerHelper.logError("Hardware service is unavailable");
+            throw new RocketHardwareServiceUnavailableException();
+        }
+    }
+
+    void stagesDataLoggers(List<StageData> stages) {
+        for (StageData stage : stages) {
+            LoggerHelper.logInfo("Rocket stage " + stage.getStageLevel() + " - fuel level: " + stage.getFuel());
+        }
+    }
+
 }

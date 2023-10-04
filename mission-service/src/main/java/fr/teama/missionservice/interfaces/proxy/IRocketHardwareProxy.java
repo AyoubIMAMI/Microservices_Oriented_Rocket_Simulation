@@ -6,6 +6,6 @@ public interface IRocketHardwareProxy {
 
     void startLogging() throws RocketHardwareServiceUnavailableException;
     void stopLogging() throws RocketHardwareServiceUnavailableException;
-
     void rocketDestruction() throws RocketHardwareServiceUnavailableException;
+    Double checkRocket() throws RocketHardwareServiceUnavailableException;
 }
