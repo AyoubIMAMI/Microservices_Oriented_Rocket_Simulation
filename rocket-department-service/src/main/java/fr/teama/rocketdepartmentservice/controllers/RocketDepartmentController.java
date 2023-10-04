@@ -34,8 +34,9 @@ public class RocketDepartmentController {
     }
 
     @PostMapping("/launch")
-    public ResponseEntity<String> startRocket() throws TelemetryServiceUnavailableException, RocketHardwareServiceUnavailableException {
-        LoggerHelper.logInfo("Request received for start of mission");
+    public ResponseEntity<String> startRocket() throws TelemetryServiceUnavailableException,
+            RocketHardwareServiceUnavailableException, InterruptedException {
+        LoggerHelper.logInfo("Request received to launch the rocker in 60 seconds");
         rocketAction.launchRocket();
         return ResponseEntity.ok().body("OK");
     }
