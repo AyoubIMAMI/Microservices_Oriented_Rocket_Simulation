@@ -1,6 +1,8 @@
 package fr.teama.payloadservice.controllers;
 
 import fr.teama.payloadservice.controllers.dto.ErrorDTO;
+import fr.teama.payloadservice.exceptions.PayloadHardwareServiceUnavaibleException;
+import fr.teama.payloadservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.payloadservice.exceptions.TelemetryServiceUnavailableException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,6 +18,24 @@ public class PayloadControllerAdvice {
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setError("Telemetry service unavailable.");
         errorDTO.setDetails("The telemetry service is currently unavailable. Please try again later.");
+        return errorDTO;
+    }
+
+    @ExceptionHandler({RocketHardwareServiceUnavailableException.class})
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    public ErrorDTO handleExceptions(RocketHardwareServiceUnavailableException e) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("Rocket hardware service unavailable.");
+        errorDTO.setDetails("The rocket hardware service is currently unavailable. Please try again later.");
+        return errorDTO;
+    }
+
+    @ExceptionHandler({PayloadHardwareServiceUnavaibleException.class})
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    public ErrorDTO handleExceptions(PayloadHardwareServiceUnavaibleException e) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("Payload hardware service unavailable.");
+        errorDTO.setDetails("The payload hardware service is currently unavailable. Please try again later.");
         return errorDTO;
     }
 

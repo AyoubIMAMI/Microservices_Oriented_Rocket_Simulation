@@ -14,17 +14,6 @@ public class PayloadHardwareProxy implements IPayloadHardwareProxy {
     private String apiBaseUrlHostAndPort;
 
     private final RestTemplate restTemplate = new RestTemplate();
-    @Override
-    public void startOrbitalPosDispatch() throws PayloadHardwareServiceUnavaibleException {
-        try {
-            LoggerHelper.logInfo("Warn the payload hardware service to start dispatching");
-            ResponseEntity<String> response = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/payload-hardware/start-pos-dispatch", null, String.class);
-        } catch (Exception e) {
-            LoggerHelper.logError(e.toString());
-            LoggerHelper.logError("Payload hardware service unavailable");
-            throw new PayloadHardwareServiceUnavaibleException();
-        }
-    }
 
     @Override
     public void stopOrbitalPosDispatch() throws PayloadHardwareServiceUnavaibleException {

@@ -1,11 +1,13 @@
 package fr.teama.payloadservice.components;
 
 import fr.teama.payloadservice.exceptions.PayloadHardwareServiceUnavaibleException;
+import fr.teama.payloadservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.payloadservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.payloadservice.helpers.LoggerHelper;
 import fr.teama.payloadservice.interfaces.IPayloadReleaser;
 import fr.teama.payloadservice.interfaces.proxy.IMissionProxy;
 import fr.teama.payloadservice.interfaces.proxy.IPayloadHardwareProxy;
+import fr.teama.payloadservice.interfaces.proxy.IRocketHardwareProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -14,14 +16,14 @@ import org.springframework.stereotype.Component;
 public class PayloadReleaser implements IPayloadReleaser {
     @Autowired
     IMissionProxy missionProxy;
+
     @Autowired
-    IPayloadHardwareProxy payloadHardwareProxy;
+    IRocketHardwareProxy rocketHardwareProxy;
 
     @Override
-    public ResponseEntity<String> dropPayload() throws TelemetryServiceUnavailableException, PayloadHardwareServiceUnavaibleException {
-        LoggerHelper.logInfo("The payload has been dropped");
+    public ResponseEntity<String> dropPayload() throws TelemetryServiceUnavailableException, PayloadHardwareServiceUnavaibleException, RocketHardwareServiceUnavailableException {
+        ResponseEntity<String> res = rocketHardwareProxy.dropPayload();
         missionProxy.missionSuccessNotify();
-        payloadHardwareProxy.startOrbitalPosDispatch();
         return ResponseEntity.ok().body("Payload dropped");
     }
 }

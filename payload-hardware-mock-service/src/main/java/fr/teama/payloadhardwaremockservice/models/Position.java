@@ -38,9 +38,13 @@ public class Position {
     @Override
     public String toString() {
         return "{" +
-                "x=" + x +
-                ", y=" + y +
+                "x=" + roundDouble(x) +
+                ", y=" + roundDouble(y) +
                 ", altitude=" + altitude +
                 '}';
+    }
+
+    private Double roundDouble(Double value) {
+        return Math.round(value * 10.0) / 10.0;
     }
 }

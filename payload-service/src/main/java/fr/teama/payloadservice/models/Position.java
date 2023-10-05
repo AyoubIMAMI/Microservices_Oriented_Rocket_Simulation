@@ -1,12 +1,20 @@
-package fr.teama.telemetryservice.controllers.dto;
+package fr.teama.payloadservice.models;
 
-public class PositionDTO {
+import jakarta.persistence.Embeddable;
+
+@Embeddable
+public class Position {
     Double x;
     Double y;
     Double altitude;
 
-    public PositionDTO() {
+    public Position(Double x, Double y, Double altitude) {
+        this.x = x;
+        this.y = y;
+        this.altitude = altitude;
+    }
 
+    public Position() {
     }
 
     public Double getX() {

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class RocketDataDTO {
 
-    private Double altitude;
+    private PositionDTO position;
 
     private Double speed;
 
@@ -23,22 +23,20 @@ public class RocketDataDTO {
 
     @Override
     public String toString() {
-        return "RocketDataDTO{" +
-                "altitude=" + altitude +
+        return "RocketData{" +
+                "position=" + position +
                 ", speed=" + speed +
-                ", acceleration=" + acceleration +
                 ", stages=" + stages +
-                ", timestamp=" + timestamp +
                 ", status=" + status +
                 '}';
     }
 
-    public Double getAltitude() {
-        return altitude;
+    public PositionDTO getPosition() {
+        return position;
     }
 
-    public void setAltitude(Double altitude) {
-        this.altitude = altitude;
+    public void setPosition(PositionDTO position) {
+        this.position = position;
     }
 
     public Double getSpeed() {

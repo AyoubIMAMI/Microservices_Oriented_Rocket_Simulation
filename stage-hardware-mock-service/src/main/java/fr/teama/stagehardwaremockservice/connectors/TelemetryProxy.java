@@ -17,7 +17,6 @@ public class TelemetryProxy implements ITelemetryProxy {
 
     @Override
     public void sendStageData(StageData stageData) throws TelemetryServiceUnavailableException {
-        LoggerHelper.logInfo("Send stage data to telemetry service : " + stageData.toString());
         try {
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/send-stage-data", stageData, String.class);
         } catch (Exception e) {

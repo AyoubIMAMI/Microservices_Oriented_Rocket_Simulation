@@ -24,7 +24,7 @@ public class ExecutiveController {
 
     @PostMapping
     public ResponseEntity<String> missionStartWarning() throws TelemetryServiceUnavailableException {
-        LoggerHelper.logInfo("The mission has started");
+        LoggerHelper.logInfo("Notification of the start of the mission");
         return dataAsker.askStageHeightToTelemetry();
     }
 

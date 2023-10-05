@@ -2,14 +2,12 @@ package fr.teama.payloadhardwaremockservice.controllers;
 
 import fr.teama.payloadhardwaremockservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.payloadhardwaremockservice.helpers.LoggerHelper;
-import fr.teama.payloadhardwaremockservice.interfaces.IHardware;
+import fr.teama.payloadhardwaremockservice.interfaces.IPayloadHardware;
+import fr.teama.payloadhardwaremockservice.models.Position;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,18 +23,18 @@ public class PayloadHardwareController {
     public static final String BASE_URI = "/api/payload-hardware";
 
     @Autowired
-    private IHardware hardware;
+    private IPayloadHardware hardware;
 
     @PostMapping("/start-pos-dispatch")
-    public ResponseEntity<String> startOrbitalPosDispatch() {
-        LoggerHelper.logInfo("Start orbital position dispatch");
+    public ResponseEntity<String> startOrbitalPosDispatch(@RequestBody Position position) {
+        LoggerHelper.logInfo("Request received to start orbital position dispatch");
         // Create an ExecutorService with a fixed thread pool size
         ExecutorService executorService = Executors.newFixedThreadPool(1); // You can adjust the pool size as needed
 
         // Submit the hardware.startLogging() task to the executor
         executorService.submit(() -> {
             try {
-                hardware.startOrbitalPosDispatch();
+                hardware.startOrbitalPosDispatch(position);
             } catch (TelemetryServiceUnavailableException e) {
                 // Handle the exception as needed
                 LoggerHelper.logError(e.toString());

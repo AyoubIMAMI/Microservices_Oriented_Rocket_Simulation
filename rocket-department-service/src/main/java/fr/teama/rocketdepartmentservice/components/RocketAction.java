@@ -34,12 +34,10 @@ public class RocketAction implements IRocketAction {
     @Override
     public void slowDownRocket() throws RocketHardwareServiceUnavailableException {
         rocketHardwareProxy.slowDown();
-        LoggerHelper.logInfo("Ask rocket-hardware to slow down");
     }
 
     @Override
     public void activeStage() throws RocketHardwareServiceUnavailableException {
         rocketHardwareProxy.activateCurrentStage();
-        LoggerHelper.logInfo("Ask rocket-hardware to speed up");
     }
 }

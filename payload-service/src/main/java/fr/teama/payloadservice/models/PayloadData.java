@@ -1,4 +1,4 @@
-package fr.teama.payloadservice.entities;
+package fr.teama.payloadservice.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

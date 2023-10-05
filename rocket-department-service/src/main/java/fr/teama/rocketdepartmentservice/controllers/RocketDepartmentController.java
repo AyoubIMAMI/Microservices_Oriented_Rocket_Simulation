@@ -35,28 +35,28 @@ public class RocketDepartmentController {
 
     @PostMapping("/launch")
     public ResponseEntity<String> startRocket() throws TelemetryServiceUnavailableException, RocketHardwareServiceUnavailableException {
-        LoggerHelper.logInfo("Request received for start of mission");
+        LoggerHelper.logInfo("Request received for launching the rocket");
         rocketAction.launchRocket();
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/stage")
     public ResponseEntity<String> stageRocket() throws RocketHardwareServiceUnavailableException {
-        LoggerHelper.logInfo("Request received rocket staging");
+        LoggerHelper.logInfo("Notification received, fuel condition reached for staging the rocket");
         rocketAction.stageRocket();
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/enters-q")
     public ResponseEntity<String> slowDownRocket() throws RocketHardwareServiceUnavailableException {
-        LoggerHelper.logInfo("Request received rocket enters Max Q => slow down");
+        LoggerHelper.logInfo("Notification received, rocket enters Max Q => slow down");
         rocketAction.slowDownRocket();
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/leaves-q")
     public ResponseEntity<String> speedUpRocket() throws RocketHardwareServiceUnavailableException {
-        LoggerHelper.logInfo("Request received rocket leaves Max Q => speed up");
+        LoggerHelper.logInfo("Notification received, rocket leaves Max Q => speed up");
         rocketAction.activeStage();
         return ResponseEntity.ok().body("OK");
     }

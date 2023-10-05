@@ -10,27 +10,38 @@ public class StageDataDTO {
 
     private boolean isActivated;
 
-    private Double altitude;
+    private PositionDTO position;
 
     private Double speed;
 
     private Double acceleration;
 
+    private Double angle;
+
     private LocalDateTime timestamp;
+
+    private boolean legsDeployed;
 
     public StageDataDTO() {
     }
 
     @Override
     public String toString() {
-        return "StageDataDTO{" +
+        return "StageData{" +
                 "stageLevel=" + stageLevel +
                 ", fuel=" + fuel +
                 ", isActivated=" + isActivated +
-                ", altitude=" + altitude +
+                '}';
+    }
+
+    public String toStringComplete() {
+        return "StageData{" +
+                "fuel=" + fuel +
+                ", isActivated=" + isActivated +
+                ", position=" + position +
                 ", speed=" + speed +
-                ", acceleration=" + acceleration +
-                ", timestamp=" + timestamp +
+                ", angle=" + roundDouble(angle) +
+                ", legsDeployed=" + legsDeployed +
                 '}';
     }
 
@@ -58,12 +69,12 @@ public class StageDataDTO {
         this.stageLevel = stageLevel;
     }
 
-    public Double getAltitude() {
-        return altitude;
+    public PositionDTO getPosition() {
+        return position;
     }
 
-    public void setAltitude(Double altitude) {
-        this.altitude = altitude;
+    public void setPosition(PositionDTO position) {
+        this.position = position;
     }
 
     public Double getSpeed() {
@@ -88,5 +99,25 @@ public class StageDataDTO {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Double getAngle() {
+        return angle;
+    }
+
+    public void setAngle(Double angle) {
+        this.angle = angle;
+    }
+
+    public boolean isLegsDeployed() {
+        return legsDeployed;
+    }
+
+    public void setLegsDeployed(boolean legsDeployed) {
+        this.legsDeployed = legsDeployed;
+    }
+
+    private Double roundDouble(Double value) {
+        return Math.round(value * 10.0) / 10.0;
     }
 }
