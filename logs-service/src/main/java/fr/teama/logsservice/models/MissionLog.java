@@ -1,22 +1,37 @@
 package fr.teama.logsservice.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+
+import java.time.LocalDateTime;
 
 @Entity
 public class MissionLog {
     @Id
+    @GeneratedValue
     private Long id;
     private String serviceName;
     private String text;
-    private double timestamp;
+    private LocalDateTime date;
 
     public MissionLog() {
     }
 
-    public MissionLog(String serviceName, String text) {
+    public MissionLog(String serviceName, String text, LocalDateTime date) {
         this.serviceName = serviceName;
         this.text = text;
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "MissionLog{" +
+                "id=" + id +
+                ", serviceName='" + serviceName + '\'' +
+                ", text='" + text + '\'' +
+                ", date=" + date +
+                '}';
     }
 
     public void setId(Long id) {
@@ -41,5 +56,13 @@ public class MissionLog {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 }

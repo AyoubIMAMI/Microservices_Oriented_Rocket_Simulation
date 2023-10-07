@@ -114,10 +114,9 @@ services:
 
   postgres-logs:
     image: postgres:15.2
-    container_name: database-logs
     environment:
       - POSTGRES_PASSWORD=postgrespass
       - POSTGRES_USER=postgresuser
       - POSTGRES_DB=database-logs
     ports:
-      - 3008:5432
+      - 3012:5432
