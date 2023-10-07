@@ -2,7 +2,6 @@ package fr.teama.executiveservice.connectors;
 
 import fr.teama.executiveservice.connectors.externalDTO.MissionLogDTO;
 import fr.teama.executiveservice.helpers.LoggerHelper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;

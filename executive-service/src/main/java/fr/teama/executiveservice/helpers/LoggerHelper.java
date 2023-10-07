@@ -1,10 +1,8 @@
 package fr.teama.executiveservice.helpers;
 
 import fr.teama.executiveservice.connectors.LogsProxy;
-import fr.teama.executiveservice.exceptions.LogsServiceUnavailableException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class LoggerHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggerHelper.class);
