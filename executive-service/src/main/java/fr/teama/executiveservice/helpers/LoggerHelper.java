@@ -1,7 +1,10 @@
 package fr.teama.executiveservice.helpers;
 
+import fr.teama.executiveservice.connectors.LogsProxy;
+import fr.teama.executiveservice.exceptions.LogsServiceUnavailableException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class LoggerHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggerHelper.class);
@@ -10,13 +13,16 @@ public class LoggerHelper {
 
     public static void logInfo(String logging) {
         LOGGER.info(SERVICE_COLOR + SERVICE_NAME + ": \u001B[32m" + logging + "\u001B[0m");
+        LogsProxy.saveNewLog(SERVICE_NAME, logging);
     }
 
     public static void logWarn(String logging) {
         LOGGER.warn(SERVICE_COLOR + SERVICE_NAME + ": \u001B[33m" + logging + "\u001B[0m");
+        LogsProxy.saveNewLog(SERVICE_NAME, logging);
     }
 
     public static void logError(String logging) {
         LOGGER.error(SERVICE_COLOR + SERVICE_NAME + ": \u001B[31m" + logging + "\u001B[0m");
+        LogsProxy.saveNewLog(SERVICE_NAME, logging);
     }
 }
