@@ -1,7 +1,8 @@
-package fr.teama.executiveservice.connectors;
+package fr.teama.payloadservice.connectors;
 
-import fr.teama.executiveservice.connectors.externalDTO.MissionLogDTO;
-import fr.teama.executiveservice.helpers.LoggerHelper;
+
+import fr.teama.payloadservice.connectors.externalDTO.MissionLogDTO;
+import fr.teama.payloadservice.helpers.LoggerHelper;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
-package fr.teama.executiveservice.connectors;
+package fr.teama.weatherservice.connectors;
 
-import fr.teama.executiveservice.connectors.externalDTO.MissionLogDTO;
-import fr.teama.executiveservice.helpers.LoggerHelper;
+
+import fr.teama.weatherservice.connectors.externalDTO.MissionLogDTO;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;

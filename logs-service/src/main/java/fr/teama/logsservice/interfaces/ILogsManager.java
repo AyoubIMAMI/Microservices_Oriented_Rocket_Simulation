@@ -9,5 +9,5 @@ public interface ILogsManager {
     void saveLog(String serviceName, String text, LocalDateTime date);
     List<MissionLog> getAllLogs();
 
-    void clearLogs();
+    void resetDb();
 }

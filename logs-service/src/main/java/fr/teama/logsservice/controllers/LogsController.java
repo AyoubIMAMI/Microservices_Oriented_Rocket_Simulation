@@ -23,7 +23,7 @@ public class LogsController {
 
     @PostMapping("/save")
     public ResponseEntity<String> saveNewLog(@RequestBody MissionLogDTO missionLogDTO) {
-        LoggerHelper.logInfo("Request to store a log from " + missionLogDTO.getServiceName());
+//        LoggerHelper.logInfo("Request to store a log from " + missionLogDTO.getServiceName());
         logsManager.saveLog(missionLogDTO.getServiceName(), missionLogDTO.getText(), missionLogDTO.getDate());
         return ResponseEntity.ok().body("Log successfully saved");
     }
@@ -34,10 +34,10 @@ public class LogsController {
         return ResponseEntity.ok().body(logsManager.getAllLogs());
     }
 
-    @PostMapping("/clear")
-    public ResponseEntity<String> clearLogs() {
-        LoggerHelper.logInfo("Request received to clear all logs");
-        logsManager.clearLogs();
+    @PostMapping("/reset-db")
+    public ResponseEntity<String> resetDb() {
+        LoggerHelper.logInfo("Resetting database");
+        logsManager.resetDb();
         return ResponseEntity.ok().body("Logs successfully cleared");
     }
 }

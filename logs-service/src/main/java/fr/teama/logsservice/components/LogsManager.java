@@ -19,7 +19,7 @@ public class LogsManager implements ILogsManager {
     public void saveLog(String serviceName, String text, LocalDateTime date) {
         MissionLog missionLog = new MissionLog(serviceName, text, date);
         missionLogRepository.save(missionLog);
-        LoggerHelper.logInfo("New mission log saved : " + missionLog);
+//        LoggerHelper.logInfo("New mission log saved : " + missionLog);
         missionLogRepository.save(missionLog);
     }
 
@@ -29,7 +29,7 @@ public class LogsManager implements ILogsManager {
     }
 
     @Override
-    public void clearLogs() {
+    public void resetDb() {
         missionLogRepository.deleteAll();
     }
 }
