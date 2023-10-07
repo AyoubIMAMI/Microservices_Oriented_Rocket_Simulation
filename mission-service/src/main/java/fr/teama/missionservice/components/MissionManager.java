@@ -29,6 +29,10 @@ public class MissionManager implements IMissionManager {
     @Autowired
     ITelemetryProxy telemetryProxy;
 
+    @Autowired
+    ILogsProxy logsProxy;
+
+
     @Override
     public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("The mission is starting");
@@ -54,15 +58,17 @@ public class MissionManager implements IMissionManager {
     }
 
     @Override
-    public void missionSuccess() throws RocketHardwareServiceUnavailableException {
+    public void missionSuccess() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
         LoggerHelper.logWarn("The mission has succeed !!!");
         rocketHardwareProxy.stopLogging();
+        LoggerHelper.logInfoWithoutSaving("All logs of the missions : " + logsProxy.getAllLogs().getBody());
     }
 
     @Override
-    public void missionFailed() throws RocketHardwareServiceUnavailableException {
+    public void missionFailed() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
         LoggerHelper.logWarn("The mission has failed due to unexpected events");
         rocketHardwareProxy.stopLogging();
+        LoggerHelper.logInfoWithoutSaving("All logs of the missions : " + logsProxy.getAllLogs().getBody());
     }
 
     private void logServiceMessage(boolean serviceReady, String serviceName) {

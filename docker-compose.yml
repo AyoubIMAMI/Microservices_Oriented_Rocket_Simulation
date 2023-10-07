@@ -81,12 +81,22 @@ services:
     ports:
       - 3008:8080
 
+  logs-service:
+    container_name: logs-service
+    image: "marsy/logs-service"
+    ports:
+      - 3011:8080
+    environment:
+      - POSTGRES_HOST=postgres-logs:5432
+    depends_on:
+      - postgres-logs
+
   webcaster-service:
     container_name: webcaster-service
     image: "marsy/webcaster-service"
     restart: always
     ports:
-      - 3011:8080
+      - 3013:8080
 
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
   postgres:
