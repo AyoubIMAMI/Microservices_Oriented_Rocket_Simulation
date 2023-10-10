@@ -38,7 +38,7 @@ public class RocketHardware implements IRocketHardware {
     @Override
     public void startLogging() throws TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("Start logging");
-        rocket = new RocketData(List.of(new StageData(1, 100.0), new StageData(2, 250.0)));
+        rocket = new RocketData(List.of(new StageData(1, 0.0), new StageData(2, 0.0)));
 
         sendLog = true;
 

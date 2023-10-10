@@ -62,21 +62,20 @@ public class RocketHardwareProxy implements IRocketHardwareProxy {
     @Override
     public Double checkRocket() throws RocketHardwareServiceUnavailableException {
         try {
+            // fuel level infos
+            LoggerHelper.logInfo("Ask to the rocket hardware the stages fuel level");
             ResponseEntity<RocketData> response = restTemplate.getForEntity(apiBaseUrlHostAndPort +
                     "/rocket-hardware/preparation", RocketData.class);
             RocketData rocketData = response.getBody();
             assert rocketData != null;
-
-            // fuel level infos
-            LoggerHelper.logInfo("Ask to the rocket hardware the stages fuel level");
             stagesDataLoggers(rocketData.getStages());
             LoggerHelper.logInfo("Fueling the rocket stages in progress");
             restTemplate.postForEntity(apiBaseUrlHostAndPort +
                     "/rocket-hardware/fueling", null, String.class);
             LoggerHelper.logInfo("Fueling complete");
             LoggerHelper.logInfo("Ask to the rocket hardware the stages fuel level");
-            rocketData = restTemplate.postForEntity(apiBaseUrlHostAndPort +
-                    "/rocket-hardware/preparation", null, RocketData.class).getBody();
+            rocketData = restTemplate.getForEntity(apiBaseUrlHostAndPort +
+                    "/rocket-hardware/preparation", RocketData.class).getBody();
             assert rocketData != null;
             stagesDataLoggers(rocketData.getStages());
 

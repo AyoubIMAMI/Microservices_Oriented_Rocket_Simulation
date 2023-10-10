@@ -34,15 +34,15 @@ public class RocketAction implements IRocketAction {
             sleep(500);
         }
 
-        for (int i = 10; i >= 0; i--) {
-            String unit = i > 1 ? " seconds" : " second";
-            LoggerHelper.logInfo("The mission will start in " + i + unit);
-            if (i == 3) {
-                LoggerHelper.logInfo("Main engine starting");
-                rocketHardwareProxy.activateCurrentStage();
-            }
+        for (int i = 10; i > 3; i--) {
+            LoggerHelper.logInfo("The mission will start in " + i + " seconds");
             sleep(500);
         }
+        LoggerHelper.logInfo("The mission will start in 3 seconds");
+        LoggerHelper.logInfo("Main engine starting");
+        rocketHardwareProxy.activateCurrentStage();
+        LoggerHelper.logInfo("The mission will start in 2 seconds");
+        LoggerHelper.logInfo("The mission will start in 1 second");
         LoggerHelper.logInfo("Rocket launched");
         dataAsker.getNotificationOnEvents();
     }
