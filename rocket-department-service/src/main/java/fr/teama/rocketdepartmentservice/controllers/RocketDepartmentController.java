@@ -7,6 +7,7 @@ import fr.teama.rocketdepartmentservice.helpers.LoggerHelper;
 import fr.teama.rocketdepartmentservice.interfaces.IDataAsker;
 import fr.teama.rocketdepartmentservice.interfaces.IRocketAnalyzer;
 import fr.teama.rocketdepartmentservice.interfaces.IRocketAction;
+import fr.teama.rocketdepartmentservice.interfaces.proxy.IWebcasterProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class RocketDepartmentController {
     private IRocketAction rocketAction;
 
     @Autowired
-    private IDataAsker dataAsker;
+    private IWebcasterProxy webcasterProxy;
 
     @GetMapping("/status")
     public ResponseEntity<String> getRocketStatus() {
@@ -50,16 +51,18 @@ public class RocketDepartmentController {
     }
 
     @PostMapping("/enters-q")
-    public ResponseEntity<String> slowDownRocket() throws RocketHardwareServiceUnavailableException {
+    public ResponseEntity<String> slowDownRocket() throws RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, rocket enters Max Q => slow down");
         rocketAction.slowDownRocket();
+        webcasterProxy.warnWebcaster("Rocket enters Max Q => slow down");
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/leaves-q")
-    public ResponseEntity<String> speedUpRocket() throws RocketHardwareServiceUnavailableException {
+    public ResponseEntity<String> speedUpRocket() throws RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, rocket leaves Max Q => speed up");
         rocketAction.activeStage();
+        webcasterProxy.warnWebcaster("Rocket leaves Max Q => speed up");
         return ResponseEntity.ok().body("OK");
     }
 
