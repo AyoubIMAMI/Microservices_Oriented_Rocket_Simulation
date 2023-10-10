@@ -63,6 +63,7 @@ function scenario2() {
   printf "\n\033[0;33m## Reset databases and mock hardware for the next scenario\n\033[0m\n"
   curl --silent --show-error --output /dev/null --location --request POST http://localhost:3003/api/telemetry/reset-db
   curl --silent --show-error --output /dev/null --location --request POST http://localhost:3004/api/payload/reset-db
+  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3011/api/logs/reset-db
 
   printf "\n\033[0;34m========================================\033[0m
 

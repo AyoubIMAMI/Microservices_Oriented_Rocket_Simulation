@@ -5,6 +5,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface IMissionManager {
     ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException;
-    void missionFailed() throws RocketHardwareServiceUnavailableException;
-    void missionSuccess() throws RocketHardwareServiceUnavailableException;
+    void missionFailed() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException;
+    void missionSuccess() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException;
 }

@@ -27,13 +27,13 @@ public class MissionController {
         return missionManager.startMission();
     }
     @PostMapping("/success")
-    public ResponseEntity<String> endMission() throws RocketHardwareServiceUnavailableException {
+    public ResponseEntity<String> endMission() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
         missionManager.missionSuccess();
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/rocket-hardware-destruction")
-    public ResponseEntity<String> rocketHardwareDestructionOrder() throws RocketHardwareServiceUnavailableException {
+    public ResponseEntity<String> rocketHardwareDestructionOrder() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
         rocketHardwareProxy.rocketDestruction();
         missionManager.missionFailed();
         return ResponseEntity.ok("Destruction order sent");
