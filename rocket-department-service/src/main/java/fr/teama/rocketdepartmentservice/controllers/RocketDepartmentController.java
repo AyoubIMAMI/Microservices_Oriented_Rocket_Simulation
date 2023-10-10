@@ -2,6 +2,7 @@ package fr.teama.rocketdepartmentservice.controllers;
 
 import fr.teama.rocketdepartmentservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.exceptions.TelemetryServiceUnavailableException;
+import fr.teama.rocketdepartmentservice.exceptions.WebcasterServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.helpers.LoggerHelper;
 import fr.teama.rocketdepartmentservice.interfaces.IDataAsker;
 import fr.teama.rocketdepartmentservice.interfaces.IRocketAnalyzer;
@@ -35,7 +36,7 @@ public class RocketDepartmentController {
 
     @PostMapping("/launch")
     public ResponseEntity<String> startRocket() throws TelemetryServiceUnavailableException,
-            RocketHardwareServiceUnavailableException, InterruptedException {
+            RocketHardwareServiceUnavailableException, InterruptedException, WebcasterServiceUnavailableException {
         LoggerHelper.logInfo("Request received to launch the rocket in 60 seconds");
         rocketAction.launchRocket();
         return ResponseEntity.ok().body("OK");
