@@ -70,8 +70,9 @@ public class MissionManager implements IMissionManager {
     }
 
     @Override
-    public void missionSuccess() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
+    public void missionSuccess() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException, WebcasterServiceUnavailableException {
         LoggerHelper.logWarn("The mission has succeed !!!");
+        webcasterProxy.warnWebcaster("The mission has succeed !!!");
         rocketHardwareProxy.stopLogging();
         LoggerHelper.logInfoWithoutSaving("All logs of the missions : " + logsProxy.getAllLogs().getBody());
     }
