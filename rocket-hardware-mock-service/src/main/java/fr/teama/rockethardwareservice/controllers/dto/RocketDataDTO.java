@@ -1,19 +1,17 @@
 package fr.teama.rockethardwareservice.controllers.dto;
 
-import fr.teama.rockethardwareservice.models.StageData;
-
 import java.util.List;
 
 public class RocketDataDTO {
 
-    private List<StageData> stages;
     private Double status;
+    private List<StageDataDTO> stages;
 
-    public List<StageData> getStages() {
+    public List<StageDataDTO> getStages() {
         return stages;
     }
 
-    public void setStages(List<StageData> stages) {
+    public void setStages(List<StageDataDTO> stages) {
         this.stages = stages;
     }
 
@@ -23,5 +21,13 @@ public class RocketDataDTO {
 
     public void setStatus(Double status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "RocketData{" +
+                ", stages=" + stages +
+                ", status=" + status +
+                '}';
     }
 }

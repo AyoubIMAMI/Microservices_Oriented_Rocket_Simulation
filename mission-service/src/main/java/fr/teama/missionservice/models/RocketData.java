@@ -7,11 +7,6 @@ public class RocketData {
     private List<StageData> stages;
     private Double status;
 
-    public RocketData(List<StageData> stages, Double status) {
-        this.stages = stages;
-        this.status = status;
-    }
-
     public List<StageData> getStages() {
         return stages;
     }

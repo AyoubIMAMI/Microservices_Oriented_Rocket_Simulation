@@ -1,16 +1,20 @@
 package fr.teama.rockethardwareservice.controllers;
 
 import fr.teama.rockethardwareservice.controllers.dto.RocketDataDTO;
+import fr.teama.rockethardwareservice.controllers.dto.StageDataDTO;
 import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.helpers.LoggerHelper;
 import fr.teama.rockethardwareservice.interfaces.IRocketHardware;
 import fr.teama.rockethardwareservice.models.RocketData;
+import fr.teama.rockethardwareservice.models.StageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -55,14 +59,31 @@ public class RocketHardwareController {
         return ResponseEntity.status(HttpStatus.OK).body("Logging stopped successfully");
     }
 
-    @GetMapping("/preparation")
+    @GetMapping(path = "/preparation", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<RocketDataDTO> getRocketData() {
         LoggerHelper.logInfo("Request received to send stages fuel level");
         RocketData rocketData = rocketHardware.getRocketData();
+
+        List<StageDataDTO> stageDataDTOList = getStageDataDTOS(rocketData);
+
         RocketDataDTO rocketDataDTO = new RocketDataDTO();
-        rocketDataDTO.setStages(rocketData.getStages());
         rocketDataDTO.setStatus(rocketData.getStatus());
+        rocketDataDTO.setStages(stageDataDTOList);
+
         return ResponseEntity.ok().body(rocketDataDTO);
+    }
+
+    private static List<StageDataDTO> getStageDataDTOS(RocketData rocketData) {
+        List<StageDataDTO> stageDataDTOList = new ArrayList<>();
+        List<StageData> stageDataList = rocketData.getStages();
+
+        for (StageData stageData : stageDataList) {
+            StageDataDTO stageDataDTO = new StageDataDTO();
+            stageDataDTO.setStageLevel(stageData.getStageLevel());
+            stageDataDTO.setFuel(stageData.getFuel());
+            stageDataDTOList.add(stageDataDTO);
+        }
+        return stageDataDTOList;
     }
 
     @PostMapping("/fueling")

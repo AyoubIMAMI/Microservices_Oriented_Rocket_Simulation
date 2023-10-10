@@ -5,11 +5,6 @@ public class StageData {
     private int stageLevel;
     private Double fuel;
 
-    public StageData(int stageLevel, Double fuel) {
-        this.stageLevel = stageLevel;
-        this.fuel = fuel;
-    }
-
     public int getStageLevel() {
         return stageLevel;
     }

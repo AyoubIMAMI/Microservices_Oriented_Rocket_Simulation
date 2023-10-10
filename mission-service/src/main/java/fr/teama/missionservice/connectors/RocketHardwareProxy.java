@@ -72,7 +72,7 @@ public class RocketHardwareProxy implements IRocketHardwareProxy {
             stagesDataLoggers(rocketData.getStages());
             LoggerHelper.logInfo("Fueling the rocket stages in progress");
             restTemplate.postForEntity(apiBaseUrlHostAndPort +
-                    "/rocket-hardware/fueling", null, RocketData.class).getBody();
+                    "/rocket-hardware/fueling", null, String.class);
             LoggerHelper.logInfo("Fueling complete");
             LoggerHelper.logInfo("Ask to the rocket hardware the stages fuel level");
             rocketData = restTemplate.postForEntity(apiBaseUrlHostAndPort +
@@ -96,6 +96,7 @@ public class RocketHardwareProxy implements IRocketHardwareProxy {
             return rocketStatus;
         } catch (Exception e) {
             LoggerHelper.logError("Hardware service is unavailable");
+            LoggerHelper.logError(String.valueOf(e));
             throw new RocketHardwareServiceUnavailableException();
         }
     }
