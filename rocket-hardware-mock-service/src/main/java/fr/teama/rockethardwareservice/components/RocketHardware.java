@@ -129,7 +129,7 @@ public class RocketHardware implements IRocketHardware {
 
     @Override
     public void fuelingTheRocket() {
-        double fuelLevel = 120.0;
+        double fuelLevel = 105.0;
         for (StageData stage : rocket.getStages()) {
             stage.setFuel(fuelLevel);
             fuelLevel += 150.0;
