@@ -104,6 +104,7 @@ public class RocketHardware implements IRocketHardware {
 
     @Override
     public void stageRocket() throws StageHardwareServiceUnavailableException {
+        LoggerHelper.logInfo("Main engine cut-off");
         LoggerHelper.logInfo("Stage rocket physically");
         StageData stageToDetach = rocket.getStages().get(0);
         rocket.setStages(rocket.getStages().subList(1, rocket.getStages().size()));
