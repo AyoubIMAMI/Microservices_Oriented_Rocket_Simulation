@@ -1,6 +1,5 @@
 package fr.teama.missionservice.connectors;
 
-import fr.teama.missionservice.exceptions.WeatherServiceUnavailableException;
 import fr.teama.missionservice.exceptions.WebcasterServiceUnavailableException;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.proxy.IWebcasterProxy;
@@ -20,6 +19,7 @@ public class WebcasterProxy implements IWebcasterProxy {
             restTemplate.postForEntity(apiBaseUrlHostAndPort + "/webcaster", logs, String.class);
         } catch (Exception e) {
             LoggerHelper.logError("Webcaster service is unavailable");
+            LoggerHelper.logError(e.toString());
             throw new WebcasterServiceUnavailableException();
         }
     }
