@@ -27,7 +27,7 @@ public class MissionController {
         return missionManager.startMission();
     }
     @PostMapping("/success")
-    public ResponseEntity<String> endMission() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
+    public ResponseEntity<String> endMission() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException, WebcasterServiceUnavailableException {
         missionManager.missionSuccess();
         return ResponseEntity.ok().body("OK");
     }
