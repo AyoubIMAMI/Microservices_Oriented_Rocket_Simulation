@@ -29,6 +29,8 @@ compile_dir "stage-hardware-mock-service"
 
 compile_dir "logs-service"
 
+compile_dir "webcaster-service"
+
 # remove # to add pause in script execution
 #read -p "** Press any key to continue... "
 
