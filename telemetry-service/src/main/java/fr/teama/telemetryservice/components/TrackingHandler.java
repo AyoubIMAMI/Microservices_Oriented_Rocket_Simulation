@@ -110,6 +110,9 @@ public class TrackingHandler implements ITelemetryNotifier {
                     case "/rocket/leaves-q":
                         rocketDepartmentProxy.heightReached(tracking);
                         break;
+                    case "/rocket/fairing-altitude":
+                        rocketDepartmentProxy.heightReached(tracking);
+                        break;
                 }
                 break;
             case "payload":

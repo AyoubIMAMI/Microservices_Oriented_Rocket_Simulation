@@ -56,4 +56,10 @@ public class RocketAction implements IRocketAction {
     public void activeStage() throws RocketHardwareServiceUnavailableException {
         rocketHardwareProxy.activateCurrentStage();
     }
+
+    @Override
+    public void fairing() throws RocketHardwareServiceUnavailableException {
+        LoggerHelper.logInfo("The rocket department wants the rocket hardware to eject the fairing");
+        rocketHardwareProxy.fairing();
+    }
 }

@@ -11,4 +11,6 @@ public interface IRocketAction {
     void slowDownRocket() throws RocketHardwareServiceUnavailableException;
 
     void activeStage() throws RocketHardwareServiceUnavailableException;
+
+    void fairing() throws RocketHardwareServiceUnavailableException;
 }

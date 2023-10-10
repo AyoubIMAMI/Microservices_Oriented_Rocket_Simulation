@@ -134,4 +134,11 @@ public class RocketHardwareController {
         rocketHardware.dropPayload();
         return ResponseEntity.ok().body("OK");
     }
+
+    @PostMapping("/fairing")
+    public ResponseEntity<String> fairing() {
+        LoggerHelper.logInfo("Request received to deploy the fairing");
+        rocketHardware.fairing();
+        return ResponseEntity.ok().body("OK");
+    }
 }

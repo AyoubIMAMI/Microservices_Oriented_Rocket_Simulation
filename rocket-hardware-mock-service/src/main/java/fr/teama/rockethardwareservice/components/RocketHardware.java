@@ -142,4 +142,9 @@ public class RocketHardware implements IRocketHardware {
         LoggerHelper.logInfo("Drop payload physically");
         payloadHardwareProxy.startOrbitalPosDispatch(rocket.getPosition());
     }
+
+    @Override
+    public void fairing() {
+        LoggerHelper.logInfo("Eject fairing physically");
+    }
 }

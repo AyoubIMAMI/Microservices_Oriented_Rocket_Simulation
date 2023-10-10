@@ -61,4 +61,13 @@ public class RocketDepartmentController {
         rocketAction.activeStage();
         return ResponseEntity.ok().body("OK");
     }
+
+    @PostMapping("/fairing-altitude")
+    public ResponseEntity<String> fairingAltitude() throws RocketHardwareServiceUnavailableException {
+        LoggerHelper.logInfo("Notification received, rocket reaches the orbit altitude");
+        rocketAction.fairing();
+        LoggerHelper.logInfo("The rocket department wants the second engine to cut-off");
+        rocketAction.slowDownRocket();
+        return ResponseEntity.ok().body("OK");
+    }
 }

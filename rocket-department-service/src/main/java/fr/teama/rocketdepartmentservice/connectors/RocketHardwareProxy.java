@@ -48,4 +48,15 @@ public class RocketHardwareProxy implements IRocketHardwareProxy {
             throw new RocketHardwareServiceUnavailableException();
         }
     }
+
+    @Override
+    public void fairing() throws RocketHardwareServiceUnavailableException {
+        try {
+            LoggerHelper.logInfo("Inform the rocket hardware service to deploy the fairing");
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket-hardware/fairing", null, String.class);
+        } catch (Exception e) {
+            LoggerHelper.logError("Hardware service unavailable");
+            throw new RocketHardwareServiceUnavailableException();
+        }
+    }
 }

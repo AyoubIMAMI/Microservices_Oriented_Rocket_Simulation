@@ -10,4 +10,5 @@ public interface IRocketHardwareProxy {
 
     void slowDown() throws RocketHardwareServiceUnavailableException;
 
+    void fairing() throws RocketHardwareServiceUnavailableException;
 }
