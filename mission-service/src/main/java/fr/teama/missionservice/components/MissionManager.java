@@ -58,6 +58,7 @@ public class MissionManager implements IMissionManager {
 
         if (missionReady) {
             LoggerHelper.logInfo("Rocket is on Internal Power");
+            webcasterProxy.warnWebcaster("Rocket is on Internal Power");
             gettingNotifyInCaseOfRocketAnomaly();
             NotifyMissionStart();
             rocketDepartmentProxy.launchRocket();
