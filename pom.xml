@@ -35,6 +35,7 @@
         <module>stage-hardware-mock-service</module>
         <module>payload-hardware-mock-service</module>
         <module>logs-service</module>
+        <module>webcaster-service</module>
     </modules>
 
     <dependencyManagement>
