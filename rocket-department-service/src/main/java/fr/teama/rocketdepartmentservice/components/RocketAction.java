@@ -26,9 +26,11 @@ public class RocketAction implements IRocketAction {
     IWebcasterProxy webcasterProxy;
 
     @Override
-    public void stageRocket() throws RocketHardwareServiceUnavailableException {
+    public void stageRocket() throws RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException {
         rocketHardwareProxy.stageRocket();
+        webcasterProxy.warnWebcaster("Main engine cut-off. Staging separation");
         rocketHardwareProxy.activateCurrentStage();
+        webcasterProxy.warnWebcaster("Second engine starting");
     }
 
     @Override

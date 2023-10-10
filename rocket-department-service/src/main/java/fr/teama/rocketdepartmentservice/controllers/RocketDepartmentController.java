@@ -44,7 +44,7 @@ public class RocketDepartmentController {
     }
 
     @PostMapping("/stage")
-    public ResponseEntity<String> stageRocket() throws RocketHardwareServiceUnavailableException {
+    public ResponseEntity<String> stageRocket() throws RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, fuel condition reached for staging the rocket");
         rocketAction.stageRocket();
         return ResponseEntity.ok().body("OK");
@@ -67,11 +67,13 @@ public class RocketDepartmentController {
     }
 
     @PostMapping("/fairing-altitude")
-    public ResponseEntity<String> fairingAltitude() throws RocketHardwareServiceUnavailableException {
+    public ResponseEntity<String> fairingAltitude() throws RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, rocket reaches the orbit altitude");
         rocketAction.fairing();
+        webcasterProxy.warnWebcaster("Rocket reaches the orbit altitude => fairing");
         LoggerHelper.logInfo("The rocket department wants the second engine to cut-off");
         rocketAction.slowDownRocket();
+        webcasterProxy.warnWebcaster("Second engine cut-off");
         return ResponseEntity.ok().body("OK");
     }
 }
