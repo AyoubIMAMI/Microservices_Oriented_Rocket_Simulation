@@ -7,8 +7,8 @@ public class PayloadData {
 
     private LocalDateTime timestamp;
 
-    public PayloadData() {
-        this.position=new Position();
+    public PayloadData(Position position) {
+        this.position = position;
     }
 
     public Position getPosition() {

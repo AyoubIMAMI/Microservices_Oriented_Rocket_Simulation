@@ -5,7 +5,7 @@ import java.util.List;
 
 public class RocketData {
 
-    private Double altitude;
+    private Position position;
 
     private Double speed;
 
@@ -18,7 +18,7 @@ public class RocketData {
     private Double status;
 
     public RocketData(List<StageData> stages) {
-        this.altitude = 0.0;
+        this.position = new Position(0.0, 0.0, 0.0);
         this.speed = 0.0;
         this.stages = stages;
         this.status = 1.0;
@@ -28,19 +28,19 @@ public class RocketData {
     @Override
     public String toString() {
         return "RocketData{" +
-                "altitude=" + altitude +
+                "position=" + position +
                 ", speed=" + speed +
                 ", stages=" + stages +
                 ", status=" + status +
                 '}';
     }
 
-    public Double getAltitude() {
-        return altitude;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setAltitude(Double altitude) {
-        this.altitude = altitude;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public Double getSpeed() {

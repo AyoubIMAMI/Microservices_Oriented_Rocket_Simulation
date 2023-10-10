@@ -1,9 +1,11 @@
 package fr.teama.rockethardwareservice.components;
 
+import fr.teama.rockethardwareservice.exceptions.PayloadHardwareServiceUnavaibleException;
 import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.helpers.LoggerHelper;
 import fr.teama.rockethardwareservice.interfaces.IRocketHardware;
+import fr.teama.rockethardwareservice.interfaces.proxy.IPayloadHardwareProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.IStageHardwareProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.rockethardwareservice.models.RocketData;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 @Component
 public class RocketHardware implements IRocketHardware {
@@ -24,6 +27,9 @@ public class RocketHardware implements IRocketHardware {
 
     @Autowired
     IStageHardwareProxy stageHardwareProxy;
+
+    @Autowired
+    IPayloadHardwareProxy payloadHardwareProxy;
 
     private final long updateDelay = 500;
 
@@ -43,21 +49,26 @@ public class RocketHardware implements IRocketHardware {
         sendLog = true;
 
         while (sendLog) {
+            Double altitude = rocket.getPosition().getAltitude();
             if (rocket.getStages().get(0) != null) {
                 StageData lowestStageOnRocket = rocket.getStages().get(0);
                 if (lowestStageOnRocket.isActivated() && lowestStageOnRocket.getFuel() > 0) {
-                    lowestStageOnRocket.setFuel(max(lowestStageOnRocket.getFuel() - 10, 0));
+                    lowestStageOnRocket.setFuel(max(lowestStageOnRocket.getFuel() - 5, 0));
                     this.rocket.setAcceleration(ACCELERATION);
-                } else if (lowestStageOnRocket.getFuel() <= 0 && rocket.getAltitude() > 0) {
+
+                    rocket.getPosition().setX(rocket.getPosition().getX() + (Math.random() * 20) - 10);
+                    rocket.getPosition().setY(rocket.getPosition().getY() + (Math.random() * 20) - 10);
+
+                } else if (lowestStageOnRocket.getFuel() <= 0 && altitude > 0) {
                     LoggerHelper.logWarn("No more fuel in stage " + lowestStageOnRocket.getStageLevel() + ". Waiting for stage to be detached");
                     this.rocket.setAcceleration(-EARTH_GRAVITY);
-                } else if (!lowestStageOnRocket.isActivated() && rocket.getAltitude() > 0) {
+                } else if (!lowestStageOnRocket.isActivated() && altitude > 0) {
                     LoggerHelper.logWarn("Stage " + lowestStageOnRocket.getStageLevel() + " is not activated. Waiting for stage to be activated");
                     this.rocket.setAcceleration(-EARTH_GRAVITY);
                 }
 
-                rocket.setSpeed(rocket.getSpeed() + rocket.getAcceleration());
-                rocket.setAltitude(rocket.getAltitude() + rocket.getSpeed());
+                rocket.setSpeed(min(rocket.getSpeed() + rocket.getAcceleration(), 300));
+                rocket.getPosition().setAltitude(altitude + rocket.getSpeed());
             } else {
                 //LoggerHelper.logWarn("No more stages on rocket");
                 this.rocket.setAcceleration(-EARTH_GRAVITY);
@@ -97,12 +108,12 @@ public class RocketHardware implements IRocketHardware {
         StageData stageToDetach = rocket.getStages().get(0);
         rocket.setStages(rocket.getStages().subList(1, rocket.getStages().size()));
         stageToDetach.setActivated(false);
-        stageHardwareProxy.startLogging(stageToDetach, rocket.getAltitude(), rocket.getSpeed());
+        stageHardwareProxy.startLogging(stageToDetach, rocket.getPosition(), rocket.getSpeed());
     }
 
     @Override
     public void activateStageRocket() {
-        LoggerHelper.logInfo("Activate lowest stage of the rocket, speed will increase");
+        LoggerHelper.logInfo("Activate lowest stage of the rocket (stage " + this.rocket.getStages().get(0).getStageLevel() + "), speed will increase");
         this.rocket.getStages().get(0).setActivated(true);
     }
 
@@ -123,5 +134,11 @@ public class RocketHardware implements IRocketHardware {
             stage.setFuel(fuelLevel);
             fuelLevel += 150.0;
         }
+    }
+
+    @Override
+    public void dropPayload() throws PayloadHardwareServiceUnavaibleException {
+        LoggerHelper.logInfo("Drop payload physically");
+        payloadHardwareProxy.startOrbitalPosDispatch(rocket.getPosition());
     }
 }

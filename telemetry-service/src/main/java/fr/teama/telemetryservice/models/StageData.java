@@ -20,13 +20,17 @@ public class StageData {
 
     private boolean isActivated;
 
-    private Double altitude;
+    private Position position;
 
     private Double speed;
 
     private Double acceleration;
 
+    private Double angle;
+
     private LocalDateTime timestamp;
+
+    private boolean legsDeployed;
 
     public StageData() {
 
@@ -36,10 +40,16 @@ public class StageData {
         this.stageLevel = stageDTO.getStageLevel();
         this.fuel = stageDTO.getFuel();
         this.isActivated = stageDTO.isActivated();
-        this.altitude = stageDTO.getAltitude();
+        if (stageDTO.getPosition() != null) {
+            this.position = new Position(stageDTO.getPosition());
+        } else {
+            this.position = null;
+        }
         this.speed = stageDTO.getSpeed();
         this.acceleration = stageDTO.getAcceleration();
         this.timestamp = stageDTO.getTimestamp();
+        this.angle = stageDTO.getAngle();
+        this.legsDeployed = stageDTO.isLegsDeployed();
     }
 
     @Override
@@ -48,9 +58,11 @@ public class StageData {
                 "stageLevel=" + stageLevel +
                 ", fuel=" + fuel +
                 ", isActivated=" + isActivated +
-                ", altitude=" + altitude +
+                ", position=" + position +
                 ", speed=" + speed +
                 ", acceleration=" + acceleration +
+                ", angle=" + angle +
+                ", legsDeployed=" + legsDeployed +
                 ", timestamp=" + timestamp +
                 '}';
     }
@@ -79,12 +91,12 @@ public class StageData {
         isActivated = activated;
     }
 
-    public Double getAltitude() {
-        return altitude;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setAltitude(Double altitude) {
-        this.altitude = altitude;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public Double getSpeed() {
@@ -109,5 +121,25 @@ public class StageData {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Double getAngle() {
+        return angle;
+    }
+
+    public void setAngle(Double angle) {
+        this.angle = angle;
+    }
+
+    public boolean isLegsDeployed() {
+        return legsDeployed;
+    }
+
+    public void setLegsDeployed(boolean legsDeployed) {
+        this.legsDeployed = legsDeployed;
+    }
+
+    public Double getAltitude() {
+        return this.position.getAltitude();
     }
 }

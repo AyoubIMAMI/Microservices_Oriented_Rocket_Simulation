@@ -4,6 +4,7 @@ import fr.teama.stagehardwaremockservice.controllers.dto.StageDataDTO;
 import fr.teama.stagehardwaremockservice.controllers.dto.StageFullStateDTO;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
 public class StageData {
 
@@ -13,7 +14,7 @@ public class StageData {
 
     private boolean isActivated;
 
-    private Double altitude;
+    private Position position;
 
     private Double speed;
 
@@ -21,13 +22,19 @@ public class StageData {
 
     private LocalDateTime timestamp;
 
+    private Double angle;
+
+    private boolean legsDeployed;
+
     public StageData(StageFullStateDTO fullStage) {
         StageDataDTO stageData = fullStage.getStageData();
+        this.position = new Position(fullStage.getPosition());
         this.stageLevel = stageData.getStageLevel();
         this.fuel = stageData.getFuel();
         this.isActivated = stageData.isActivated();
-        this.altitude = fullStage.getAltitude();
         this.speed = fullStage.getSpeed() * 0.6; // Loss of speed due to staging
+        this.angle = (Math.random() * 35 + 10) * (new Random().nextBoolean() ? 1 : -1); // Random angle between 10 and 45 degrees
+        this.legsDeployed = false;
     }
 
     public StageData() {
@@ -54,12 +61,12 @@ public class StageData {
         isActivated = activated;
     }
 
-    public Double getAltitude() {
-        return altitude;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setAltitude(Double altitude) {
-        this.altitude = altitude;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public Double getSpeed() {
@@ -81,8 +88,8 @@ public class StageData {
     @Override
     public String toString() {
         return "StageData{" +
-                "stageLevel=" + stageLevel +
-                ", altitude=" + altitude +
+                "position=" + position +
+                ", stageLevel=" + stageLevel +
                 ", speed=" + speed +
                 '}';
     }
@@ -93,5 +100,45 @@ public class StageData {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Double getAngle() {
+        return angle;
+    }
+
+    public void setAngle(Double angle) {
+        this.angle = angle;
+    }
+
+    public boolean isLegsDeployed() {
+        return legsDeployed;
+    }
+
+    public void setLegsDeployed(boolean legsDeployed) {
+        this.legsDeployed = legsDeployed;
+    }
+
+    public Double getAltitude() {
+        return this.position.getAltitude();
+    }
+
+    public void setAltitude(Double altitude) {
+        this.position.setAltitude(altitude);
+    }
+
+    public Double getX() {
+        return this.position.getX();
+    }
+
+    public void setX(Double x) {
+        this.position.setX(x);
+    }
+
+    public Double getY() {
+        return this.position.getY();
+    }
+
+    public void setY(Double y) {
+        this.position.setY(y);
     }
 }

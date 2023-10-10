@@ -1,18 +1,19 @@
 package fr.teama.rockethardwareservice.connectors.externalDTO;
 
+import fr.teama.rockethardwareservice.models.Position;
 import fr.teama.rockethardwareservice.models.StageData;
 
 public class StageFullStateDTO {
 
     private StageData stageData;
 
-    private Double altitude;
+    private Position position;
 
     private Double speed;
 
-    public StageFullStateDTO(StageData stageData, Double altitude, Double speed) {
+    public StageFullStateDTO(StageData stageData, Position position, Double speed) {
         this.stageData = stageData;
-        this.altitude = altitude;
+        this.position = position;
         this.speed = speed;
     }
 
@@ -27,12 +28,12 @@ public class StageFullStateDTO {
         this.stageData = stageData;
     }
 
-    public Double getAltitude() {
-        return altitude;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setAltitude(Double altitude) {
-        this.altitude = altitude;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public Double getSpeed() {
@@ -46,8 +47,8 @@ public class StageFullStateDTO {
     @Override
     public String toString() {
         return "StageFullStateDTO{" +
-                "stageData=" + stageData +
-                ", altitude=" + altitude +
+                "position=" + position +
+                ", stageData=" + stageData +
                 ", speed=" + speed +
                 '}';
     }

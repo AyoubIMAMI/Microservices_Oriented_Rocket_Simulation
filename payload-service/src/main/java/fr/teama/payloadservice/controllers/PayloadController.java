@@ -2,8 +2,9 @@ package fr.teama.payloadservice.controllers;
 
 import fr.teama.payloadservice.controllers.dto.PayloadDataDTO;
 import fr.teama.payloadservice.controllers.dto.PositionDTO;
-import fr.teama.payloadservice.entities.PayloadData;
-import fr.teama.payloadservice.entities.Position;
+import fr.teama.payloadservice.exceptions.RocketHardwareServiceUnavailableException;
+import fr.teama.payloadservice.models.PayloadData;
+import fr.teama.payloadservice.models.Position;
 import fr.teama.payloadservice.exceptions.PayloadHardwareServiceUnavaibleException;
 import fr.teama.payloadservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.payloadservice.helpers.LoggerHelper;
@@ -34,13 +35,13 @@ public class PayloadController {
 
     @PostMapping
     public ResponseEntity<String> missionStartWarning() throws TelemetryServiceUnavailableException {
-        LoggerHelper.logInfo("The mission has started");
+        LoggerHelper.logInfo("Notification of the start of the mission");
         return dataAsker.askOrbitToTelemetry();
     }
 
     @PostMapping("/drop")
-    public ResponseEntity<String> dropPayload() throws TelemetryServiceUnavailableException, PayloadHardwareServiceUnavaibleException {
-        LoggerHelper.logInfo("Request for dropping the payload");
+    public ResponseEntity<String> dropPayload() throws TelemetryServiceUnavailableException, PayloadHardwareServiceUnavaibleException, RocketHardwareServiceUnavailableException {
+        LoggerHelper.logInfo("Notification received, requesting to drop the payload");
         return payloadReleaser.dropPayload();
     }
     @PostMapping("/data")

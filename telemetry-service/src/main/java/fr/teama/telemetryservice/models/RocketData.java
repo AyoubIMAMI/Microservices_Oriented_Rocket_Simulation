@@ -17,7 +17,7 @@ public class RocketData {
     @ElementCollection
     private List<StageData> stages;
 
-    private Double altitude;
+    private Position position;
 
     private Double speed;
 
@@ -28,7 +28,7 @@ public class RocketData {
     private Double status;
 
     public RocketData(RocketDataDTO rocketDTO) {
-        this.altitude=rocketDTO.getAltitude();
+        this.position = new Position(rocketDTO.getPosition());
         this.speed=rocketDTO.getSpeed();
         this.stages=new ArrayList<>();
         this.status = rocketDTO.getStatus();
@@ -51,7 +51,7 @@ public class RocketData {
     public String toString() {
         return "RocketData{" +
                 "stages=" + stages +
-                ", altitude=" + altitude +
+                ", position=" + position +
                 ", speed=" + speed +
                 ", acceleration=" + acceleration +
                 ", timestamp=" + timestamp +
@@ -67,12 +67,12 @@ public class RocketData {
         this.stages = stages;
     }
 
-    public Double getAltitude() {
-        return altitude;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setAltitude(Double altitude) {
-        this.altitude = altitude;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public Double getSpeed() {
@@ -105,5 +105,9 @@ public class RocketData {
 
     public void setStatus(Double status) {
         this.status = status;
+    }
+
+    public Double getAltitude() {
+        return this.position.getAltitude();
     }
 }

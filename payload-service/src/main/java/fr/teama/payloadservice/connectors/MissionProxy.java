@@ -16,7 +16,7 @@ public class MissionProxy implements IMissionProxy {
     @Override
     public ResponseEntity<String> missionSuccessNotify() throws TelemetryServiceUnavailableException {
         try {
-            LoggerHelper.logInfo("Notify mission-service that the mission that the Payload has been dropped.");
+            LoggerHelper.logInfo("Notify mission-service that the mission that the payload has been dropped.");
             return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/mission/success", null, String.class);
         } catch (Exception e) {
             LoggerHelper.logError(e.toString());

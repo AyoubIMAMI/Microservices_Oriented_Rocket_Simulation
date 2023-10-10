@@ -22,7 +22,7 @@ public class DataAsker implements IDataAsker {
     @Override
     public void getNotificationOnEvents() throws TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("The rocket department wants the telemetry service to notify it when the fuel is empty");
-        telemetryProxy.askWhenEventHappens(TrackingFieldDTO.FUEL, 0.0, "rocket-department",
+        telemetryProxy.askWhenEventHappens(TrackingFieldDTO.FUEL, 40.0, "rocket-department",
                 "/rocket/stage", OperationTypeDTO.LESS_OR_EQUAL, "the rocket reaches the fuel of ");
 
         LoggerHelper.logInfo("The rocket department wants the telemetry service to notify it when the rocket enters the Max Q");

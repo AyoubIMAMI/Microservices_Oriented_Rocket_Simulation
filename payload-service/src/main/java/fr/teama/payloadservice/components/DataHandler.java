@@ -1,6 +1,6 @@
 package fr.teama.payloadservice.components;
 
-import fr.teama.payloadservice.entities.PayloadData;
+import fr.teama.payloadservice.models.PayloadData;
 import fr.teama.payloadservice.exceptions.PayloadHardwareServiceUnavaibleException;
 import fr.teama.payloadservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.payloadservice.helpers.LoggerHelper;
@@ -20,8 +20,10 @@ public class DataHandler implements IDataAsker, PayloadDataHandler {
 
     @Autowired
     private ITelemetryProxy telemetryProxy;
+
     @Autowired
     private PayloadDataRepository payloadDataRepository;
+
     @Autowired
     private IPayloadHardwareProxy payloadHardwareProxy;
 
@@ -34,18 +36,18 @@ public class DataHandler implements IDataAsker, PayloadDataHandler {
         payloadDataRepository.save(payloadData);
         LoggerHelper.logInfo(payloadData.toString());
         List<PayloadData> payloadDataList = payloadDataRepository.findAll();
-        LoggerHelper.logInfo("Number Of payload data:"+payloadDataList.size());
+        LoggerHelper.logInfo("Number of payload data: " + payloadDataList.size());
         if (payloadDataList.size()>=10){
             boolean certifyOrbit=true;
             LoggerHelper.logInfo("Sample of 10 payload data available");
-            LoggerHelper.logInfo("Verifying that the payload altitude was always between 3500 and 3700");
+            LoggerHelper.logInfo("Verifying that the payload altitude was always between 3500 and 3800");
             for (PayloadData currentPayloadData: payloadDataList){
                 LoggerHelper.logInfo(currentPayloadData.toString());
-                if (currentPayloadData.getPosition().getAltitude()>3500 && currentPayloadData.getPosition().getAltitude()<3700){
-                    LoggerHelper.logInfo("Altitude: " +currentPayloadData.getPosition().getAltitude()+" between 3500 and 3700");
+                if (currentPayloadData.getPosition().getAltitude()>3500 && currentPayloadData.getPosition().getAltitude()<3800){
+                    LoggerHelper.logInfo("Altitude: " +currentPayloadData.getPosition().getAltitude()+" between 3500 and 3800");
                 }
                 else{
-                    LoggerHelper.logInfo("Altitude: " +currentPayloadData.getPosition().getAltitude()+" not between 3500 and 3700");
+                    LoggerHelper.logInfo("Altitude: " +currentPayloadData.getPosition().getAltitude()+" not between 3500 and 3800");
                     certifyOrbit=false;
                     break;
                 }

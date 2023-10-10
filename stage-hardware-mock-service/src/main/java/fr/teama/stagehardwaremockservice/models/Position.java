@@ -1,12 +1,25 @@
-package fr.teama.telemetryservice.controllers.dto;
+package fr.teama.stagehardwaremockservice.models;
 
-public class PositionDTO {
+import fr.teama.stagehardwaremockservice.controllers.dto.PositionDTO;
+
+public class Position {
     Double x;
     Double y;
     Double altitude;
 
-    public PositionDTO() {
+    public Position() {
+    }
 
+    public Position(Double x, Double y, Double altitude) {
+        this.x = x;
+        this.y = y;
+        this.altitude = altitude;
+    }
+
+    public Position(PositionDTO positionDTO) {
+        this.x = positionDTO.getX();
+        this.y = positionDTO.getY();
+        this.altitude = positionDTO.getAltitude();
     }
 
     public Double getX() {

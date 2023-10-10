@@ -1,12 +1,17 @@
-package fr.teama.telemetryservice.controllers.dto;
+package fr.teama.rockethardwareservice.models;
 
-public class PositionDTO {
+public class Position {
     Double x;
     Double y;
     Double altitude;
 
-    public PositionDTO() {
+    public Position() {
+    }
 
+    public Position(Double x, Double y, Double altitude) {
+        this.x = x;
+        this.y = y;
+        this.altitude = altitude;
     }
 
     public Double getX() {

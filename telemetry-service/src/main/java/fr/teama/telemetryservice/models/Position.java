@@ -1,5 +1,6 @@
-package fr.teama.payloadservice.entities;
+package fr.teama.telemetryservice.models;
 
+import fr.teama.telemetryservice.controllers.dto.PositionDTO;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
@@ -8,13 +9,19 @@ public class Position {
     Double y;
     Double altitude;
 
+    public Position() {
+    }
+
     public Position(Double x, Double y, Double altitude) {
         this.x = x;
         this.y = y;
         this.altitude = altitude;
     }
 
-    public Position() {
+    public Position(PositionDTO positionDTO) {
+        this.x = positionDTO.getX();
+        this.y = positionDTO.getY();
+        this.altitude = positionDTO.getAltitude();
     }
 
     public Double getX() {
@@ -43,8 +50,14 @@ public class Position {
 
     @Override
     public String toString() {
-        return "x=" + x +
-                ", y=" + y +
-                ", altitude=" + altitude;
+        return "{" +
+                "x=" + roundDouble(x) +
+                ", y=" + roundDouble(y) +
+                ", altitude=" + altitude +
+                '}';
+    }
+
+    private Double roundDouble(Double value) {
+        return Math.round(value * 10.0) / 10.0;
     }
 }

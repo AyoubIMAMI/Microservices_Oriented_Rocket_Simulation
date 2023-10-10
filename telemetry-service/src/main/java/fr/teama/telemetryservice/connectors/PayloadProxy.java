@@ -31,7 +31,7 @@ public class PayloadProxy implements IPayloadProxy {
     @Override
     public ResponseEntity<String> sendData(PayloadDataDTO payloadDataDTO) throws PayloadServiceUnavailableException {
         try {
-            LoggerHelper.logInfo("  Transferring the data from payload Hardware to the payload service");
+            LoggerHelper.logInfo("Transferring the data from \u001B[37mpayload\u001B[32m hardware to the payload service");
             return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/payload/data", payloadDataDTO, String.class);
         } catch (Exception e) {
             LoggerHelper.logError(e.toString());

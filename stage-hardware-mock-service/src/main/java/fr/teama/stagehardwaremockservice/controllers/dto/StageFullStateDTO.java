@@ -5,15 +5,9 @@ public class StageFullStateDTO {
 
     private StageDataDTO stageData;
 
-    private Double altitude;
+    private PositionDTO position;
 
     private Double speed;
-
-    public StageFullStateDTO(StageDataDTO stageData, Double altitude, Double speed) {
-        this.stageData = stageData;
-        this.altitude = altitude;
-        this.speed = speed;
-    }
 
     public StageFullStateDTO() {
     }
@@ -26,12 +20,12 @@ public class StageFullStateDTO {
         this.stageData = stageData;
     }
 
-    public Double getAltitude() {
-        return altitude;
+    public PositionDTO getPosition() {
+        return position;
     }
 
-    public void setAltitude(Double altitude) {
-        this.altitude = altitude;
+    public void setPosition(PositionDTO position) {
+        this.position = position;
     }
 
     public Double getSpeed() {
@@ -45,8 +39,8 @@ public class StageFullStateDTO {
     @Override
     public String toString() {
         return "StageFullStateDTO{" +
-                "stageData=" + stageData +
-                ", altitude=" + altitude +
+                "position=" + position +
+                ", stageData=" + stageData +
                 ", speed=" + speed +
                 '}';
     }

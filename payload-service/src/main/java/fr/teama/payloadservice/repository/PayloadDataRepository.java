@@ -1,7 +1,7 @@
 package fr.teama.payloadservice.repository;
 
 
-import fr.teama.payloadservice.entities.PayloadData;
+import fr.teama.payloadservice.models.PayloadData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -50,13 +50,13 @@ public class TelemetryController {
 
     @PostMapping("/send-rocket-data")
     public ResponseEntity<String> saveNewRocketData(@RequestBody RocketDataDTO rocket) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException {
-        LoggerHelper.logInfo("Saving data from rocket hardware");
+        LoggerHelper.logInfo("Receive \u001B[33mrocket\u001B[32m hardware data: " + rocket.toString());
         return this.dataSaver.saveRocketData(new RocketData(rocket));
     }
 
     @PostMapping("/send-stage-data")
     public ResponseEntity<String> saveNewStageData(@RequestBody StageDataDTO stage) throws RocketStageServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
-        LoggerHelper.logInfo("Saving data from stage hardware");
+        LoggerHelper.logInfo("Receive \u001B[38;5;165mstage\u001B[32m " + stage.getStageLevel() + " hardware data: " + stage.toStringComplete());
         return this.dataSaver.saveStageData(new StageData(stage));
     }
 

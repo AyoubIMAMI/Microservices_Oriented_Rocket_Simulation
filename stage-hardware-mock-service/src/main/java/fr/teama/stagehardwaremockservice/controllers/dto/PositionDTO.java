@@ -1,4 +1,4 @@
-package fr.teama.telemetryservice.controllers.dto;
+package fr.teama.stagehardwaremockservice.controllers.dto;
 
 public class PositionDTO {
     Double x;
@@ -6,7 +6,12 @@ public class PositionDTO {
     Double altitude;
 
     public PositionDTO() {
+    }
 
+    public PositionDTO(Double x, Double y, Double altitude) {
+        this.x = x;
+        this.y = y;
+        this.altitude = altitude;
     }
 
     public Double getX() {
