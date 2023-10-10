@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import static java.lang.Thread.sleep;
 
 @Component
 public class MissionManager implements IMissionManager {
@@ -34,13 +33,16 @@ public class MissionManager implements IMissionManager {
     @Autowired
     ILogsProxy logsProxy;
 
+    @Autowired
+    IWebcasterProxy webcasterProxy;
 
     @Override
-    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException {
+    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, WebcasterServiceUnavailableException {
         LoggerHelper.logInfo("The mission is starting");
         rocketHardwareProxy.startLogging();
 
-        LoggerHelper.logInfo("Rocket preparation:");
+        LoggerHelper.logInfo("Rocket preparation started");
+        webcasterProxy.warnWebcaster("Rocket preparation started");
         Double rocketStatus = rocketHardwareProxy.checkRocket();
 
         boolean weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
@@ -52,6 +54,7 @@ public class MissionManager implements IMissionManager {
         logServiceMessage(missionReady, "Mission service");
 
         LoggerHelper.logInfo("Rocket preparation complete");
+        webcasterProxy.warnWebcaster("Rocket preparation complete");
 
         if (missionReady) {
             LoggerHelper.logInfo("Rocket is on Internal Power");
