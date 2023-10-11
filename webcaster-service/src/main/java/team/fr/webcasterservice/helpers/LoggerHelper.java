@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 public class LoggerHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggerHelper.class);
     private static final String SERVICE_NAME = "webcaster-service";
-    private static final String SERVICE_COLOR = "\u001B[36m";
+    private static final String SERVICE_COLOR = "\u001B[34;5;165m";
 
     public static void logInfo(String logging) {
         LOGGER.info(SERVICE_COLOR + SERVICE_NAME + ": \u001B[32m" + logging + "\u001B[0m");
