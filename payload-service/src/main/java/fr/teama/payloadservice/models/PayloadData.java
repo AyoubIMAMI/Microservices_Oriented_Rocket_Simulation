@@ -8,14 +8,16 @@ import java.time.LocalDateTime;
 
 @Entity
 public class PayloadData {
-    private Position position;
 
-    private LocalDateTime timestamp;
     @GeneratedValue
     @Id
     private Long id;
+    private String RocketName;
+    private Position position;
+    private LocalDateTime timestamp;
 
-    public PayloadData(Position position, LocalDateTime timestamp) {
+    public PayloadData(String rocketName, Position position, LocalDateTime timestamp) {
+        this.RocketName = rocketName;
         this.position=position;
         this.timestamp=timestamp;
     }
@@ -46,6 +48,14 @@ public class PayloadData {
 
     public Long getId() {
         return id;
+    }
+
+    public String getRocketName() {
+        return RocketName;
+    }
+
+    public void setRocketName(String rocketName) {
+        RocketName = rocketName;
     }
 
     @Override

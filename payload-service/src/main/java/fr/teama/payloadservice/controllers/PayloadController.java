@@ -18,6 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -52,8 +55,11 @@ public class PayloadController {
     }
     @PostMapping("/data")
     public ResponseEntity<String> savePayloadData(@RequestBody PayloadDataDTO payloadDataDTO) throws PayloadHardwareServiceUnavaibleException {
-        PositionDTO position= payloadDataDTO.getPosition();
-        payloadDataHandler.saveDataPayload(new PayloadData(new Position(position.getX(), position.getY(),position.getAltitude()),payloadDataDTO.getTimestamp()));
+        String rocketName = payloadDataDTO.getRocketName();
+        PositionDTO positionDTO = payloadDataDTO.getPosition();
+        LocalDateTime timestamp = payloadDataDTO.getTimestamp();
+        Position position = new Position(positionDTO.getX(), positionDTO.getY(), positionDTO.getAltitude());
+        payloadDataHandler.saveDataPayload(new PayloadData(rocketName, position, timestamp));
         return ResponseEntity.status(HttpStatus.OK).body("Save successful");
     }
 
