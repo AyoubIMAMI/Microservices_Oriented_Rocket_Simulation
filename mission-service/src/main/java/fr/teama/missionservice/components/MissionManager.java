@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 
 @Component
 public class MissionManager implements IMissionManager {
@@ -74,14 +76,14 @@ public class MissionManager implements IMissionManager {
         LoggerHelper.logWarn("The mission has succeed !!!");
         webcasterProxy.warnWebcaster("The mission has succeed !!!");
         rocketHardwareProxy.stopLogging();
-        LoggerHelper.logInfoWithoutSaving("All logs of the missions : " + logsProxy.getAllLogs().getBody());
+        LoggerHelper.logInfoWithoutSaving("Number of logs of the missions : " + Objects.requireNonNull(logsProxy.getAllLogs().getBody()).size());
     }
 
     @Override
     public void missionFailed() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
         LoggerHelper.logWarn("The mission has failed due to unexpected events");
         rocketHardwareProxy.stopLogging();
-        LoggerHelper.logInfoWithoutSaving("All logs of the missions : " + logsProxy.getAllLogs().getBody());
+        LoggerHelper.logInfoWithoutSaving("Number of logs of the missions : " + Objects.requireNonNull(logsProxy.getAllLogs().getBody()).size());
     }
 
     private void logServiceMessage(boolean serviceReady, String serviceName) {
