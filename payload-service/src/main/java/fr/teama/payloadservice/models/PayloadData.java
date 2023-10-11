@@ -12,12 +12,12 @@ public class PayloadData {
     @GeneratedValue
     @Id
     private Long id;
-    private String RocketName;
+    private String rocketName;
     private Position position;
     private LocalDateTime timestamp;
 
     public PayloadData(String rocketName, Position position, LocalDateTime timestamp) {
-        this.RocketName = rocketName;
+        this.rocketName = rocketName;
         this.position=position;
         this.timestamp=timestamp;
     }
@@ -51,11 +51,11 @@ public class PayloadData {
     }
 
     public String getRocketName() {
-        return RocketName;
+        return rocketName;
     }
 
     public void setRocketName(String rocketName) {
-        RocketName = rocketName;
+        rocketName = rocketName;
     }
 
     @Override

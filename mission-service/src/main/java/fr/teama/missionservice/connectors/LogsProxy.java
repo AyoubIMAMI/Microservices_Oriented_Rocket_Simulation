@@ -26,7 +26,6 @@ public class LogsProxy implements ILogsProxy {
             return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/logs/save", missionLogDTO, String.class);
         } catch (Exception e) {
             e.printStackTrace();
-//            throw new LogsServiceUnavailableException();
             return new ResponseEntity<>(e.toString(), HttpStatusCode.valueOf(500));
         }
     }
@@ -38,6 +37,17 @@ public class LogsProxy implements ILogsProxy {
             SavedMissionLog[] savedMissionLogArray = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/logs", SavedMissionLog[].class).getBody();
             assert savedMissionLogArray != null;
             return ResponseEntity.ok().body(List.of(savedMissionLogArray));
+        } catch (Exception e) {
+            LoggerHelper.logError(e.toString());
+            throw new LogsServiceUnavailableException();
+        }
+    }
+
+    @Override
+    public ResponseEntity<String> changeRocketName(String rocketName) throws LogsServiceUnavailableException {
+        try {
+            LoggerHelper.logInfo("Ask logs service to change rocket name to " + rocketName);
+            return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/logs/rocket-name", rocketName, String.class);
         } catch (Exception e) {
             LoggerHelper.logError(e.toString());
             throw new LogsServiceUnavailableException();

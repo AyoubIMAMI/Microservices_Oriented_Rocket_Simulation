@@ -1,9 +1,9 @@
 package fr.teama.telemetryservice.connectors;
 
-import fr.teama.telemetryservice.controllers.dto.PayloadDataDTO;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.helpers.LoggerHelper;
 import fr.teama.telemetryservice.interfaces.proxy.IPayloadProxy;
+import fr.teama.telemetryservice.models.PayloadData;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -29,10 +29,10 @@ public class PayloadProxy implements IPayloadProxy {
     }
 
     @Override
-    public ResponseEntity<String> sendData(PayloadDataDTO payloadDataDTO) throws PayloadServiceUnavailableException {
+    public ResponseEntity<String> sendData(PayloadData payloadData) throws PayloadServiceUnavailableException {
         try {
             LoggerHelper.logInfo("Transferring the data from \u001B[37mpayload\u001B[32m hardware to the payload service");
-            return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/payload/data", payloadDataDTO, String.class);
+            return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/payload/data", payloadData, String.class);
         } catch (Exception e) {
             LoggerHelper.logError(e.toString());
             throw new PayloadServiceUnavailableException();

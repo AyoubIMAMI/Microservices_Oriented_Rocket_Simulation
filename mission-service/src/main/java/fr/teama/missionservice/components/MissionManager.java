@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-
 @Component
 public class MissionManager implements IMissionManager {
 
@@ -40,12 +39,16 @@ public class MissionManager implements IMissionManager {
     IWebcasterProxy webcasterProxy;
 
     @Override
-    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, WebcasterServiceUnavailableException {
-        LoggerHelper.logInfo("The mission is starting");
+    public ResponseEntity<String> startMission(String rocketName) throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, WebcasterServiceUnavailableException, LogsServiceUnavailableException {
+        telemetryProxy.changeRocketName(rocketName);
+        telemetryProxy.resetTrackings();
+        logsProxy.changeRocketName(rocketName);
+
+        LoggerHelper.logInfo("The mission is starting for rocket " + rocketName);
         rocketHardwareProxy.startLogging();
 
-        LoggerHelper.logInfo("Rocket preparation started");
-        webcasterProxy.warnWebcaster("Rocket preparation started");
+        LoggerHelper.logInfo("Rocket " + rocketName + " preparation started");
+        webcasterProxy.warnWebcaster("Rocket " + rocketName + " preparation started");
         Double rocketStatus = rocketHardwareProxy.checkRocket();
 
         boolean weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
@@ -56,12 +59,12 @@ public class MissionManager implements IMissionManager {
         logServiceMessage(rocketServiceReady, "Rocket department service");
         logServiceMessage(missionReady, "Mission service");
 
-        LoggerHelper.logInfo("Rocket preparation complete");
-        webcasterProxy.warnWebcaster("Rocket preparation complete");
+        LoggerHelper.logInfo("Rocket " + rocketName + " preparation complete");
+        webcasterProxy.warnWebcaster("Rocket " + rocketName + " preparation complete");
 
         if (missionReady) {
-            LoggerHelper.logInfo("Rocket is on Internal Power");
-            webcasterProxy.warnWebcaster("Rocket is on Internal Power");
+            LoggerHelper.logInfo("Rocket " + rocketName + " is on Internal Power");
+            webcasterProxy.warnWebcaster("Rocket " + rocketName + " is on Internal Power");
             gettingNotifyInCaseOfRocketAnomaly();
             NotifyMissionStart();
             rocketDepartmentProxy.launchRocket();

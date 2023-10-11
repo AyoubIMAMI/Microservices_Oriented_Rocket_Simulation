@@ -14,8 +14,11 @@ public class StageData {
     @GeneratedValue
     private Long id;
 
+    String rocketName;
+
     @NotNull(message = "Stage must have a level")
     private int stageLevel;
+
     private Double fuel;
 
     private boolean isActivated;
@@ -36,7 +39,8 @@ public class StageData {
 
     }
 
-    public StageData(StageDataDTO stageDTO) {
+    public StageData(String rocketName, StageDataDTO stageDTO) {
+        this.rocketName = rocketName;
         this.stageLevel = stageDTO.getStageLevel();
         this.fuel = stageDTO.getFuel();
         this.isActivated = stageDTO.isActivated();
@@ -55,7 +59,8 @@ public class StageData {
     @Override
     public String toString() {
         return "StageData{" +
-                "stageLevel=" + stageLevel +
+                "rocketName=" + rocketName +
+                ", stageLevel=" + stageLevel +
                 ", fuel=" + fuel +
                 ", isActivated=" + isActivated +
                 ", position=" + position +
@@ -141,5 +146,13 @@ public class StageData {
 
     public Double getAltitude() {
         return this.position.getAltitude();
+    }
+
+    public String getRocketName() {
+        return rocketName;
+    }
+
+    public void setRocketName(String rocketName) {
+        this.rocketName = rocketName;
     }
 }

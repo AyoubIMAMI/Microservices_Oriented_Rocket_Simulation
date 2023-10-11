@@ -22,9 +22,9 @@ public class MissionController {
     IRocketHardwareProxy rocketHardwareProxy;
 
     @PostMapping("/start")
-    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, WebcasterServiceUnavailableException {
-        LoggerHelper.logInfo("Request received to start the mission");
-        return missionManager.startMission();
+    public ResponseEntity<String> startMission(@RequestBody String rocketName) throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, WebcasterServiceUnavailableException, LogsServiceUnavailableException {
+        LoggerHelper.logInfo("Request received to start the mission for rocket " + rocketName);
+        return missionManager.startMission(rocketName);
     }
     @PostMapping("/success")
     public ResponseEntity<String> endMission() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException, WebcasterServiceUnavailableException {

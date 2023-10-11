@@ -4,12 +4,10 @@ import fr.teama.telemetryservice.controllers.dto.PayloadDataDTO;
 import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
 import fr.teama.telemetryservice.controllers.dto.StageDataDTO;
 import fr.teama.telemetryservice.controllers.dto.TrackingDTO;
-import fr.teama.telemetryservice.interfaces.proxy.IPayloadProxy;
+import fr.teama.telemetryservice.interfaces.DataSender;
 import fr.teama.telemetryservice.exceptions.ExecutiveServiceUnavailableException;
-import fr.teama.telemetryservice.models.StageData;
 import fr.teama.telemetryservice.models.Tracking;
 import fr.teama.telemetryservice.exceptions.MissionServiceUnavailableException;
-import fr.teama.telemetryservice.models.RocketData;
 import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
 import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
 import fr.teama.telemetryservice.helpers.LoggerHelper;
@@ -31,10 +29,10 @@ public class TelemetryController {
     private ITelemetryNotifier telemetryNotifier;
 
     @Autowired
-    private IPayloadProxy payloadProxy;
+    private DataSaver dataSaver;
 
     @Autowired
-    private DataSaver dataSaver;
+    private DataSender dataSender;
 
     @GetMapping("/service-status")
     public ResponseEntity<String> telemetryStatus() {
@@ -49,25 +47,30 @@ public class TelemetryController {
     }
 
     @PostMapping("/send-rocket-data")
-    public ResponseEntity<String> saveNewRocketData(@RequestBody RocketDataDTO rocket) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException {
-        LoggerHelper.logInfo("Receive \u001B[33mrocket\u001B[32m hardware data: " + rocket.toString());
-        return this.dataSaver.saveRocketData(new RocketData(rocket));
+    public ResponseEntity<String> saveNewRocketData(@RequestBody RocketDataDTO rocketDataDTO) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException {
+        LoggerHelper.logInfo("Receive \u001B[33mrocket\u001B[32m hardware data: " + rocketDataDTO.toString());
+        return this.dataSaver.saveRocketData(rocketDataDTO);
     }
 
     @PostMapping("/send-stage-data")
-    public ResponseEntity<String> saveNewStageData(@RequestBody StageDataDTO stage) throws RocketStageServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
-        LoggerHelper.logInfo("Receive \u001B[38;5;165mstage\u001B[32m " + stage.getStageLevel() + " hardware data: " + stage.toStringComplete());
-        return this.dataSaver.saveStageData(new StageData(stage));
+    public ResponseEntity<String> saveNewStageData(@RequestBody StageDataDTO stageDataDTO) throws RocketStageServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
+        LoggerHelper.logInfo("Receive \u001B[38;5;165mstage\u001B[32m " + stageDataDTO.getStageLevel() + " hardware data: " + stageDataDTO.toStringComplete());
+        return this.dataSaver.saveStageData(stageDataDTO);
     }
 
     @PostMapping("/send-payload-data")
-    public ResponseEntity<String> transferPayloadData(@RequestBody PayloadDataDTO payloadDataDTO) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException {
-        return this.payloadProxy.sendData(payloadDataDTO);
+    public ResponseEntity<String> transferPayloadData(@RequestBody PayloadDataDTO payloadDataDTO) throws PayloadServiceUnavailableException {
+        return this.dataSender.sendPayloadData(payloadDataDTO);
     }
 
-    @PostMapping("/reset-db")
+    @PostMapping("/reset-tracking")
     public ResponseEntity<String> resetDb() {
-        LoggerHelper.logInfo("Resetting database");
-        return this.dataSaver.resetDB();
+        return this.dataSaver.resetTracking();
+    }
+
+    @PostMapping("/rocket-name")
+    public ResponseEntity<String> changeRocketName(@RequestBody String rocketName) {
+        LoggerHelper.logInfo("Change rocket name to " + rocketName + " for future data");
+        return this.dataSaver.changeRocketName(rocketName);
     }
 }
