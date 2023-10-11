@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 public class LoggerHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggerHelper.class);
     private static final String SERVICE_NAME = "executive-service";
-    private static final String SERVICE_COLOR = "\u001B[32m";
+    private static final String SERVICE_COLOR = "\u001B[32;5;208m";
 
     public static void logInfo(String logging) {
         LOGGER.info(SERVICE_COLOR + SERVICE_NAME + ": \u001B[32m" + logging + "\u001B[0m");
