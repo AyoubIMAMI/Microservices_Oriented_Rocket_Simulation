@@ -100,6 +100,13 @@ public class RocketHardwareController {
         return ResponseEntity.ok("Sabotaging successful");
     }
 
+    @PostMapping("/pressure-anomaly")
+    public ResponseEntity<String> pressureAnomalyOnTheRocket() {
+        LoggerHelper.logWarn("The rocket hurt a little asteroid");
+        rocketHardware.pressureAnomalyOnTheRocket();
+        return ResponseEntity.ok("Pressure anomaly successful");
+    }
+
     @PostMapping("/destroy")
     public ResponseEntity<String> rocketDestruction() {
         LoggerHelper.logInfo("Request received for destroy the rocket");

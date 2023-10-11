@@ -4,6 +4,7 @@ import fr.teama.missionservice.exceptions.*;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.IMissionManager;
 import fr.teama.missionservice.interfaces.proxy.*;
+import fr.teama.missionservice.models.RocketStates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -49,7 +50,7 @@ public class MissionManager implements IMissionManager {
 
         boolean weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
         boolean rocketServiceReady = rocketDepartmentProxy.getRocketStatus().equals("GO");
-        boolean missionReady = rocketStatus == 1.0 && weatherServiceReady && rocketServiceReady;
+        boolean missionReady = rocketStatus == RocketStates.NORMAL.getValue() && weatherServiceReady && rocketServiceReady;
 
         logServiceMessage(weatherServiceReady, "Weather service");
         logServiceMessage(rocketServiceReady, "Rocket department service");
@@ -99,6 +100,7 @@ public class MissionManager implements IMissionManager {
     }
 
     private void gettingNotifyInCaseOfRocketAnomaly() throws TelemetryServiceUnavailableException {
-        telemetryProxy.gettingNotifyInCaseOfRocketAnomaly();
+        telemetryProxy.gettingNotifyInCaseOfRocketAnomaly(RocketStates.SEVERE_ANOMALY);
+        telemetryProxy.gettingNotifyInCaseOfRocketAnomaly(RocketStates.PRESSURE_ANOMALY);
     }
 }
