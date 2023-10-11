@@ -9,6 +9,7 @@ import fr.teama.rockethardwareservice.interfaces.proxy.IPayloadHardwareProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.IStageHardwareProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.rockethardwareservice.models.RocketData;
+import fr.teama.rockethardwareservice.models.RocketStates;
 import fr.teama.rockethardwareservice.models.StageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -93,7 +94,7 @@ public class RocketHardware implements IRocketHardware {
     @Override
     public void sabotageTheRocket() {
         LoggerHelper.logWarn("Rocket successfully sabotaged");
-        rocket.setStatus(0.0);
+        rocket.setStatus(RocketStates.SEVERE_ANOMALY.getValue());
     }
 
     @Override
@@ -146,5 +147,11 @@ public class RocketHardware implements IRocketHardware {
     @Override
     public void fairing() {
         LoggerHelper.logInfo("Eject fairing physically");
+    }
+
+    @Override
+    public void pressureAnomalyOnTheRocket() {
+        LoggerHelper.logWarn("A pressure anomaly appeared on the rocket");
+        rocket.setStatus(RocketStates.PRESSURE_ANOMALY.getValue());
     }
 }

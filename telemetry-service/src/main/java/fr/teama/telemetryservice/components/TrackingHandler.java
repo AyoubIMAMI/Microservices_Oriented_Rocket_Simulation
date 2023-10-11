@@ -119,7 +119,7 @@ public class TrackingHandler implements ITelemetryNotifier {
                 payloadProxy.heightReached();
                 break;
             case "mission":
-                missionProxy.specificStatusDetected();
+                missionProxy.specificStatusDetected(tracking.getRouteToNotify());
                 break;
             case "executive":
                 executiveProxy.notifyStageLanded();

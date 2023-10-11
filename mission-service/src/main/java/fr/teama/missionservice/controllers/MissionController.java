@@ -38,4 +38,10 @@ public class MissionController {
         missionManager.missionFailed();
         return ResponseEntity.ok("Destruction order sent");
     }
+
+    @PostMapping("/rocket-pressure-anomaly")
+    public ResponseEntity<String> informRocketPressureAnomaly() {
+        LoggerHelper.logWarn("Pressure anomaly detected");
+        return ResponseEntity.ok("Pressure anomaly");
+    }
 }
