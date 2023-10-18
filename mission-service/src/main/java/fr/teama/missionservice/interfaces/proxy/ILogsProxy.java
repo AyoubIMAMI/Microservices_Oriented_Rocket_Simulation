@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ILogsProxy {
     ResponseEntity<List<SavedMissionLog>> getAllLogs() throws LogsServiceUnavailableException;
+
+    ResponseEntity<String> changeRocketName(String rocketName) throws LogsServiceUnavailableException;
 }

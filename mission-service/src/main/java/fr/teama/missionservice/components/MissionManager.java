@@ -4,10 +4,12 @@ import fr.teama.missionservice.exceptions.*;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.IMissionManager;
 import fr.teama.missionservice.interfaces.proxy.*;
+import fr.teama.missionservice.models.RocketStates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 
 @Component
 public class MissionManager implements IMissionManager {
@@ -37,28 +39,32 @@ public class MissionManager implements IMissionManager {
     IWebcasterProxy webcasterProxy;
 
     @Override
-    public ResponseEntity<String> startMission() throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, WebcasterServiceUnavailableException {
-        LoggerHelper.logInfo("The mission is starting");
+    public ResponseEntity<String> startMission(String rocketName) throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, WebcasterServiceUnavailableException, LogsServiceUnavailableException {
+        telemetryProxy.changeRocketName(rocketName);
+        telemetryProxy.resetTrackings();
+        logsProxy.changeRocketName(rocketName);
+
+        LoggerHelper.logInfo("The mission is starting for rocket " + rocketName);
         rocketHardwareProxy.startLogging();
 
-        LoggerHelper.logInfo("Rocket preparation started");
-        webcasterProxy.warnWebcaster("Rocket preparation started");
+        LoggerHelper.logInfo("Rocket " + rocketName + " preparation started");
+        webcasterProxy.warnWebcaster("Rocket " + rocketName + " preparation started");
         Double rocketStatus = rocketHardwareProxy.checkRocket();
 
         boolean weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
         boolean rocketServiceReady = rocketDepartmentProxy.getRocketStatus().equals("GO");
-        boolean missionReady = rocketStatus == 1.0 && weatherServiceReady && rocketServiceReady;
+        boolean missionReady = rocketStatus == RocketStates.NORMAL.getValue() && weatherServiceReady && rocketServiceReady;
 
         logServiceMessage(weatherServiceReady, "Weather service");
         logServiceMessage(rocketServiceReady, "Rocket department service");
         logServiceMessage(missionReady, "Mission service");
 
-        LoggerHelper.logInfo("Rocket preparation complete");
-        webcasterProxy.warnWebcaster("Rocket preparation complete");
+        LoggerHelper.logInfo("Rocket " + rocketName + " preparation complete");
+        webcasterProxy.warnWebcaster("Rocket " + rocketName + " preparation complete");
 
         if (missionReady) {
-            LoggerHelper.logInfo("Rocket is on Internal Power");
-            webcasterProxy.warnWebcaster("Rocket is on Internal Power");
+            LoggerHelper.logInfo("Rocket " + rocketName + " is on Internal Power");
+            webcasterProxy.warnWebcaster("Rocket " + rocketName + " is on Internal Power");
             gettingNotifyInCaseOfRocketAnomaly();
             NotifyMissionStart();
             rocketDepartmentProxy.launchRocket();
@@ -74,14 +80,14 @@ public class MissionManager implements IMissionManager {
         LoggerHelper.logWarn("The mission has succeed !!!");
         webcasterProxy.warnWebcaster("The mission has succeed !!!");
         rocketHardwareProxy.stopLogging();
-        LoggerHelper.logInfoWithoutSaving("All logs of the missions : " + logsProxy.getAllLogs().getBody());
+        LoggerHelper.logInfoWithoutSaving("Number of logs of the missions : " + Objects.requireNonNull(logsProxy.getAllLogs().getBody()).size());
     }
 
     @Override
     public void missionFailed() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
         LoggerHelper.logWarn("The mission has failed due to unexpected events");
         rocketHardwareProxy.stopLogging();
-        LoggerHelper.logInfoWithoutSaving("All logs of the missions : " + logsProxy.getAllLogs().getBody());
+        LoggerHelper.logInfoWithoutSaving("Number of logs of the missions : " + Objects.requireNonNull(logsProxy.getAllLogs().getBody()).size());
     }
 
     private void logServiceMessage(boolean serviceReady, String serviceName) {
@@ -97,6 +103,7 @@ public class MissionManager implements IMissionManager {
     }
 
     private void gettingNotifyInCaseOfRocketAnomaly() throws TelemetryServiceUnavailableException {
-        telemetryProxy.gettingNotifyInCaseOfRocketAnomaly();
+        telemetryProxy.gettingNotifyInCaseOfRocketAnomaly(RocketStates.SEVERE_ANOMALY);
+        telemetryProxy.gettingNotifyInCaseOfRocketAnomaly(RocketStates.PRESSURE_ANOMALY);
     }
 }

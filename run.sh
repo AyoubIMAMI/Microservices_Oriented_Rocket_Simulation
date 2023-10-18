@@ -55,15 +55,12 @@ Start of scenario 1: Mission successful with passage through Max Q, payload deli
 \033[0;35m========================================\033[0m\n\n"
   sleep 5
 
-  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3001/api/mission/start
+  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3001/api/mission/start -H "Content-Type: application/text" --data "Appolo 12"
 }
 
 function scenario2() {
   printf "\n\033[0m========================================\033[0m\n"
-  printf "\n\033[0;33m## Reset databases and mock hardware for the next scenario\n\033[0m\n"
-  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3003/api/telemetry/reset-db
-  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3004/api/payload/reset-db
-  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3011/api/logs/reset-db
+  printf "\n\033[0;33m## Ordering the launch of a second rocket\n\033[0m\n"
 
   printf "\n\033[0;34m========================================\033[0m
 
@@ -72,7 +69,7 @@ Start of scenario 2: Mission failed due to a severe anomaly and the destruction 
 \033[0;35m========================================\033[0m\n\n"
   sleep 5
 
-  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3001/api/mission/start
+  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3001/api/mission/start -H "Content-Type: application/text" --data "Falcon 10"
 }
 
 function sabotageRocket() {
@@ -82,7 +79,7 @@ function sabotageRocket() {
 
 wait_telemetry_service
 (sleep 2 && scenario1) &
-#(sleep 70 && scenario2) & #redo timing
-#(sleep 80 && sabotageRocket) & #redo timing
+(sleep 85 && scenario2) &
+(sleep 102 && sabotageRocket) &
 docker compose logs --follow --since 0m
 read -p "."

@@ -11,14 +11,20 @@ public class MissionLog {
     @Id
     @GeneratedValue
     private Long id;
+
+    private String rocketName;
+
     private String serviceName;
+
     private String text;
+
     private LocalDateTime date;
 
     public MissionLog() {
     }
 
-    public MissionLog(String serviceName, String text, LocalDateTime date) {
+    public MissionLog(String rocketName, String serviceName, String text, LocalDateTime date) {
+        this.rocketName = rocketName;
         this.serviceName = serviceName;
         this.text = text;
         this.date = date;
@@ -64,5 +70,13 @@ public class MissionLog {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public String getRocketName() {
+        return rocketName;
+    }
+
+    public void setRocketName(String rocketName) {
+        this.rocketName = rocketName;
     }
 }

@@ -4,6 +4,7 @@ import fr.teama.missionservice.exceptions.RocketHardwareServiceUnavailableExcept
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.proxy.IRocketHardwareProxy;
 import fr.teama.missionservice.models.RocketData;
+import fr.teama.missionservice.models.RocketStates;
 import fr.teama.missionservice.models.StageData;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -86,7 +87,7 @@ public class RocketHardwareProxy implements IRocketHardwareProxy {
 
             // status info
             Double rocketStatus = rocketData.getStatus();
-            if (rocketStatus == 1.0) {
+            if (rocketStatus == RocketStates.NORMAL.getValue()) {
                 LoggerHelper.logInfo("Rocket status " + rocketData.getStatus() + " - OK");
             } else {
                 LoggerHelper.logWarn("Rocket status " + rocketData.getStatus() + " - NOT OK");

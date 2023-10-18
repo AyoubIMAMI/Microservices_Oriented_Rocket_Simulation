@@ -35,7 +35,7 @@ public class DataHandler implements IDataAsker, PayloadDataHandler {
     public void saveDataPayload(PayloadData payloadData) throws PayloadHardwareServiceUnavaibleException {
         payloadDataRepository.save(payloadData);
         LoggerHelper.logInfo(payloadData.toString());
-        List<PayloadData> payloadDataList = payloadDataRepository.findAll();
+        List<PayloadData> payloadDataList = payloadDataRepository.findAllByRocketName(payloadData.getRocketName());
         LoggerHelper.logInfo("Number of payload data: " + payloadDataList.size());
         if (payloadDataList.size()>=10){
             boolean certifyOrbit=true;

@@ -21,16 +21,16 @@ public class LogsController {
     @Autowired
     ILogsManager logsManager;
 
+
     @PostMapping("/save")
     public ResponseEntity<String> saveNewLog(@RequestBody MissionLogDTO missionLogDTO) {
-//        LoggerHelper.logInfo("Request to store a log from " + missionLogDTO.getServiceName());
         logsManager.saveLog(missionLogDTO.getServiceName(), missionLogDTO.getText(), missionLogDTO.getDate());
         return ResponseEntity.ok().body("Log successfully saved");
     }
 
     @GetMapping
     public ResponseEntity<List<MissionLog>> getAllLogs() {
-        LoggerHelper.logInfo("Request received to get all logs");
+        LoggerHelper.logInfo("Request received to get all logs for current rocket");
         return ResponseEntity.ok().body(logsManager.getAllLogs());
     }
 
@@ -39,5 +39,11 @@ public class LogsController {
         LoggerHelper.logInfo("Resetting database");
         logsManager.resetDb();
         return ResponseEntity.ok().body("Logs successfully cleared");
+    }
+
+    @PostMapping("/rocket-name")
+    public ResponseEntity<String> changeRocketName(@RequestBody String rocketName) {
+        LoggerHelper.logInfo("Change rocket name to " + rocketName + " for future data");
+        return this.logsManager.changeRocketName(rocketName);
     }
 }

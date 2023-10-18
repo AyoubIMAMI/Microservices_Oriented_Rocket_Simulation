@@ -14,6 +14,8 @@ public class RocketData {
     @GeneratedValue
     private Long id;
 
+    String name;
+
     @ElementCollection
     private List<StageData> stages;
 
@@ -27,12 +29,15 @@ public class RocketData {
 
     private Double status;
 
-    public RocketData(RocketDataDTO rocketDTO) {
+    public RocketData(String name, RocketDataDTO rocketDTO) {
+        this.name = name;
         this.position = new Position(rocketDTO.getPosition());
         this.speed=rocketDTO.getSpeed();
         this.stages=new ArrayList<>();
         this.status = rocketDTO.getStatus();
-        rocketDTO.getStages().forEach(stageDTO -> this.stages.add(new StageData(stageDTO)));
+        this.acceleration=rocketDTO.getAcceleration();
+        this.timestamp=rocketDTO.getTimestamp();
+        rocketDTO.getStages().forEach(stageDTO -> this.stages.add(new StageData(name, stageDTO)));
     }
 
     public RocketData() {
@@ -50,7 +55,8 @@ public class RocketData {
     @Override
     public String toString() {
         return "RocketData{" +
-                "stages=" + stages +
+                "name=" + name +
+                ", stages=" + stages +
                 ", position=" + position +
                 ", speed=" + speed +
                 ", acceleration=" + acceleration +
@@ -109,5 +115,13 @@ public class RocketData {
 
     public Double getAltitude() {
         return this.position.getAltitude();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

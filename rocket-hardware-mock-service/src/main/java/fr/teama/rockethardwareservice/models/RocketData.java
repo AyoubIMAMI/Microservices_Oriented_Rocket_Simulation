@@ -21,7 +21,7 @@ public class RocketData {
         this.position = new Position(0.0, 0.0, 0.0);
         this.speed = 0.0;
         this.stages = stages;
-        this.status = 1.0;
+        this.status = RocketStates.NORMAL.getValue();
         this.acceleration = 0.0;
     }
 

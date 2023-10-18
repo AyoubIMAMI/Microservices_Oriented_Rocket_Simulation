@@ -27,4 +27,6 @@ public interface IRocketHardware {
     void dropPayload() throws PayloadHardwareServiceUnavaibleException;
 
     void fairing();
+
+    void pressureAnomalyOnTheRocket();
 }

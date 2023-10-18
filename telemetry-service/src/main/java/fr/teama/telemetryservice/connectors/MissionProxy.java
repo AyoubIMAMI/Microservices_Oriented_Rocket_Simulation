@@ -15,10 +15,10 @@ public class MissionProxy implements IMissionProxy {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public void specificStatusDetected() throws MissionServiceUnavailableException {
+    public void specificStatusDetected(String routeToNotify) throws MissionServiceUnavailableException {
         try {
             LoggerHelper.logInfo("Notify mission service that the rocket has a specific status");
-            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/mission/rocket-hardware-destruction", null, String.class);
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + routeToNotify, null, String.class);
         } catch (Exception e) {
             LoggerHelper.logError(e.toString());
             throw new MissionServiceUnavailableException();
