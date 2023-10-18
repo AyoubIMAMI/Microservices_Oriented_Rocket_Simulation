@@ -2,6 +2,7 @@ package fr.teama.rockethardwareservice.controllers;
 
 import fr.teama.rockethardwareservice.controllers.dto.RocketDataDTO;
 import fr.teama.rockethardwareservice.controllers.dto.StageDataDTO;
+import fr.teama.rockethardwareservice.exceptions.MissionServiceUnvailableException;
 import fr.teama.rockethardwareservice.exceptions.PayloadHardwareServiceUnavaibleException;
 import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
@@ -42,7 +43,7 @@ public class RocketHardwareController {
         executorService.submit(() -> {
             try {
                 rocketHardware.startLogging();
-            } catch (TelemetryServiceUnavailableException e) {
+            } catch (TelemetryServiceUnavailableException | MissionServiceUnvailableException e) {
                 LoggerHelper.logError(e.toString());
             }
         });
