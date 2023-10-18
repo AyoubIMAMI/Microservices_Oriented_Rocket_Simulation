@@ -1,10 +1,12 @@
 package fr.teama.rockethardwareservice.components;
 
+import fr.teama.rockethardwareservice.exceptions.MissionServiceUnvailableException;
 import fr.teama.rockethardwareservice.exceptions.PayloadHardwareServiceUnavaibleException;
 import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.helpers.LoggerHelper;
 import fr.teama.rockethardwareservice.interfaces.IRocketHardware;
+import fr.teama.rockethardwareservice.interfaces.proxy.IMissionProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.IPayloadHardwareProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.IStageHardwareProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.ITelemetryProxy;
@@ -32,6 +34,9 @@ public class RocketHardware implements IRocketHardware {
     @Autowired
     IPayloadHardwareProxy payloadHardwareProxy;
 
+    @Autowired
+    IMissionProxy missionProxy;
+
     private final long updateDelay = 500;
 
     RocketData rocket;
@@ -43,13 +48,18 @@ public class RocketHardware implements IRocketHardware {
     boolean sendLog;
 
     @Override
-    public void startLogging() throws TelemetryServiceUnavailableException {
+    public void startLogging() throws TelemetryServiceUnavailableException, MissionServiceUnvailableException {
         LoggerHelper.logInfo("Start logging");
         rocket = new RocketData(List.of(new StageData(1, 0.0), new StageData(2, 0.0)));
 
         sendLog = true;
 
         while (sendLog) {
+            if (rocket.getStatus() == RocketStates.CRITICAL_ANOMALY.getValue()) {
+                LoggerHelper.logWarn("Rocket critical anomaly detected");
+                missionProxy.warnMissionThatRocketHasCriticalAnomaly();
+            }
+
             Double altitude = rocket.getPosition().getAltitude();
             if (rocket.getStages().get(0) != null) {
                 StageData lowestStageOnRocket = rocket.getStages().get(0);
@@ -153,5 +163,11 @@ public class RocketHardware implements IRocketHardware {
     public void pressureAnomalyOnTheRocket() {
         LoggerHelper.logWarn("A pressure anomaly appeared on the rocket");
         rocket.setStatus(RocketStates.PRESSURE_ANOMALY.getValue());
+    }
+
+    @Override
+    public void criticalSabotagingOfTheRocket() {
+        LoggerHelper.logWarn("Rocket is redirected towards the earth");
+        rocket.setStatus(RocketStates.CRITICAL_ANOMALY.getValue());
     }
 }

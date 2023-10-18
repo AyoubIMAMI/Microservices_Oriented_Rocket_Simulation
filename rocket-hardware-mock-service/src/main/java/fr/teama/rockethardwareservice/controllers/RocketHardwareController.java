@@ -100,6 +100,13 @@ public class RocketHardwareController {
         return ResponseEntity.ok("Sabotaging successful");
     }
 
+    @PostMapping("/dangerous-sabotaging")
+    public ResponseEntity<String> criticalSabotagingOfTheRocket() {
+        LoggerHelper.logWarn("Palpatooine comes to redirect the rocket and destroy the earth");
+        rocketHardware.criticalSabotagingOfTheRocket();
+        return ResponseEntity.ok("Sabotaging successful");
+    }
+
     @PostMapping("/pressure-anomaly")
     public ResponseEntity<String> pressureAnomalyOnTheRocket() {
         LoggerHelper.logWarn("The rocket hurt a little asteroid");
