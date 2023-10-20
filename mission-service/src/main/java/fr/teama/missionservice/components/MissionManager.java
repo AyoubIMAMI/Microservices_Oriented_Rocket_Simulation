@@ -51,8 +51,18 @@ public class MissionManager implements IMissionManager {
         webcasterProxy.warnWebcaster("Rocket " + rocketName + " preparation started");
         Double rocketStatus = rocketHardwareProxy.checkRocket();
 
-        boolean weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
-        boolean rocketServiceReady = rocketDepartmentProxy.getRocketStatus().equals("GO");
+        boolean weatherServiceReady = false;
+        boolean rocketServiceReady = false;
+
+        try {
+            weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
+            rocketServiceReady = rocketDepartmentProxy.getRocketStatus().equals("GO");
+        } catch (WeatherServiceUnavailableException e) {
+            LoggerHelper.logError("Weather service is unavailable");
+        } catch (RocketServiceUnavailableException e) {
+            LoggerHelper.logError("Rocket department service is unavailable");
+        }
+
         boolean missionReady = rocketStatus == RocketStates.NORMAL.getValue() && weatherServiceReady && rocketServiceReady;
 
         logServiceMessage(weatherServiceReady, "Weather service");
@@ -71,6 +81,7 @@ public class MissionManager implements IMissionManager {
             return ResponseEntity.ok().body("GO");
         } else {
             LoggerHelper.logWarn("CANNOT LAUNCH ROCKET");
+            missionFailed();
             return ResponseEntity.ok().body("NO GO");
         }
     }
