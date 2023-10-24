@@ -1,24 +1,16 @@
 package fr.teama.telemetryservice.components;
 
 import fr.teama.telemetryservice.controllers.dto.PayloadDataDTO;
+import fr.teama.telemetryservice.controllers.dto.RobotDataDTO;
 import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
 import fr.teama.telemetryservice.controllers.dto.StageDataDTO;
-import fr.teama.telemetryservice.exceptions.ExecutiveServiceUnavailableException;
-import fr.teama.telemetryservice.exceptions.MissionServiceUnavailableException;
+import fr.teama.telemetryservice.exceptions.*;
 import fr.teama.telemetryservice.interfaces.DataSender;
 import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
 import fr.teama.telemetryservice.interfaces.proxy.IPayloadProxy;
-import fr.teama.telemetryservice.models.PayloadData;
-import fr.teama.telemetryservice.models.RocketData;
-import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
-import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
+import fr.teama.telemetryservice.models.*;
 import fr.teama.telemetryservice.interfaces.DataSaver;
-import fr.teama.telemetryservice.models.RocketName;
-import fr.teama.telemetryservice.models.StageData;
-import fr.teama.telemetryservice.repository.RocketDataRepository;
-import fr.teama.telemetryservice.repository.RocketNameRepository;
-import fr.teama.telemetryservice.repository.StageDataRepository;
-import fr.teama.telemetryservice.repository.TrackingRepository;
+import fr.teama.telemetryservice.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -44,8 +36,11 @@ public class DataManager implements DataSaver, DataSender {
     @Autowired
     IPayloadProxy payloadProxy;
 
+    @Autowired
+    RobotDataRepository robotDataRepository;
+
     @Override
-    public ResponseEntity<String> saveRocketData(RocketDataDTO rocketDataDTO) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException {
+    public ResponseEntity<String> saveRocketData(RocketDataDTO rocketDataDTO) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException, RobotDepartmentServiceUnavailableException {
         RocketData rocketData = new RocketData(rocketNameRepository.findTopByOrderByIdDesc().getName(), rocketDataDTO);
         trackingHandler.verifyRocketData(rocketData);
         stageDataRepository.saveAll(rocketData.getStages());
@@ -54,7 +49,7 @@ public class DataManager implements DataSaver, DataSender {
     }
 
     @Override
-    public ResponseEntity<String> saveStageData(StageDataDTO stageDataDTO) throws RocketStageServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
+    public ResponseEntity<String> saveStageData(StageDataDTO stageDataDTO) throws RocketStageServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, RobotDepartmentServiceUnavailableException {
         StageData stageData = new StageData(rocketNameRepository.findTopByOrderByIdDesc().getName(), stageDataDTO);
         trackingHandler.verifyStageData(stageData);
         stageDataRepository.save(stageData);
@@ -78,5 +73,13 @@ public class DataManager implements DataSaver, DataSender {
     public ResponseEntity<String> sendPayloadData(PayloadDataDTO payloadDataDTO) throws PayloadServiceUnavailableException {
         PayloadData payloadData = new PayloadData(rocketNameRepository.findTopByOrderByIdDesc().getName(), payloadDataDTO);
         return payloadProxy.sendData(payloadData);
+    }
+
+    @Override
+    public ResponseEntity<String> saveRobotData(RobotDataDTO robotDataDTO) throws RocketStageServiceUnavailableException, ExecutiveServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+        RobotData robotData = new RobotData(rocketNameRepository.findTopByOrderByIdDesc().getName(), robotDataDTO);
+        trackingHandler.verifyRobotData(robotData);
+        robotDataRepository.save(robotData);
+        return ResponseEntity.ok().body("Robot data saved");
     }
 }

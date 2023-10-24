@@ -31,6 +31,10 @@ compile_dir "logs-service"
 
 compile_dir "webcaster-service"
 
+compile_dir "robot-department-service"
+
+compile_dir "robot-hardware-mock-service"
+
 # remove # to add pause in script execution
 #read -p "** Press any key to continue... "
 

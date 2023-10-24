@@ -2,10 +2,7 @@ package fr.teama.telemetryservice.controllers;
 
 
 import fr.teama.telemetryservice.controllers.dto.ErrorDTO;
-import fr.teama.telemetryservice.exceptions.ExecutiveServiceUnavailableException;
-import fr.teama.telemetryservice.exceptions.MissionServiceUnavailableException;
-import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
-import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
+import fr.teama.telemetryservice.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -47,6 +44,15 @@ public class TelemetryControllerAdvice {
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setError("Rocket stage service unavailable.");
         errorDTO.setDetails("The rocket stage service is currently unavailable. Please try again later.");
+        return errorDTO;
+    }
+
+    @ExceptionHandler({RobotDepartmentServiceUnavailableException.class})
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    public ErrorDTO handleExceptions(RobotDepartmentServiceUnavailableException e) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("Robot department service unavailable.");
+        errorDTO.setDetails("The robot department service is currently unavailable. Please try again later.");
         return errorDTO;
     }
 }

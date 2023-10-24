@@ -16,6 +16,8 @@
         <option value="$PROJECT_DIR$/stage-hardware-mock-service/pom.xml" />
         <option value="$PROJECT_DIR$/payload-hardware-mock-service/pom.xml" />
         <option value="$PROJECT_DIR$/webcaster-service/pom.xml" />
+        <option value="$PROJECT_DIR$/robot-department-service/pom.xml" />
+        <option value="$PROJECT_DIR$/robot-hardware-mock-service/pom.xml" />
       </list>
     </option>
   </component>

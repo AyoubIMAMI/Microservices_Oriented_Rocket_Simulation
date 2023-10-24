@@ -1,15 +1,9 @@
 package fr.teama.telemetryservice.controllers;
 
-import fr.teama.telemetryservice.controllers.dto.PayloadDataDTO;
-import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
-import fr.teama.telemetryservice.controllers.dto.StageDataDTO;
-import fr.teama.telemetryservice.controllers.dto.TrackingDTO;
+import fr.teama.telemetryservice.controllers.dto.*;
+import fr.teama.telemetryservice.exceptions.*;
 import fr.teama.telemetryservice.interfaces.DataSender;
-import fr.teama.telemetryservice.exceptions.ExecutiveServiceUnavailableException;
 import fr.teama.telemetryservice.models.Tracking;
-import fr.teama.telemetryservice.exceptions.MissionServiceUnavailableException;
-import fr.teama.telemetryservice.exceptions.PayloadServiceUnavailableException;
-import fr.teama.telemetryservice.exceptions.RocketStageServiceUnavailableException;
 import fr.teama.telemetryservice.helpers.LoggerHelper;
 import fr.teama.telemetryservice.interfaces.DataSaver;
 import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
@@ -47,15 +41,21 @@ public class TelemetryController {
     }
 
     @PostMapping("/send-rocket-data")
-    public ResponseEntity<String> saveNewRocketData(@RequestBody RocketDataDTO rocketDataDTO) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException {
+    public ResponseEntity<String> saveNewRocketData(@RequestBody RocketDataDTO rocketDataDTO) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException, RobotDepartmentServiceUnavailableException {
         LoggerHelper.logInfo("Receive \u001B[33mrocket\u001B[32m hardware data: " + rocketDataDTO.toString());
         return this.dataSaver.saveRocketData(rocketDataDTO);
     }
 
     @PostMapping("/send-stage-data")
-    public ResponseEntity<String> saveNewStageData(@RequestBody StageDataDTO stageDataDTO) throws RocketStageServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
+    public ResponseEntity<String> saveNewStageData(@RequestBody StageDataDTO stageDataDTO) throws RocketStageServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, RobotDepartmentServiceUnavailableException {
         LoggerHelper.logInfo("Receive \u001B[38;5;165mstage\u001B[32m " + stageDataDTO.getStageLevel() + " hardware data: " + stageDataDTO.toStringComplete());
         return this.dataSaver.saveStageData(stageDataDTO);
+    }
+
+    @PostMapping("/send-robot-data")
+    public ResponseEntity<String> saveNewRobotData(@RequestBody RobotDataDTO robotDataDTO) throws RocketStageServiceUnavailableException, ExecutiveServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+        LoggerHelper.logInfo("Receive \u001B[93mrobot\u001B[32m hardware data: " + robotDataDTO.toString());
+        return this.dataSaver.saveRobotData(robotDataDTO);
     }
 
     @PostMapping("/send-payload-data")

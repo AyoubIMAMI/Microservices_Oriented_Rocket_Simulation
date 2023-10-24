@@ -2,6 +2,7 @@ package fr.teama.rockethardwareservice.controllers;
 
 import fr.teama.rockethardwareservice.controllers.dto.ErrorDTO;
 import fr.teama.rockethardwareservice.exceptions.PayloadHardwareServiceUnavaibleException;
+import fr.teama.rockethardwareservice.exceptions.RobotHardwareServiceUnavaibleException;
 import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,15 @@ public class RocketHardwareControllerAdvice {
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setError("Payload hardware service unavailable.");
         errorDTO.setDetails("The payload hardware service is currently unavailable. Please try again later.");
+        return errorDTO;
+    }
+
+    @ExceptionHandler({RobotHardwareServiceUnavaibleException.class})
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    public ErrorDTO handleExceptions(RobotHardwareServiceUnavaibleException e) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("Robot hardware service unavailable.");
+        errorDTO.setDetails("The robot hardware service is currently unavailable. Please try again later.");
         return errorDTO;
     }
 }

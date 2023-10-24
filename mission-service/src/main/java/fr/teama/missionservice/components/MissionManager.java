@@ -27,6 +27,9 @@ public class MissionManager implements IMissionManager {
     IExecutiveProxy executiveProxy;
 
     @Autowired
+    IRobotDepartmentProxy robotDepartmentProxy;
+
+    @Autowired
     IRocketHardwareProxy rocketHardwareProxy;
 
     @Autowired
@@ -39,7 +42,7 @@ public class MissionManager implements IMissionManager {
     IWebcasterProxy webcasterProxy;
 
     @Override
-    public ResponseEntity<String> startMission(String rocketName) throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, WebcasterServiceUnavailableException, LogsServiceUnavailableException {
+    public ResponseEntity<String> startMission(String rocketName) throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, WebcasterServiceUnavailableException, LogsServiceUnavailableException, RobotDepartmentServiceUnavailableException {
         telemetryProxy.changeRocketName(rocketName);
         telemetryProxy.resetTrackings();
         logsProxy.changeRocketName(rocketName);
@@ -97,9 +100,10 @@ public class MissionManager implements IMissionManager {
             LoggerHelper.logWarn(serviceName + " is not OK to launch rocket");
     }
 
-    private void NotifyMissionStart() throws PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
+    private void NotifyMissionStart() throws PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, RobotDepartmentServiceUnavailableException {
         payloadProxy.missionStartNotification();
         executiveProxy.missionStartNotification();
+        robotDepartmentProxy.missionStartNotification();
     }
 
     private void gettingNotifyInCaseOfRocketAnomaly() throws TelemetryServiceUnavailableException {

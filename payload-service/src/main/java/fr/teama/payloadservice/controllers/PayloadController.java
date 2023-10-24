@@ -2,13 +2,10 @@ package fr.teama.payloadservice.controllers;
 
 import fr.teama.payloadservice.controllers.dto.PayloadDataDTO;
 import fr.teama.payloadservice.controllers.dto.PositionDTO;
-import fr.teama.payloadservice.exceptions.RocketHardwareServiceUnavailableException;
-import fr.teama.payloadservice.exceptions.WebcasterServiceUnavailableException;
+import fr.teama.payloadservice.exceptions.*;
 import fr.teama.payloadservice.interfaces.proxy.IWebcasterProxy;
 import fr.teama.payloadservice.models.PayloadData;
 import fr.teama.payloadservice.models.Position;
-import fr.teama.payloadservice.exceptions.PayloadHardwareServiceUnavaibleException;
-import fr.teama.payloadservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.payloadservice.helpers.LoggerHelper;
 import fr.teama.payloadservice.interfaces.IDataAsker;
 import fr.teama.payloadservice.interfaces.IPayloadReleaser;
@@ -18,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -48,7 +44,7 @@ public class PayloadController {
     }
 
     @PostMapping("/drop")
-    public ResponseEntity<String> dropPayload() throws TelemetryServiceUnavailableException, PayloadHardwareServiceUnavaibleException, RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException {
+    public ResponseEntity<String> dropPayload() throws RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException, MissionServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, requesting to drop the payload");
         webcasterProxy.warnWebcaster("Payload drop requested");
         return payloadReleaser.dropPayload();

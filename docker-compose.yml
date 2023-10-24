@@ -108,8 +108,22 @@ services:
     ports:
       - 3013:8080
 
+  robot-department-service:
+    container_name: robot-department-service
+    image: "marsy/robot-department-service"
+    restart: always
+    ports:
+      - 3014:8080
+
+  robot-hardware-mock-service:
+    container_name: robot-hardware-mock-service
+    image: "marsy/robot-hardware-mock-service"
+    restart: always
+    ports:
+      - 3015:8080
+
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
-  postgres:
+  postgres-telemetry:
     image: postgres:15.2
     container_name: database-telemetry
     environment:

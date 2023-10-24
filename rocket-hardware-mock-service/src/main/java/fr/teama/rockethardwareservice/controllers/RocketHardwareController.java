@@ -3,6 +3,7 @@ package fr.teama.rockethardwareservice.controllers;
 import fr.teama.rockethardwareservice.controllers.dto.RocketDataDTO;
 import fr.teama.rockethardwareservice.controllers.dto.StageDataDTO;
 import fr.teama.rockethardwareservice.exceptions.PayloadHardwareServiceUnavaibleException;
+import fr.teama.rockethardwareservice.exceptions.RobotHardwareServiceUnavaibleException;
 import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.helpers.LoggerHelper;
@@ -139,6 +140,13 @@ public class RocketHardwareController {
     public ResponseEntity<String> dropPayload() throws PayloadHardwareServiceUnavaibleException {
         LoggerHelper.logInfo("Request received for drop the payload");
         rocketHardware.dropPayload();
+        return ResponseEntity.ok().body("OK");
+    }
+
+    @PostMapping("/drop-robot")
+    public ResponseEntity<String> dropRobot() throws RobotHardwareServiceUnavaibleException {
+        LoggerHelper.logInfo("Request received for drop the robot");
+        rocketHardware.dropRobot();
         return ResponseEntity.ok().body("OK");
     }
 

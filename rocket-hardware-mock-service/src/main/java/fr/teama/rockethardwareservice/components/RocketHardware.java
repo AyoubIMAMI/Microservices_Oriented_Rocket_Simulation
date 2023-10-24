@@ -1,11 +1,13 @@
 package fr.teama.rockethardwareservice.components;
 
 import fr.teama.rockethardwareservice.exceptions.PayloadHardwareServiceUnavaibleException;
+import fr.teama.rockethardwareservice.exceptions.RobotHardwareServiceUnavaibleException;
 import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
 import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.helpers.LoggerHelper;
 import fr.teama.rockethardwareservice.interfaces.IRocketHardware;
 import fr.teama.rockethardwareservice.interfaces.proxy.IPayloadHardwareProxy;
+import fr.teama.rockethardwareservice.interfaces.proxy.IRobotHardwareProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.IStageHardwareProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.rockethardwareservice.models.RocketData;
@@ -31,6 +33,9 @@ public class RocketHardware implements IRocketHardware {
 
     @Autowired
     IPayloadHardwareProxy payloadHardwareProxy;
+
+    @Autowired
+    IRobotHardwareProxy robotHardwareProxy;
 
     private final long updateDelay = 500;
 
@@ -142,6 +147,12 @@ public class RocketHardware implements IRocketHardware {
     public void dropPayload() throws PayloadHardwareServiceUnavaibleException {
         LoggerHelper.logInfo("Drop payload physically");
         payloadHardwareProxy.startOrbitalPosDispatch(rocket.getPosition());
+    }
+
+    @Override
+    public void dropRobot() throws RobotHardwareServiceUnavaibleException {
+        LoggerHelper.logInfo("Drop robot physically");
+        robotHardwareProxy.startRobotLogging(rocket.getPosition());
     }
 
     @Override
