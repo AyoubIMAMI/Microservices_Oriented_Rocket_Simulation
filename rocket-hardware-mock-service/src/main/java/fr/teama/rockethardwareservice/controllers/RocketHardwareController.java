@@ -2,6 +2,7 @@ package fr.teama.rockethardwareservice.controllers;
 
 import fr.teama.rockethardwareservice.controllers.dto.RocketDataDTO;
 import fr.teama.rockethardwareservice.controllers.dto.StageDataDTO;
+import fr.teama.rockethardwareservice.exceptions.MissionServiceUnvailableException;
 import fr.teama.rockethardwareservice.exceptions.PayloadHardwareServiceUnavaibleException;
 import fr.teama.rockethardwareservice.exceptions.RobotHardwareServiceUnavaibleException;
 import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
@@ -43,7 +44,7 @@ public class RocketHardwareController {
         executorService.submit(() -> {
             try {
                 rocketHardware.startLogging();
-            } catch (TelemetryServiceUnavailableException e) {
+            } catch (TelemetryServiceUnavailableException | MissionServiceUnvailableException e) {
                 LoggerHelper.logError(e.toString());
             }
         });
@@ -98,6 +99,13 @@ public class RocketHardwareController {
     public ResponseEntity<String> sabotagingTheRocket() {
         LoggerHelper.logWarn("Elune Mars from SpaceY comes to sabotage the rocket :(");
         rocketHardware.sabotageTheRocket();
+        return ResponseEntity.ok("Sabotaging successful");
+    }
+
+    @PostMapping("/dangerous-sabotaging")
+    public ResponseEntity<String> criticalSabotagingOfTheRocket() {
+        LoggerHelper.logWarn("Palpatooine comes to redirect the rocket and destroy the earth");
+        rocketHardware.criticalSabotagingOfTheRocket();
         return ResponseEntity.ok("Sabotaging successful");
     }
 

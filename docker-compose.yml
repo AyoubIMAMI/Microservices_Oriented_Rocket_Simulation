@@ -25,8 +25,6 @@ services:
 
   weather-service:
     container_name: weather-service
-    networks:
-      - app-tier
     image: "marsy/weather-service"
     restart: always
     ports:

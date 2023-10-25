@@ -53,4 +53,10 @@ public class MissionController {
         kafkaProducerService.sendMessage("test");
         return ResponseEntity.ok("message sent");
     }
+
+    @PostMapping("/rocket-critical-anomaly")
+    public ResponseEntity<String> rocketSelfDestroyedDueToCriticalAnomaly() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
+        missionManager.missionFailed();
+        return ResponseEntity.ok("Receive information about the critical anomaly");
+    }
 }
