@@ -4,7 +4,7 @@ package fr.teama.scientificdepartmentservice.controllers;
 import fr.teama.scientificdepartmentservice.helpers.LoggerHelper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,9 +16,9 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 public class ScientificDepartmentController {
     public static final String BASE_URI = "/api/rocket";
 
-    @GetMapping("/coordinates")
+    @PostMapping("/robot-landed")
     public ResponseEntity<String> getRocketCoordinates() {
-        LoggerHelper.logInfo("Request received to send robot coordinates");
+        LoggerHelper.logInfo("Warned that the robot has landed");
         return ResponseEntity.ok().body("OK");
     }
 }
