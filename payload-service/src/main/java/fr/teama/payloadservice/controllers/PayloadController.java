@@ -3,6 +3,7 @@ package fr.teama.payloadservice.controllers;
 import fr.teama.payloadservice.controllers.dto.PayloadDataDTO;
 import fr.teama.payloadservice.controllers.dto.PositionDTO;
 import fr.teama.payloadservice.exceptions.*;
+import fr.teama.payloadservice.interfaces.proxy.IRocketHardwareProxy;
 import fr.teama.payloadservice.interfaces.proxy.IWebcasterProxy;
 import fr.teama.payloadservice.models.PayloadData;
 import fr.teama.payloadservice.models.Position;
@@ -36,6 +37,9 @@ public class PayloadController {
     @Autowired
     private IWebcasterProxy webcasterProxy;
 
+    @Autowired
+    private IRocketHardwareProxy rocketHardwareProxy;
+
 
     @PostMapping
     public ResponseEntity<String> missionStartWarning() throws TelemetryServiceUnavailableException {
@@ -47,7 +51,9 @@ public class PayloadController {
     public ResponseEntity<String> dropPayload() throws RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException, MissionServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, requesting to drop the payload");
         webcasterProxy.warnWebcaster("Payload drop requested");
-        return payloadReleaser.dropPayload();
+        payloadReleaser.dropPayload();
+        rocketHardwareProxy.activeEngine();
+        return ResponseEntity.status(HttpStatus.OK).body("Payload dropped");
     }
     @PostMapping("/data")
     public ResponseEntity<String> savePayloadData(@RequestBody PayloadDataDTO payloadDataDTO) throws PayloadHardwareServiceUnavaibleException {

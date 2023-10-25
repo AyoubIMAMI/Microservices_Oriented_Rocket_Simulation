@@ -48,6 +48,7 @@ function wait_telemetry_service() {
 }
 
 function scenario1() {
+  #todo: change scenario line
   printf "\n\033[1;34m========================================\033[0m
 
 Start of scenario 1: Mission successful with passage through Max Q, payload delivery and stage return to Earth.
@@ -79,7 +80,8 @@ function sabotageRocket() {
 
 wait_telemetry_service
 (sleep 2 && scenario1) &
-(sleep 85 && scenario2) &
-(sleep 102 && sabotageRocket) &
+#todo: redo timing for scenario 2
+#(sleep 85 && scenario2) &
+#(sleep 102 && sabotageRocket) &
 docker compose logs --follow --since 0m
 read -p "."

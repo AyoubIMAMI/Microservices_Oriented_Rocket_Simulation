@@ -6,13 +6,12 @@ import fr.teama.rockethardwareservice.helpers.LoggerHelper;
 import fr.teama.rockethardwareservice.interfaces.proxy.IRobotHardwareProxy;
 import fr.teama.rockethardwareservice.models.Position;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
 public class RobotHardwareProxy implements IRobotHardwareProxy {
-    @Value("${stage-hardware.host.baseurl}")
+    @Value("${robot-hardware.host.baseurl}")
     private String apiBaseUrlHostAndPort;
 
     private final RestTemplate restTemplate = new RestTemplate();

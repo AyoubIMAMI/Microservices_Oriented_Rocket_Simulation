@@ -16,7 +16,9 @@
     <file url="file://$PROJECT_DIR$/payload-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/payload-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/robot-department-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/robot-department-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/robot-hardware-mock-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/robot-hardware-mock-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/rocket-department-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/rocket-department-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/rocket-hardware-mock-service/src/main/java" charset="UTF-8" />

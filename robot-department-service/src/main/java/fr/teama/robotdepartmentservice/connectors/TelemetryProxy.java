@@ -23,7 +23,7 @@ public class TelemetryProxy implements ITelemetryProxy {
     @Override
     public ResponseEntity<String> askRocketHeight() throws TelemetryServiceUnavailableException {
         try {
-            TrackItemDTO trackItemDTO = new TrackItemDTO(TrackingFieldDTO.HEIGHT, 10000.0, OperationTypeDTO.GREATER_OR_EQUAL);
+            TrackItemDTO trackItemDTO = new TrackItemDTO(TrackingFieldDTO.HEIGHT, 12000.0, OperationTypeDTO.GREATER_OR_EQUAL);
             List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
             trackItemDTOList.add(trackItemDTO);
 

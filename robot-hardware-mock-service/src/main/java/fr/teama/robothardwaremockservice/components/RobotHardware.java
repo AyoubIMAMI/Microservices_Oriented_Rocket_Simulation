@@ -47,9 +47,9 @@ public class RobotHardware implements IRobotHardware {
             // Flip maneuver
             if (robotData.getAngle() != 0) {
                 if (robotData.getAngle() > 0) {
-                    robotData.setAngle(max(robotData.getAngle() - new Random().nextDouble() * 3, 0));
+                    robotData.setAngle(max(robotData.getAngle() - new Random().nextDouble() * 5, 0));
                 } else {
-                    robotData.setAngle(min(robotData.getAngle() + new Random().nextDouble() * 3, 0));
+                    robotData.setAngle(min(robotData.getAngle() + new Random().nextDouble() * 5, 0));
                 }
 
                 if (robotData.getAngle() == 0) {
@@ -78,6 +78,7 @@ public class RobotHardware implements IRobotHardware {
 
             // Deploy parachute
             if (robotData.getAltitude() <= DEPLOY_PARACHUTE_HEIGHT && !robotData.isParachuteDeployed()) {
+                LoggerHelper.logInfo("Robot has deployed its parachute at " + robotData.getAltitude() + " decameters");
                 robotData.setParachuteDeployed(true);
                 robotData.setAcceleration(PARACHUTE_ACCELERATION);
             }

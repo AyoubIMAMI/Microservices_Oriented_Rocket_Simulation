@@ -26,6 +26,10 @@ public class RobotData {
         this.angle = (Math.random() * 35 + 10) * (new Random().nextBoolean() ? 1 : -1);
     }
 
+    public RobotData() {
+
+    }
+
     public Position getPosition() {
         return position;
     }

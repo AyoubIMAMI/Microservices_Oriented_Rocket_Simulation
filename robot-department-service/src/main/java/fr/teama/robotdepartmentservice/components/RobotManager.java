@@ -14,6 +14,7 @@ public class RobotManager implements IRobotManager {
 
     @Override
     public void startRobot() throws RobotHardwareServiceUnavailableException {
+        //TODO: stuff with scientific and others
         robotHardwareProxy.stopLogging();
     }
 }
