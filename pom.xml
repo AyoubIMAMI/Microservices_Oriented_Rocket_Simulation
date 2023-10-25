@@ -36,6 +36,7 @@
         <module>payload-hardware-mock-service</module>
         <module>logs-service</module>
         <module>webcaster-service</module>
+        <module>scientific-department-service</module>
     </modules>
 
     <dependencyManagement>
