@@ -8,4 +8,7 @@ public interface IRobotHardwareProxy {
 
     ResponseEntity<String> stopLogging() throws RobotHardwareServiceUnavailableException;
 
+    ResponseEntity<String> moveToTheSpot(double x, double y) throws RobotHardwareServiceUnavailableException;
+
+    ResponseEntity<String> takeSamples() throws RobotHardwareServiceUnavailableException;
 }

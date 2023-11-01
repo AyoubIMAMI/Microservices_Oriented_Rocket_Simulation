@@ -36,4 +36,16 @@ public class RobotDepartmentProxy implements IRobotDepartmentProxy {
             throw new RobotDepartmentServiceUnavailableException();
         }
     }
+
+    @Override
+    public void reachedPositionSuccessfully() throws RobotDepartmentServiceUnavailableException {
+        try {
+            LoggerHelper.logInfo("Notify the robot department that the robot has reached the position successfully");
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/robot/reached-position", null, String.class);
+        } catch (Exception e) {
+            LoggerHelper.logError(e.toString());
+            throw new RobotDepartmentServiceUnavailableException();
+        }
+    }
+
 }

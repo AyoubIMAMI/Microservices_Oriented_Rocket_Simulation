@@ -1,6 +1,7 @@
 package fr.teama.robothardwaremockservice.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class RobotData {
@@ -8,6 +9,8 @@ public class RobotData {
     private Position position;
 
     private LocalDateTime timestamp;
+
+    private Sample sample;
 
     private Double speed;
 
@@ -29,6 +32,7 @@ public class RobotData {
     public RobotData() {
 
     }
+
 
     public Position getPosition() {
         return position;
@@ -111,5 +115,11 @@ public class RobotData {
 
     public void setY(Double y) {
         this.position.setY(y);
+    }
+    public Sample getSample() {
+        return sample;
+    }
+    public void setSample(Sample sample) {
+        this.sample = sample;
     }
 }

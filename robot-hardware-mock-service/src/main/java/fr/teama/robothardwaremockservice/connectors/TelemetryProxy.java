@@ -5,6 +5,7 @@ import fr.teama.robothardwaremockservice.exceptions.TelemetryServiceUnavailableE
 import fr.teama.robothardwaremockservice.helpers.LoggerHelper;
 import fr.teama.robothardwaremockservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.robothardwaremockservice.models.RobotData;
+import fr.teama.robothardwaremockservice.models.Sample;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -24,5 +25,14 @@ public class TelemetryProxy implements ITelemetryProxy {
             LoggerHelper.logError(e.toString());
             throw new TelemetryServiceUnavailableException();
         }
+    }
+    @Override
+    public void sendSampleData(RobotData robotData) {
+        Sample sample = new Sample();
+        sample.addMineral("Pyroxene");
+        sample.addMineral("Olivine");
+        sample.addMineral("Ilmenite");
+        robotData.setSample(sample);
+        restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/send-sample-data", robotData, String.class);
     }
 }

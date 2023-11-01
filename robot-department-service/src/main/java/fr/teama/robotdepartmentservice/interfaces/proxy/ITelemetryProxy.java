@@ -6,4 +6,6 @@ import org.springframework.http.ResponseEntity;
 public interface ITelemetryProxy {
     ResponseEntity<String> askRocketHeight() throws TelemetryServiceUnavailableException;
     ResponseEntity<String> askRobotHeight() throws TelemetryServiceUnavailableException;
+
+    ResponseEntity<String> askRobotPosition(double x, double y) throws TelemetryServiceUnavailableException;
 }

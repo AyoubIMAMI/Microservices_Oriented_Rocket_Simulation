@@ -28,11 +28,37 @@ public class RobotHardwareController {
 
         ExecutorService executorService = Executors.newFixedThreadPool(1);
 
-        executorService.submit(() -> robotHardware.startLogging(position));
+        executorService.submit(() -> robotHardware.startLoggingLanding(position));
 
         executorService.shutdown();
 
         return ResponseEntity.ok("Logging started successfully");
+    }
+
+    @PostMapping("/start-movement")
+    public ResponseEntity<String> startLoggingMovement(@RequestBody Position position) {
+        LoggerHelper.logInfo("Request received to start logging the movement of the robot");
+
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+
+        executorService.submit(() -> robotHardware.startLoggingMovement(position));
+
+        executorService.shutdown();
+
+        return ResponseEntity.ok("Logging started successfully");
+    }
+
+    @PostMapping("/take-samples")
+    public ResponseEntity<String> takeSamples() {
+        LoggerHelper.logInfo("Request received to take samples");
+
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+
+        executorService.submit(() -> robotHardware.takeSamples());
+
+        executorService.shutdown();
+
+        return ResponseEntity.ok("Samples taken successfully");
     }
 
     @PostMapping("/stop-logging")

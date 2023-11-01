@@ -47,11 +47,22 @@ public class RobotDepartmentController {
     }
 
     @PostMapping("/landed")
-    public ResponseEntity<String> landed() throws WebcasterServiceUnavailableException, RobotHardwareServiceUnavailableException {
+    public ResponseEntity<String> landed() throws WebcasterServiceUnavailableException, RobotHardwareServiceUnavailableException, TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, robot has landed");
         webcasterProxy.warnWebcaster("Robot has landed");
         robotManager.startRobot();
+
+
         return ResponseEntity.ok("Robot has landed");
+    }
+
+    @PostMapping("/reached-position")
+    public ResponseEntity<String> reachedPosition() throws WebcasterServiceUnavailableException, RobotHardwareServiceUnavailableException {
+        LoggerHelper.logInfo("Notification received, robot has reached the position");
+        webcasterProxy.warnWebcaster("Robot has reached the position");
+        robotManager.takeSamples();
+
+        return ResponseEntity.ok("Robot has reached the position");
     }
 
 }

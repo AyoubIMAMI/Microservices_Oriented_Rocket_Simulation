@@ -5,6 +5,7 @@ import fr.teama.telemetryservice.controllers.dto.RobotDataDTO;
 import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
 import fr.teama.telemetryservice.controllers.dto.StageDataDTO;
 import fr.teama.telemetryservice.exceptions.*;
+import fr.teama.telemetryservice.helpers.LoggerHelper;
 import fr.teama.telemetryservice.interfaces.DataSender;
 import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
 import fr.teama.telemetryservice.interfaces.proxy.IPayloadProxy;
@@ -73,6 +74,13 @@ public class DataManager implements DataSaver, DataSender {
     public ResponseEntity<String> sendPayloadData(PayloadDataDTO payloadDataDTO) throws PayloadServiceUnavailableException {
         PayloadData payloadData = new PayloadData(rocketNameRepository.findTopByOrderByIdDesc().getName(), payloadDataDTO);
         return payloadProxy.sendData(payloadData);
+    }
+
+    @Override
+    public ResponseEntity<String> sendRobotDataForScientist(RobotDataDTO robotDataDTO) {
+        //TODO send robot data to scientific department that will handle them
+        LoggerHelper.logInfo("Robot data sample sent to scientific department"+ robotDataDTO.getSample().toString());
+        return(ResponseEntity.ok().body("Robot data sent to scientific department"));
     }
 
     @Override

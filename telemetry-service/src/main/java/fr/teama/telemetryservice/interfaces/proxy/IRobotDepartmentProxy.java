@@ -8,4 +8,6 @@ public interface IRobotDepartmentProxy {
     void notifyHeightReached() throws RobotDepartmentServiceUnavailableException;
 
     void landedSuccessfully() throws RobotDepartmentServiceUnavailableException;
+
+    void reachedPositionSuccessfully() throws RobotDepartmentServiceUnavailableException;
 }

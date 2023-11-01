@@ -1,5 +1,7 @@
 package fr.teama.telemetryservice.controllers.dto;
 
+import fr.teama.telemetryservice.models.Sample;
+
 import java.time.LocalDateTime;
 import java.util.Random;
 
@@ -12,6 +14,7 @@ public class RobotDataDTO {
     private Double speed;
 
     private Double acceleration;
+    private Sample sample;
 
     private Double angle;
 
@@ -28,6 +31,14 @@ public class RobotDataDTO {
 
     public RobotDataDTO() {
 
+    }
+
+    public Sample getSample() {
+        return sample;
+    }
+
+    public void setSample(Sample sample) {
+        this.sample = sample;
     }
 
     public PositionDTO getPosition() {

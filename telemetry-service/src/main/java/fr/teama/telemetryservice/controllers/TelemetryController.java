@@ -73,4 +73,10 @@ public class TelemetryController {
         LoggerHelper.logInfo("Change rocket name to " + rocketName + " for future data");
         return this.dataSaver.changeRocketName(rocketName);
     }
+    @PostMapping("/send-sample-data")
+    public ResponseEntity<String> transferPayloadData(@RequestBody RobotDataDTO robotDataDTO) throws PayloadServiceUnavailableException, RocketStageServiceUnavailableException, ExecutiveServiceUnavailableException, MissionServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+        LoggerHelper.logInfo("Receive \u001B[93mrobot\u001B[32m hardware data: " + robotDataDTO.toString());
+        this.dataSaver.saveRobotData(robotDataDTO);
+        return this.dataSender.sendRobotDataForScientist(robotDataDTO);
+    }
 }

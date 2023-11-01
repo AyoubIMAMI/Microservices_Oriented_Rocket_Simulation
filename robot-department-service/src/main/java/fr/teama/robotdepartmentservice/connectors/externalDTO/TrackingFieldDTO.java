@@ -4,4 +4,6 @@ public enum TrackingFieldDTO {
     HEIGHT,
     SPEED,
     FUEL,
+    X,
+    Y
 }

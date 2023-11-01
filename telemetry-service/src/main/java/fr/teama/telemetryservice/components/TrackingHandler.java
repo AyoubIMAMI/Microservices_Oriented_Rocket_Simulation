@@ -102,6 +102,7 @@ public class TrackingHandler implements ITelemetryNotifier {
             case FUEL -> rocketData.getStageByLevel(1).getFuel();
             case SPEED -> rocketData.getSpeed();
             case STATUS -> rocketData.getStatus();
+            default -> 0.0;
         };
     }
 
@@ -117,6 +118,8 @@ public class TrackingHandler implements ITelemetryNotifier {
     private Double getRobotDataToCheck(TrackingField fieldToTrack, RobotData robotData) {
         return switch (fieldToTrack) {
             case HEIGHT -> robotData.getPosition().getAltitude();
+            case X -> robotData.getPosition().getX();
+            case Y -> robotData.getPosition().getY();
             default -> 0.0;
         };
     }
@@ -149,6 +152,9 @@ public class TrackingHandler implements ITelemetryNotifier {
                         break;
                     case "/robot/landed":
                         robotDepartmentProxy.landedSuccessfully();
+                        break;
+                    case "/robot/reached-position":
+                        robotDepartmentProxy.reachedPositionSuccessfully();
                         break;
                 }
                 break;

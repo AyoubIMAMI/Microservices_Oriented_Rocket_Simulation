@@ -1,12 +1,10 @@
 package fr.teama.telemetryservice.models;
 
 import fr.teama.telemetryservice.controllers.dto.RobotDataDTO;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Embeddable
 @Entity
@@ -29,6 +27,8 @@ public class RobotData {
     private LocalDateTime timestamp;
 
     private boolean isParachuteDeployed;
+    @Embedded
+    private Sample sample;
 
     public RobotData() {
 

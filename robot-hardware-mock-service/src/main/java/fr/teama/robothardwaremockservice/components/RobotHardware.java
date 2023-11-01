@@ -30,19 +30,21 @@ public class RobotHardware implements IRobotHardware {
 
     private final Double DEPLOY_PARACHUTE_HEIGHT = 300.0;
 
+    boolean sendLogForMovement;
     boolean sendLog;
+
 
     RobotData robotData;
 
     @Override
-    public void startLogging(Position position) {
+    public void startLoggingLanding(Position position) {
         robotData = new RobotData(position);
         sendLog = true;
         robotData.setAcceleration(-MOON_GRAVITY);
 
         LoggerHelper.logInfo("Robot has started its its descent to the Moon");
 
-        while(sendLog) {
+        while (sendLog) {
 
             // Flip maneuver
             if (robotData.getAngle() != 0) {
@@ -59,13 +61,13 @@ public class RobotHardware implements IRobotHardware {
 
             // Guidance
             if (robotData.getX() != 0 || robotData.getY() != 0) {
-                if(robotData.getX() > 0) {
+                if (robotData.getX() > 0) {
                     robotData.setX(max(robotData.getX() - new Random().nextDouble() * 2, 0));
                 } else {
                     robotData.setX(min(robotData.getX() + new Random().nextDouble() * 2, 0));
                 }
 
-                if(robotData.getY() > 0) {
+                if (robotData.getY() > 0) {
                     robotData.setY(max(robotData.getY() - new Random().nextDouble() * 2, 0));
                 } else {
                     robotData.setY(min(robotData.getY() + new Random().nextDouble() * 2, 0));
@@ -85,7 +87,7 @@ public class RobotHardware implements IRobotHardware {
 
             // Speed
             if (robotData.isParachuteDeployed()) {
-                robotData.setSpeed(min(robotData.getSpeed() + robotData.getAcceleration(),-MOON_GRAVITY));
+                robotData.setSpeed(min(robotData.getSpeed() + robotData.getAcceleration(), -MOON_GRAVITY));
             } else {
                 robotData.setSpeed(robotData.getSpeed() + robotData.getAcceleration());
             }
@@ -106,10 +108,84 @@ public class RobotHardware implements IRobotHardware {
                 robotData.setTimestamp(java.time.LocalDateTime.now());
                 telemetryProxy.sendRobotData(robotData);
                 TimeUnit.SECONDS.sleep(updateDelay);
+                if (robotData.getAltitude() == 0) {
+                    sendLog = false;
+                }
             } catch (InterruptedException | TelemetryServiceUnavailableException e) {
                 LoggerHelper.logError(e.toString());
             }
         }
+    }
+
+    @Override
+    public void startLoggingMovement(Position positionToReach){
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        while(sendLog){
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        LoggerHelper.logInfo("Robot has started to move to the position : "+ positionToReach.toString());
+        robotData.setParachuteDeployed(false);
+        robotData.setSpeed(10.0);
+        sendLogForMovement = true;
+        while (sendLogForMovement) {
+            // Guidance
+            if (Math.abs(robotData.getX() - positionToReach.getX()) <= 10) {
+                robotData.setX(positionToReach.getX());
+            }
+            else if (robotData.getX() > positionToReach.getX()) {
+                robotData.setX(robotData.getX() - new Random().nextDouble() * 10);
+            } else {
+                robotData.setX(robotData.getX() + new Random().nextDouble() * 10);
+            }
+
+            //if the robot is close to target set y to target
+            if (Math.abs(robotData.getY() - positionToReach.getY()) <= 10) {
+                robotData.setY(positionToReach.getY());
+            }
+            else if (robotData.getY() > positionToReach.getY()) {
+                robotData.setY(robotData.getY() - new Random().nextDouble() * 10);
+            } else {
+                robotData.setY(robotData.getY() + new Random().nextDouble() * 10);
+            }
+            try {
+                robotData.setTimestamp(java.time.LocalDateTime.now());
+                telemetryProxy.sendRobotData(robotData);
+                TimeUnit.SECONDS.sleep(updateDelay);
+                if (robotData.getX() == positionToReach.getX() && robotData.getY() == positionToReach.getY()) {
+                    LoggerHelper.logWarn("Robot has finished its guidance maneuver");
+                    return ;
+                }
+            } catch (InterruptedException | TelemetryServiceUnavailableException e) {
+                LoggerHelper.logError(e.toString());
+            }
+        }
+
+
+    }
+
+    @Override
+    public void takeSamples() {
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        LoggerHelper.logInfo("Robot has started to take samples");
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        telemetryProxy.sendSampleData(robotData);
+        LoggerHelper.logInfo("Robot has finished to take samples");
     }
 
     @Override

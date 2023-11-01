@@ -51,4 +51,23 @@ public class TelemetryProxy implements ITelemetryProxy {
             throw new TelemetryServiceUnavailableException();
         }
     }
+
+    @Override
+    public ResponseEntity<String> askRobotPosition(double x, double y) throws TelemetryServiceUnavailableException {
+        try {
+            TrackItemDTO trackItemDTOX = new TrackItemDTO(TrackingFieldDTO.X, x, OperationTypeDTO.EQUAL);
+            TrackItemDTO trackItemDTOY = new TrackItemDTO(TrackingFieldDTO.Y, y, OperationTypeDTO.EQUAL);
+
+            List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
+            trackItemDTOList.add(trackItemDTOX);
+            trackItemDTOList.add(trackItemDTOY);
+
+            TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, "robot-department", TrackingCategoryDTO.ROBOT, "/robot/reached-position");
+            LoggerHelper.logInfo("Ask telemetry to being notify when the robot reach a x position of " + trackItemDTOX.getData()+ " and a y position of " + trackItemDTOY.getData());
+            return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/telemetry/tracking", trackingDTO, String.class);
+        } catch (Exception e) {
+            LoggerHelper.logError(e.toString());
+            throw new TelemetryServiceUnavailableException();
+        }
+    }
 }
