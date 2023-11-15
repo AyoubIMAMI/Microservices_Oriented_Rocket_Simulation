@@ -7,6 +7,15 @@ public class MissionLogDTO {
     String text;
     LocalDateTime date;
 
+    @Override
+    public String toString() {
+        return "MissionLogDTO{" +
+                "serviceName='" + serviceName + '\'' +
+                ", text='" + text + '\'' +
+                ", date=" + date +
+                '}';
+    }
+
     public String getServiceName() {
         return serviceName;
     }

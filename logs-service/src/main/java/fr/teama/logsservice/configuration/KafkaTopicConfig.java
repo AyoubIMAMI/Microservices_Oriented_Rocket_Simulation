@@ -1,4 +1,4 @@
-package fr.teama.weatherservice;
+package fr.teama.logsservice.configuration;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +9,7 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
 
     // Define your Kafka topic name and partitions
-    private static final String TOPIC_NAME = "rocket-topic";
+    private static final String TOPIC_NAME = "logs-topic";
     private static final int PARTITIONS = 3;
 
     // Create a bean for the Kafka topic
