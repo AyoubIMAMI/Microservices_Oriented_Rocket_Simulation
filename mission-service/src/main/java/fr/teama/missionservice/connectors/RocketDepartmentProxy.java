@@ -1,9 +1,9 @@
 package fr.teama.missionservice.connectors;
 
+import fr.teama.missionservice.KafkaProducerService;
 import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.proxy.IRocketDepartmentProxy;
-import fr.teama.missionservice.interfaces.proxy.IWebcasterProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class RocketDepartmentProxy implements IRocketDepartmentProxy {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
-    IWebcasterProxy webcasterProxy;
+    KafkaProducerService kafkaProducerService;
 
     public String getRocketStatus() throws RocketServiceUnavailableException {
         try {
@@ -38,7 +38,7 @@ public class RocketDepartmentProxy implements IRocketDepartmentProxy {
     public void launchRocket() throws RocketServiceUnavailableException {
         try {
             LoggerHelper.logInfo("Order the rocket department to launch the rocket in 60 seconds");
-            webcasterProxy.warnWebcaster("Rocket will be launched in 60 seconds");
+            kafkaProducerService.warnWebcaster("Rocket will be launched in 60 seconds");
             ResponseEntity<String> response = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket/launch", null, String.class);
             if (Objects.equals(response.getBody(), "OK"))
                 LoggerHelper.logInfo("The rocket department has launch the rocket");

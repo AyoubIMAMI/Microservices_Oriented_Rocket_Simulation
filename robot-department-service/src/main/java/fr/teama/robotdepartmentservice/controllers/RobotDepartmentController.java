@@ -1,11 +1,11 @@
 package fr.teama.robotdepartmentservice.controllers;
 
+import fr.teama.robotdepartmentservice.KafkaProducerService;
 import fr.teama.robotdepartmentservice.exceptions.*;
 import fr.teama.robotdepartmentservice.helpers.LoggerHelper;
 import fr.teama.robotdepartmentservice.interfaces.IDataAsker;
 import fr.teama.robotdepartmentservice.interfaces.IRobotManager;
 import fr.teama.robotdepartmentservice.interfaces.IRobotReleaser;
-import fr.teama.robotdepartmentservice.interfaces.proxy.IWebcasterProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ public class RobotDepartmentController {
     private IDataAsker dataAsker;
 
     @Autowired
-    private IWebcasterProxy webcasterProxy;
+    private KafkaProducerService kafkaProducerService;
 
     @Autowired
     private IRobotReleaser robotReleaser;
@@ -40,16 +40,16 @@ public class RobotDepartmentController {
     }
 
     @PostMapping("/drop")
-    public ResponseEntity<String> dropRobot() throws WebcasterServiceUnavailableException, RocketHardwareServiceUnavailableException, MissionServiceUnavailableException {
+    public ResponseEntity<String> dropRobot() throws RocketHardwareServiceUnavailableException, MissionServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, requesting to drop the robot");
-        webcasterProxy.warnWebcaster("Robot drop requested");
+        kafkaProducerService.warnWebcaster("Robot drop requested");
         return robotReleaser.dropRobot();
     }
 
     @PostMapping("/landed")
-    public ResponseEntity<String> landed() throws WebcasterServiceUnavailableException, RobotHardwareServiceUnavailableException, TelemetryServiceUnavailableException {
+    public ResponseEntity<String> landed() throws RobotHardwareServiceUnavailableException, TelemetryServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, robot has landed");
-        webcasterProxy.warnWebcaster("Robot has landed");
+        kafkaProducerService.warnWebcaster("Robot has landed");
         robotManager.startRobot();
 
 
@@ -57,9 +57,9 @@ public class RobotDepartmentController {
     }
 
     @PostMapping("/reached-position")
-    public ResponseEntity<String> reachedPosition() throws WebcasterServiceUnavailableException, RobotHardwareServiceUnavailableException {
+    public ResponseEntity<String> reachedPosition() throws RobotHardwareServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, robot has reached the position");
-        webcasterProxy.warnWebcaster("Robot has reached the position");
+        kafkaProducerService.warnWebcaster("Robot has reached the position");
         robotManager.takeSamples();
 
         return ResponseEntity.ok("Robot has reached the position");

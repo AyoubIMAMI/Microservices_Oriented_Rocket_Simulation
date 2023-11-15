@@ -26,12 +26,12 @@ public class MissionController {
     KafkaProducerService kafkaProducerService;
 
     @PostMapping("/start")
-    public ResponseEntity<String> startMission(@RequestBody String rocketName) throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, WebcasterServiceUnavailableException, LogsServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+    public ResponseEntity<String> startMission(@RequestBody String rocketName) throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, LogsServiceUnavailableException, RobotDepartmentServiceUnavailableException {
         LoggerHelper.logInfo("Request received to start the mission for rocket " + rocketName);
         return missionManager.startMission(rocketName);
     }
     @PostMapping("/success")
-    public ResponseEntity<String> endMission() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException, WebcasterServiceUnavailableException {
+    public ResponseEntity<String> endMission() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
         missionManager.missionSuccess();
         return ResponseEntity.ok().body("OK");
     }
@@ -48,6 +48,7 @@ public class MissionController {
         LoggerHelper.logWarn("Pressure anomaly detected");
         return ResponseEntity.ok("Pressure anomaly");
     }
+
     @PostMapping("/sendMessageToWeather")
     public ResponseEntity<String> sendMessage() {
         kafkaProducerService.sendMessage("test");

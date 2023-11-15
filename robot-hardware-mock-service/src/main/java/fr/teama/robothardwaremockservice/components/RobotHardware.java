@@ -9,6 +9,7 @@ import fr.teama.robothardwaremockservice.models.RobotData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -156,11 +157,13 @@ public class RobotHardware implements IRobotHardware {
                 robotData.setY(robotData.getY() + new Random().nextDouble() * 10);
             }
             try {
+                if (Objects.equals(robotData.getX(), positionToReach.getX()) && Objects.equals(robotData.getY(), positionToReach.getY())) {
+                    LoggerHelper.logWarn("Robot has finished its autopilot guidance maneuver");
+                }
                 robotData.setTimestamp(java.time.LocalDateTime.now());
                 telemetryProxy.sendRobotData(robotData);
                 TimeUnit.SECONDS.sleep(updateDelay);
-                if (robotData.getX() == positionToReach.getX() && robotData.getY() == positionToReach.getY()) {
-                    LoggerHelper.logWarn("Robot has finished its guidance maneuver");
+                if (Objects.equals(robotData.getX(), positionToReach.getX()) && Objects.equals(robotData.getY(), positionToReach.getY())) {
                     return ;
                 }
             } catch (InterruptedException | TelemetryServiceUnavailableException e) {

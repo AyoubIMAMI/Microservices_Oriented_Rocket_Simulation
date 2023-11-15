@@ -1,13 +1,11 @@
 package fr.teama.rocketdepartmentservice.controllers;
 
+import fr.teama.rocketdepartmentservice.KafkaProducerService;
 import fr.teama.rocketdepartmentservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.exceptions.TelemetryServiceUnavailableException;
-import fr.teama.rocketdepartmentservice.exceptions.WebcasterServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.helpers.LoggerHelper;
-import fr.teama.rocketdepartmentservice.interfaces.IDataAsker;
 import fr.teama.rocketdepartmentservice.interfaces.IRocketAnalyzer;
 import fr.teama.rocketdepartmentservice.interfaces.IRocketAction;
-import fr.teama.rocketdepartmentservice.interfaces.proxy.IWebcasterProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +25,7 @@ public class RocketDepartmentController {
     private IRocketAction rocketAction;
 
     @Autowired
-    private IWebcasterProxy webcasterProxy;
+    private KafkaProducerService kafkaProducerService;
 
     @GetMapping("/status")
     public ResponseEntity<String> getRocketStatus() {
@@ -37,43 +35,43 @@ public class RocketDepartmentController {
 
     @PostMapping("/launch")
     public ResponseEntity<String> startRocket() throws TelemetryServiceUnavailableException,
-            RocketHardwareServiceUnavailableException, InterruptedException, WebcasterServiceUnavailableException {
+            RocketHardwareServiceUnavailableException, InterruptedException {
         LoggerHelper.logInfo("Request received to launch the rocket in 60 seconds");
         rocketAction.launchRocket();
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/stage")
-    public ResponseEntity<String> stageRocket() throws RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException {
+    public ResponseEntity<String> stageRocket() throws RocketHardwareServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, fuel condition reached for staging the rocket");
         rocketAction.stageRocket();
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/enters-q")
-    public ResponseEntity<String> slowDownRocket() throws RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException {
+    public ResponseEntity<String> slowDownRocket() throws RocketHardwareServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, rocket enters Max Q => slow down");
         rocketAction.slowDownRocket();
-        webcasterProxy.warnWebcaster("Rocket enters Max Q => slow down");
+        kafkaProducerService.warnWebcaster("Rocket enters Max Q => slow down");
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/leaves-q")
-    public ResponseEntity<String> speedUpRocket() throws RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException {
+    public ResponseEntity<String> speedUpRocket() throws RocketHardwareServiceUnavailableException{
         LoggerHelper.logInfo("Notification received, rocket leaves Max Q => speed up");
         rocketAction.activeStage();
-        webcasterProxy.warnWebcaster("Rocket leaves Max Q => speed up");
+        kafkaProducerService.warnWebcaster("Rocket leaves Max Q => speed up");
         return ResponseEntity.ok().body("OK");
     }
 
     @PostMapping("/fairing-altitude")
-    public ResponseEntity<String> fairingAltitude() throws RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException {
+    public ResponseEntity<String> fairingAltitude() throws RocketHardwareServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, rocket reaches the orbit altitude");
         rocketAction.fairing();
-        webcasterProxy.warnWebcaster("Rocket reaches the orbit altitude => fairing");
+        kafkaProducerService.warnWebcaster("Rocket reaches the orbit altitude => fairing");
         LoggerHelper.logInfo("The rocket department wants the second engine to cut-off");
         rocketAction.slowDownRocket();
-        webcasterProxy.warnWebcaster("Second engine cut-off");
+        kafkaProducerService.warnWebcaster("Second engine cut-off");
         return ResponseEntity.ok().body("OK");
     }
 }

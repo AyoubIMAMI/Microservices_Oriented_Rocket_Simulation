@@ -56,7 +56,7 @@ Start of scenario 1: Mission successful with passage through Max Q, payload deli
 \033[0;35m========================================\033[0m\n\n"
   sleep 5
 
-  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3001/api/mission/start -H "Content-Type: application/text" --data "Appolo 12"
+  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3001/api/mission/start -H "Content-Type: application/text" --data "Appolo 11"
 }
 
 function scenario2() {

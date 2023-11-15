@@ -37,15 +37,6 @@ public class PayloadControllerAdvice {
         return errorDTO;
     }
 
-    @ExceptionHandler({WebcasterServiceUnavailableException.class})
-    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
-    public ErrorDTO handleExceptions(WebcasterServiceUnavailableException e) {
-        ErrorDTO errorDTO = new ErrorDTO();
-        errorDTO.setError("Payload hardware service unavailable.");
-        errorDTO.setDetails("The payload hardware service is currently unavailable. Please try again later.");
-        return errorDTO;
-    }
-
     @ExceptionHandler({MissionServiceUnavailableException.class})
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     public ErrorDTO handleExceptions(MissionServiceUnavailableException e) {

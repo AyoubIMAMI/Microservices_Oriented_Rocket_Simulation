@@ -54,13 +54,4 @@ public class MissionControllerAdvice {
         errorDTO.setDetails("The executive service is currently unavailable. Please try again later.");
         return errorDTO;
     }
-
-    @ExceptionHandler({WebcasterServiceUnavailableException.class})
-    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
-    public ErrorDTO handleExceptions(WebcasterServiceUnavailableException e) {
-        ErrorDTO errorDTO = new ErrorDTO();
-        errorDTO.setError("Webcaster service unavailable.");
-        errorDTO.setDetails("The webcaster service is currently unavailable. Please try again later.");
-        return errorDTO;
-    }
 }

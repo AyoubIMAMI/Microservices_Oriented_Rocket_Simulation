@@ -1,5 +1,6 @@
 package fr.teama.missionservice.components;
 
+import fr.teama.missionservice.KafkaProducerService;
 import fr.teama.missionservice.exceptions.*;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.IMissionManager;
@@ -39,10 +40,10 @@ public class MissionManager implements IMissionManager {
     ILogsProxy logsProxy;
 
     @Autowired
-    IWebcasterProxy webcasterProxy;
+    KafkaProducerService kafkaProducerService;
 
     @Override
-    public ResponseEntity<String> startMission(String rocketName) throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, WebcasterServiceUnavailableException, LogsServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+    public ResponseEntity<String> startMission(String rocketName) throws RocketServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, LogsServiceUnavailableException, RobotDepartmentServiceUnavailableException {
         telemetryProxy.changeRocketName(rocketName);
         telemetryProxy.resetTrackings();
         logsProxy.changeRocketName(rocketName);
@@ -51,7 +52,7 @@ public class MissionManager implements IMissionManager {
         rocketHardwareProxy.startLogging();
 
         LoggerHelper.logInfo("Rocket " + rocketName + " preparation started");
-        webcasterProxy.warnWebcaster("Rocket " + rocketName + " preparation started");
+        kafkaProducerService.warnWebcaster("Rocket " + rocketName + " preparation started");
         Double rocketStatus = rocketHardwareProxy.checkRocket();
 
         boolean weatherServiceReady = false;
@@ -73,11 +74,11 @@ public class MissionManager implements IMissionManager {
         logServiceMessage(missionReady, "Mission service");
 
         LoggerHelper.logInfo("Rocket " + rocketName + " preparation complete");
-        webcasterProxy.warnWebcaster("Rocket " + rocketName + " preparation complete");
+        kafkaProducerService.warnWebcaster("Rocket " + rocketName + " preparation complete");
 
         if (missionReady) {
             LoggerHelper.logInfo("Rocket " + rocketName + " is on Internal Power");
-            webcasterProxy.warnWebcaster("Rocket " + rocketName + " is on Internal Power");
+            kafkaProducerService.warnWebcaster("Rocket " + rocketName + " is on Internal Power");
             gettingNotifyInCaseOfRocketAnomaly();
             NotifyMissionStart();
             rocketDepartmentProxy.launchRocket();
@@ -90,9 +91,9 @@ public class MissionManager implements IMissionManager {
     }
 
     @Override
-    public void missionSuccess() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException, WebcasterServiceUnavailableException {
+    public void missionSuccess() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
         LoggerHelper.logWarn("The mission has succeed !!!");
-        webcasterProxy.warnWebcaster("The mission has succeed !!!");
+        kafkaProducerService.warnWebcaster("The mission has succeed !!!");
         rocketHardwareProxy.stopLogging();
         LoggerHelper.logInfoWithoutSaving("Number of logs of the missions : " + Objects.requireNonNull(logsProxy.getAllLogs().getBody()).size());
     }

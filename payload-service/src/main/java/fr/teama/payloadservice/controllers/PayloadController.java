@@ -1,10 +1,10 @@
 package fr.teama.payloadservice.controllers;
 
+import fr.teama.payloadservice.KafkaProducerService;
 import fr.teama.payloadservice.controllers.dto.PayloadDataDTO;
 import fr.teama.payloadservice.controllers.dto.PositionDTO;
 import fr.teama.payloadservice.exceptions.*;
 import fr.teama.payloadservice.interfaces.proxy.IRocketHardwareProxy;
-import fr.teama.payloadservice.interfaces.proxy.IWebcasterProxy;
 import fr.teama.payloadservice.models.PayloadData;
 import fr.teama.payloadservice.models.Position;
 import fr.teama.payloadservice.helpers.LoggerHelper;
@@ -35,7 +35,7 @@ public class PayloadController {
     private PayloadDataHandler payloadDataHandler;
 
     @Autowired
-    private IWebcasterProxy webcasterProxy;
+    private KafkaProducerService kafkaProducerService;
 
     @Autowired
     private IRocketHardwareProxy rocketHardwareProxy;
@@ -48,9 +48,9 @@ public class PayloadController {
     }
 
     @PostMapping("/drop")
-    public ResponseEntity<String> dropPayload() throws RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException, MissionServiceUnavailableException {
+    public ResponseEntity<String> dropPayload() throws RocketHardwareServiceUnavailableException, MissionServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, requesting to drop the payload");
-        webcasterProxy.warnWebcaster("Payload drop requested");
+        kafkaProducerService.warnWebcaster("Payload drop requested");
         payloadReleaser.dropPayload();
         rocketHardwareProxy.activeEngine();
         return ResponseEntity.status(HttpStatus.OK).body("Payload dropped");

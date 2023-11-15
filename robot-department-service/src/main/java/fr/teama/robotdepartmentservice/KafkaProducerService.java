@@ -1,4 +1,4 @@
-package fr.teama.missionservice;
+package fr.teama.robotdepartmentservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -11,10 +11,6 @@ public class KafkaProducerService {
     @Autowired
     public KafkaProducerService(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
-    }
-
-    public void sendMessage(String message) {
-        kafkaTemplate.send("rocket-topic", message);
     }
 
     public void warnWebcaster(String message) {
