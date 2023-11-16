@@ -1,6 +1,5 @@
 package fr.teama.payloadhardwaremockservice.controllers;
 
-import fr.teama.payloadhardwaremockservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.payloadhardwaremockservice.helpers.LoggerHelper;
 import fr.teama.payloadhardwaremockservice.interfaces.IPayloadHardware;
 import fr.teama.payloadhardwaremockservice.models.Position;
@@ -35,7 +34,7 @@ public class PayloadHardwareController {
         executorService.submit(() -> {
             try {
                 hardware.startOrbitalPosDispatch(position);
-            } catch (TelemetryServiceUnavailableException e) {
+            } catch (Exception e) {
                 // Handle the exception as needed
                 LoggerHelper.logError(e.toString());
             }

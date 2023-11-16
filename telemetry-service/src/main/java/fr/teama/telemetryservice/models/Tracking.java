@@ -13,7 +13,7 @@ public class Tracking {
     @GeneratedValue
     private Long id;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<TrackItem> data;
 
     private String serviceToBeNotified;

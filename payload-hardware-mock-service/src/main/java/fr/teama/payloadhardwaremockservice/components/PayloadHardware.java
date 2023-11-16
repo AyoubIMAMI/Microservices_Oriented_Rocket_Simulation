@@ -1,9 +1,8 @@
 package fr.teama.payloadhardwaremockservice.components;
 
-import fr.teama.payloadhardwaremockservice.exceptions.TelemetryServiceUnavailableException;
+import fr.teama.payloadhardwaremockservice.KafkaProducerService;
 import fr.teama.payloadhardwaremockservice.helpers.LoggerHelper;
 import fr.teama.payloadhardwaremockservice.interfaces.IPayloadHardware;
-import fr.teama.payloadhardwaremockservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.payloadhardwaremockservice.models.PayloadData;
 import fr.teama.payloadhardwaremockservice.models.Position;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +15,14 @@ import java.util.concurrent.TimeUnit;
 public class PayloadHardware implements IPayloadHardware {
 
     @Autowired
-    ITelemetryProxy telemetryProxy;
+    KafkaProducerService kafkaProducerService;
 
     private final long updateDelay = 1;
     PayloadData payload;
     boolean sendLog = false;
 
     @Override
-    public void startOrbitalPosDispatch(Position dropPosition) throws TelemetryServiceUnavailableException {
+    public void startOrbitalPosDispatch(Position dropPosition) {
         LoggerHelper.logInfo("Start orbital position dispatch");
 
         payload = new PayloadData(dropPosition);
@@ -38,7 +37,7 @@ public class PayloadHardware implements IPayloadHardware {
 
             try {
                 payload.setTimestamp(java.time.LocalDateTime.now());
-                telemetryProxy.sendPayloadData(payload);
+                kafkaProducerService.sendPayloadData(payload);
                 TimeUnit.SECONDS.sleep(updateDelay);
             } catch (InterruptedException e) {
                 LoggerHelper.logError(e.toString());
