@@ -1,4 +1,4 @@
-package fr.teama.payloadhardwaremockservice;
+package team.fr.webcasterservice.configuration;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
@@ -9,16 +9,15 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
 
     // Define your Kafka topic name and partitions
-    private static final String TOPIC_NAME = "payload-hardware-topic";
+    private static final String TOPIC_NAME = "webcaster-topic";
     private static final int PARTITIONS = 1;
 
     // Create a bean for the Kafka topic
     @Bean
-    public NewTopic createPayloadHardwareTopic() {
+    public NewTopic createWebcasterTopic() {
         return TopicBuilder.name(TOPIC_NAME)
                 .partitions(PARTITIONS)
                 .replicas(1) // Set the number of replicas for fault tolerance
                 .build();
     }
-
 }

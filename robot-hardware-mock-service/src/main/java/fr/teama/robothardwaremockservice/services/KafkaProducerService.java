@@ -1,4 +1,4 @@
-package fr.teama.robothardwaremockservice;
+package fr.teama.robothardwaremockservice.services;
 
 import fr.teama.robothardwaremockservice.models.RobotData;
 import fr.teama.robothardwaremockservice.models.Sample;

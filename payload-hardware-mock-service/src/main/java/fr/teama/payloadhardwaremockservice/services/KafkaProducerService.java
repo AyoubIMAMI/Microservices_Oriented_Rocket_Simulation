@@ -1,4 +1,4 @@
-package fr.teama.payloadhardwaremockservice;
+package fr.teama.payloadhardwaremockservice.services;
 
 import fr.teama.payloadhardwaremockservice.models.PayloadData;
 import org.springframework.beans.factory.annotation.Autowired;

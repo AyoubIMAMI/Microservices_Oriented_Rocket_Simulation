@@ -1,6 +1,6 @@
-package fr.teama.stagehardwaremockservice;
+package fr.teama.robothardwaremockservice.configuration;
 
-import fr.teama.stagehardwaremockservice.models.StageData;
+import fr.teama.robothardwaremockservice.models.RobotData;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +17,7 @@ import java.util.Map;
 public class KafkaProducerConfig
 {
     @Bean
-    public ProducerFactory<String, StageData> producerStageDataFactory()
+    public ProducerFactory<String, RobotData> producerRobotDataFactory()
     {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "host.docker.internal:9092");
@@ -28,8 +28,8 @@ public class KafkaProducerConfig
 
 
     @Bean
-    public KafkaTemplate<String, StageData> kafkaStageDataTemplate()
+    public KafkaTemplate<String, RobotData> kafkaRobotDataTemplate()
     {
-        return new KafkaTemplate<>(producerStageDataFactory());
+        return new KafkaTemplate<>(producerRobotDataFactory());
     }
 }

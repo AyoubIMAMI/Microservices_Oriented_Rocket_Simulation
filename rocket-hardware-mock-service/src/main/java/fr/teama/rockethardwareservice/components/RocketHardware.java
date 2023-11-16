@@ -1,6 +1,6 @@
 package fr.teama.rockethardwareservice.components;
 
-import fr.teama.rockethardwareservice.KafkaProducerService;
+import fr.teama.rockethardwareservice.services.KafkaProducerService;
 import fr.teama.rockethardwareservice.exceptions.MissionServiceUnvailableException;
 import fr.teama.rockethardwareservice.exceptions.PayloadHardwareServiceUnavaibleException;
 import fr.teama.rockethardwareservice.exceptions.RobotHardwareServiceUnavaibleException;

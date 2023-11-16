@@ -1,6 +1,6 @@
 package fr.teama.stagehardwaremockservice.components;
 
-import fr.teama.stagehardwaremockservice.KafkaProducerService;
+import fr.teama.stagehardwaremockservice.services.KafkaProducerService;
 import fr.teama.stagehardwaremockservice.helpers.LoggerHelper;
 import fr.teama.stagehardwaremockservice.interfaces.IStageHardware;
 import fr.teama.stagehardwaremockservice.models.StageData;

@@ -1,6 +1,6 @@
 package fr.teama.rocketdepartmentservice.components;
 
-import fr.teama.rocketdepartmentservice.KafkaProducerService;
+import fr.teama.rocketdepartmentservice.services.KafkaProducerService;
 import fr.teama.rocketdepartmentservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.helpers.LoggerHelper;

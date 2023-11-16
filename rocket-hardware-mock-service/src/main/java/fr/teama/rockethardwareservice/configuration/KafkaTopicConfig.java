@@ -1,4 +1,4 @@
-package team.fr.webcasterservice;
+package fr.teama.rockethardwareservice.configuration;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
@@ -9,12 +9,12 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
 
     // Define your Kafka topic name and partitions
-    private static final String TOPIC_NAME = "webcaster-topic";
+    private static final String TOPIC_NAME = "rocket-hardware-topic";
     private static final int PARTITIONS = 1;
 
     // Create a bean for the Kafka topic
     @Bean
-    public NewTopic createWebcasterTopic() {
+    public NewTopic createRocketHardwareTopic() {
         return TopicBuilder.name(TOPIC_NAME)
                 .partitions(PARTITIONS)
                 .replicas(1) // Set the number of replicas for fault tolerance

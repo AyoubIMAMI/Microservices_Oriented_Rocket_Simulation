@@ -1,4 +1,4 @@
-package fr.teama.payloadhardwaremockservice;
+package fr.teama.payloadhardwaremockservice.configuration;
 
 import fr.teama.payloadhardwaremockservice.models.PayloadData;
 import org.apache.kafka.clients.producer.ProducerConfig;

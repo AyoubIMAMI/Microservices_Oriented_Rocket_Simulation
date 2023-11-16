@@ -1,6 +1,6 @@
 package fr.teama.robothardwaremockservice.components;
 
-import fr.teama.robothardwaremockservice.KafkaProducerService;
+import fr.teama.robothardwaremockservice.services.KafkaProducerService;
 import fr.teama.robothardwaremockservice.helpers.LoggerHelper;
 import fr.teama.robothardwaremockservice.interfaces.IRobotHardware;
 import fr.teama.robothardwaremockservice.models.Position;

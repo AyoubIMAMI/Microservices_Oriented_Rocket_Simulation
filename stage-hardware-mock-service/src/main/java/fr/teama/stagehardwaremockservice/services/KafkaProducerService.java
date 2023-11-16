@@ -1,4 +1,4 @@
-package fr.teama.stagehardwaremockservice;
+package fr.teama.stagehardwaremockservice.services;
 
 import fr.teama.stagehardwaremockservice.models.StageData;
 import org.springframework.beans.factory.annotation.Autowired;

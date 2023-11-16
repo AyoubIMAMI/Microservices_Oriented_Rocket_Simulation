@@ -1,6 +1,6 @@
 package fr.teama.payloadhardwaremockservice.components;
 
-import fr.teama.payloadhardwaremockservice.KafkaProducerService;
+import fr.teama.payloadhardwaremockservice.services.KafkaProducerService;
 import fr.teama.payloadhardwaremockservice.helpers.LoggerHelper;
 import fr.teama.payloadhardwaremockservice.interfaces.IPayloadHardware;
 import fr.teama.payloadhardwaremockservice.models.PayloadData;

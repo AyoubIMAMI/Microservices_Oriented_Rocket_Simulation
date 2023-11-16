@@ -1,4 +1,4 @@
-package fr.teama.rockethardwareservice;
+package fr.teama.rockethardwareservice.configuration;
 
 import fr.teama.rockethardwareservice.models.RocketData;
 import org.apache.kafka.clients.producer.ProducerConfig;

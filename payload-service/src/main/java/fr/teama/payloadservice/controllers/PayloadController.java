@@ -1,6 +1,6 @@
 package fr.teama.payloadservice.controllers;
 
-import fr.teama.payloadservice.KafkaProducerService;
+import fr.teama.payloadservice.services.KafkaProducerService;
 import fr.teama.payloadservice.controllers.dto.PayloadDataDTO;
 import fr.teama.payloadservice.controllers.dto.PositionDTO;
 import fr.teama.payloadservice.exceptions.*;

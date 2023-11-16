@@ -1,24 +1,19 @@
 package fr.teama.rocketdepartmentservice.services;
 
-import fr.teama.rocketdepartmentservice.connectors.externalDTO.MissionLogDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 public class KafkaProducerService {
-    private static KafkaTemplate<String, MissionLogDTO> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
-    public KafkaProducerService(KafkaTemplate<String, MissionLogDTO> kafkaTemplate) {
-        KafkaProducerService.kafkaTemplate = kafkaTemplate;
+    public KafkaProducerService(KafkaTemplate<String, String> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
     }
 
-    public static void sendMissionLog(String serviceName, String text) {
-        MissionLogDTO missionLogDTO = new MissionLogDTO(serviceName, text, LocalDateTime.now());
-        kafkaTemplate.send("logs-topic", missionLogDTO);
+    public void warnWebcaster(String message) {
+        kafkaTemplate.send("webcaster-topic", message);
     }
 }
-

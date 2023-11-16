@@ -1,4 +1,4 @@
-package fr.teama.rockethardwareservice;
+package fr.teama.rockethardwareservice.services;
 
 import fr.teama.rockethardwareservice.models.RocketData;
 import org.springframework.beans.factory.annotation.Autowired;
