@@ -34,8 +34,8 @@
       <module name="mission-service" options="-parameters" />
       <module name="payload-hardware-mock-service" options="-parameters" />
       <module name="payload-service" options="-parameters" />
-      <module name="robot-department-service" options="-parameters" />
-      <module name="robot-hardware-mock-service" options="-parameters" />
+      <module name="robot-department-service" options="" />
+      <module name="robot-hardware-mock-service" options="" />
       <module name="robot-hardware-mock-service (1) (org.springframework.boot)" options="-parameters" />
       <module name="robot-hardware-mock-service (2)" options="-parameters" />
       <module name="rocket-department-service" options="-parameters" />

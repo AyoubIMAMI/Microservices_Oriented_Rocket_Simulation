@@ -34,7 +34,11 @@ public class LogsManager implements ILogsManager {
 
     @Override
     public List<MissionLog> getAllLogs() {
-        return missionLogRepository.findAllByRocketName(rocketNameRepository.findTopByOrderByIdDesc().getName());
+        String rocketName = "default";
+        if (rocketNameRepository.findTopByOrderByIdDesc() != null) {
+            rocketName = rocketNameRepository.findTopByOrderByIdDesc().getName();
+        }
+        return missionLogRepository.findAllByRocketName(rocketName);
     }
 
     @Override
