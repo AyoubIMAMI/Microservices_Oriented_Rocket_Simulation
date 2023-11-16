@@ -16,7 +16,7 @@ public class KafkaConsumerService {
 
     @KafkaListener(topics = "logs-topic", groupId = "group_id", containerFactory = "messageListener")
     public void receiveMessage(MissionLogDTO missionLog) {
-        LoggerHelper.logInfo("Received kafka message: " + missionLog);
+//        LoggerHelper.logInfo("Received kafka message: " + missionLog);
         logsManager.saveLog(missionLog.getServiceName(), missionLog.getText(), missionLog.getDate());
     }
 }

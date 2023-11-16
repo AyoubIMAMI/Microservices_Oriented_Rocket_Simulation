@@ -1,6 +1,7 @@
 package fr.teama.telemetryservice.helpers;
 
 import fr.teama.telemetryservice.connectors.LogsProxy;
+import fr.teama.telemetryservice.services.KafkaProducerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,16 +12,16 @@ public class LoggerHelper {
 
     public static void logInfo(String logging) {
         LOGGER.info(SERVICE_COLOR + SERVICE_NAME + ": \u001B[32m" + logging + "\u001B[0m");
-        LogsProxy.saveNewLog(SERVICE_NAME, logging);
+        KafkaProducerService.sendMissionLog(SERVICE_NAME, logging);
     }
 
     public static void logWarn(String logging) {
         LOGGER.warn(SERVICE_COLOR + SERVICE_NAME + ": \u001B[33m" + logging + "\u001B[0m");
-        LogsProxy.saveNewLog(SERVICE_NAME, logging);
+        KafkaProducerService.sendMissionLog(SERVICE_NAME, logging);
     }
 
     public static void logError(String logging) {
         LOGGER.error(SERVICE_COLOR + SERVICE_NAME + ": \u001B[31m" + logging + "\u001B[0m");
-        LogsProxy.saveNewLog(SERVICE_NAME, logging);
+        KafkaProducerService.sendMissionLog(SERVICE_NAME, logging);
     }
 }

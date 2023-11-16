@@ -1,4 +1,4 @@
-package fr.teama.missionservice;
+package fr.teama.missionservice.configuration;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;

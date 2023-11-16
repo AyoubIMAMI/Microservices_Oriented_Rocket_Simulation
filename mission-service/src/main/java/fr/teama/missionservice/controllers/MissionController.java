@@ -1,6 +1,6 @@
 package fr.teama.missionservice.controllers;
 
-import fr.teama.missionservice.KafkaProducerService;
+import fr.teama.missionservice.services.KafkaProducerService;
 import fr.teama.missionservice.exceptions.*;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.IMissionManager;
