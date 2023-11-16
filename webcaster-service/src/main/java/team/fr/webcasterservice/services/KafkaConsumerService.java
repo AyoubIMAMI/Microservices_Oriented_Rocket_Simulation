@@ -2,10 +2,10 @@ package team.fr.webcasterservice.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import team.fr.webcasterservice.interfaces.IWebcaster;
 
-@Component
+@Service
 public class KafkaConsumerService {
 
     private final IWebcaster webcaster;

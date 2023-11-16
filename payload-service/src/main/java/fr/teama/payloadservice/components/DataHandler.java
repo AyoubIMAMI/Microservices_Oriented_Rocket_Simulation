@@ -40,14 +40,14 @@ public class DataHandler implements IDataAsker, PayloadDataHandler {
         if (payloadDataList.size()>=10){
             boolean certifyOrbit=true;
             LoggerHelper.logInfo("Sample of 10 payload data available");
-            LoggerHelper.logInfo("Verifying that the payload altitude was always between 3500 and 3800");
+            LoggerHelper.logInfo("Verifying that the payload altitude was always between 3500 and 3900");
             for (PayloadData currentPayloadData: payloadDataList){
                 LoggerHelper.logInfo(currentPayloadData.toString());
-                if (currentPayloadData.getPosition().getAltitude()>3500 && currentPayloadData.getPosition().getAltitude()<3800){
-                    LoggerHelper.logInfo("Altitude: " +currentPayloadData.getPosition().getAltitude()+" between 3500 and 3800");
+                if (currentPayloadData.getPosition().getAltitude()>3500 && currentPayloadData.getPosition().getAltitude()<3900){
+                    LoggerHelper.logInfo("Altitude: " +currentPayloadData.getPosition().getAltitude()+" between 3500 and 3900");
                 }
                 else{
-                    LoggerHelper.logInfo("Altitude: " +currentPayloadData.getPosition().getAltitude()+" not between 3500 and 3800");
+                    LoggerHelper.logInfo("Altitude: " +currentPayloadData.getPosition().getAltitude()+" not between 3500 and 3900");
                     certifyOrbit=false;
                     break;
                 }

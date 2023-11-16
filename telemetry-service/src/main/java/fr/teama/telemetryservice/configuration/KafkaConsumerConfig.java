@@ -1,4 +1,4 @@
-package fr.teama.telemetryservice;
+package fr.teama.telemetryservice.configuration;
 
 import fr.teama.telemetryservice.controllers.dto.PayloadDataDTO;
 import fr.teama.telemetryservice.controllers.dto.RobotDataDTO;

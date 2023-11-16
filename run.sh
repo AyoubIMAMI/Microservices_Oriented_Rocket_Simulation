@@ -81,7 +81,7 @@ function sabotageRocket() {
 wait_telemetry_service
 (sleep 2 && scenario1) &
 #todo: redo timing for scenario 2
-(sleep 123 && scenario2) &
-(sleep 140 && sabotageRocket) &
+(sleep 124 && scenario2) &
+(sleep 141 && sabotageRocket) &
 docker compose logs --follow --since 0m
 read -p "."

@@ -1,4 +1,4 @@
-package fr.teama.telemetryservice;
+package fr.teama.telemetryservice.services;
 
 import fr.teama.telemetryservice.controllers.dto.PayloadDataDTO;
 import fr.teama.telemetryservice.controllers.dto.RobotDataDTO;
@@ -10,9 +10,9 @@ import fr.teama.telemetryservice.interfaces.DataSaver;
 import fr.teama.telemetryservice.interfaces.DataSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class KafkaConsumerService {
 
     @Autowired

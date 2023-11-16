@@ -79,7 +79,7 @@ public class DataManager implements DataSaver, DataSender {
     @Override
     public ResponseEntity<String> sendRobotDataForScientist(RobotDataDTO robotDataDTO) {
         //TODO send robot data to scientific department that will handle them
-        LoggerHelper.logInfo("Robot data sample sent to scientific department"+ robotDataDTO.getSample().toString());
+        LoggerHelper.logInfo("Robot data sample sent to scientific department: "+ robotDataDTO.getSample().toString());
         return(ResponseEntity.ok().body("Robot data sent to scientific department"));
     }
 
