@@ -42,6 +42,11 @@ public class LogsManager implements ILogsManager {
     }
 
     @Override
+    public List<MissionLog> getAllLogs(String rocketName) {
+        return missionLogRepository.findAllByRocketName(rocketName);
+    }
+
+    @Override
     public void resetDb() {
         missionLogRepository.deleteAll();
     }

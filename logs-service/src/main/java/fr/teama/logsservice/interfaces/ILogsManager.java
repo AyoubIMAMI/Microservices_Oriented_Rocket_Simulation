@@ -11,6 +11,8 @@ public interface ILogsManager {
 
     List<MissionLog> getAllLogs();
 
+    List<MissionLog> getAllLogs(String rocketName);
+
     void resetDb();
 
     ResponseEntity<String> changeRocketName(String rocketName);
