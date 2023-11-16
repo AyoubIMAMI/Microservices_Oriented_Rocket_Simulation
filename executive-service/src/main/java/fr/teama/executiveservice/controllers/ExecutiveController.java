@@ -1,6 +1,5 @@
 package fr.teama.executiveservice.controllers;
 
-import fr.teama.executiveservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.executiveservice.helpers.LoggerHelper;
 import fr.teama.executiveservice.interfaces.IDataAsker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,10 @@ public class ExecutiveController {
     private IDataAsker dataAsker;
 
     @PostMapping
-    public ResponseEntity<String> missionStartWarning() throws TelemetryServiceUnavailableException {
+    public ResponseEntity<String> missionStartWarning() {
         LoggerHelper.logInfo("Notification of the start of the mission");
-        return dataAsker.askStageHeightToTelemetry();
+        dataAsker.askStageHeightToTelemetry();
+        return ResponseEntity.ok("Tracking condition sent to telemetry service");
     }
 
     @PostMapping("/stage-landed")

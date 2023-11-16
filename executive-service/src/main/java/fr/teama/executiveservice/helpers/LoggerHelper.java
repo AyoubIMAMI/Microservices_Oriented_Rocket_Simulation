@@ -1,6 +1,5 @@
 package fr.teama.executiveservice.helpers;
 
-import fr.teama.executiveservice.connectors.LogsProxy;
 import fr.teama.executiveservice.services.KafkaProducerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

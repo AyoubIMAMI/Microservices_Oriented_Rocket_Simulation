@@ -2,7 +2,6 @@ package fr.teama.rocketdepartmentservice.components;
 
 import fr.teama.rocketdepartmentservice.services.KafkaProducerService;
 import fr.teama.rocketdepartmentservice.exceptions.RocketHardwareServiceUnavailableException;
-import fr.teama.rocketdepartmentservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.helpers.LoggerHelper;
 import fr.teama.rocketdepartmentservice.interfaces.IDataAsker;
 import fr.teama.rocketdepartmentservice.interfaces.IRocketAction;
@@ -33,7 +32,7 @@ public class RocketAction implements IRocketAction {
     }
 
     @Override
-    public void launchRocket() throws TelemetryServiceUnavailableException, RocketHardwareServiceUnavailableException,
+    public void launchRocket() throws RocketHardwareServiceUnavailableException,
             InterruptedException {
         for (int i = 60; i > 10; i-=10) {
             LoggerHelper.logInfo("The mission will start in " + i + " seconds");

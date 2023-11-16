@@ -33,7 +33,7 @@ public class RobotDepartmentController {
 
 
     @PostMapping
-    public ResponseEntity<String> missionStartWarning() throws TelemetryServiceUnavailableException {
+    public ResponseEntity<String> missionStartWarning() {
         LoggerHelper.logInfo("Notification of the start of the mission");
         dataAsker.askDataToTelemetry();
         return ResponseEntity.ok("Mission start warning received");
@@ -47,7 +47,7 @@ public class RobotDepartmentController {
     }
 
     @PostMapping("/landed")
-    public ResponseEntity<String> landed() throws RobotHardwareServiceUnavailableException, TelemetryServiceUnavailableException {
+    public ResponseEntity<String> landed() throws RobotHardwareServiceUnavailableException {
         LoggerHelper.logInfo("Notification received, robot has landed");
         kafkaProducerService.warnWebcaster("Robot has landed");
         robotManager.startRobot();

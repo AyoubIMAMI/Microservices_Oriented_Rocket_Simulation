@@ -1,13 +1,12 @@
 package fr.teama.telemetryservice.services;
 
-import fr.teama.telemetryservice.controllers.dto.PayloadDataDTO;
-import fr.teama.telemetryservice.controllers.dto.RobotDataDTO;
-import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
-import fr.teama.telemetryservice.controllers.dto.StageDataDTO;
+import fr.teama.telemetryservice.controllers.dto.*;
 import fr.teama.telemetryservice.exceptions.*;
 import fr.teama.telemetryservice.helpers.LoggerHelper;
 import fr.teama.telemetryservice.interfaces.DataSaver;
 import fr.teama.telemetryservice.interfaces.DataSender;
+import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
+import fr.teama.telemetryservice.models.Tracking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -20,6 +19,9 @@ public class KafkaConsumerService {
 
     @Autowired
     private DataSender dataSender;
+
+    @Autowired
+    private ITelemetryNotifier telemetryNotifier;
 
     @KafkaListener(topics = "rocket-hardware-topic", groupId = "group_id", containerFactory = "messageRocketDataListener")
     public void receiveRocketData(RocketDataDTO rocketDataDTO) throws RocketStageServiceUnavailableException, ExecutiveServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, RobotDepartmentServiceUnavailableException {
@@ -49,5 +51,12 @@ public class KafkaConsumerService {
     @KafkaListener(topics = "payload-hardware-topic", groupId = "group_id", containerFactory = "messagePayloadDataListener")
     public void receivePayloadData(PayloadDataDTO payloadDataDTO) throws PayloadServiceUnavailableException {
         this.dataSender.sendPayloadData(payloadDataDTO);
+    }
+
+    @KafkaListener(topics = "tracking-topic", groupId = "group_id", containerFactory = "messageTrackingListener")
+    public void createTrackingNotification(TrackingDTO trackingDTO) {
+        LoggerHelper.logInfo("New tracking request received from " + trackingDTO.getServiceToBeNotified() + " service");
+        Tracking tracking = new Tracking(trackingDTO);
+        telemetryNotifier.trackingNotify(tracking);
     }
 }

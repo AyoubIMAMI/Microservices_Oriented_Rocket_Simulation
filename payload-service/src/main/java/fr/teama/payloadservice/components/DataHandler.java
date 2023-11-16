@@ -2,13 +2,12 @@ package fr.teama.payloadservice.components;
 
 import fr.teama.payloadservice.models.PayloadData;
 import fr.teama.payloadservice.exceptions.PayloadHardwareServiceUnavaibleException;
-import fr.teama.payloadservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.payloadservice.helpers.LoggerHelper;
 import fr.teama.payloadservice.interfaces.IDataAsker;
 import fr.teama.payloadservice.interfaces.PayloadDataHandler;
 import fr.teama.payloadservice.interfaces.proxy.IPayloadHardwareProxy;
-import fr.teama.payloadservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.payloadservice.repository.PayloadDataRepository;
+import fr.teama.payloadservice.services.KafkaProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ import java.util.List;
 public class DataHandler implements IDataAsker, PayloadDataHandler {
 
     @Autowired
-    private ITelemetryProxy telemetryProxy;
+    private KafkaProducerService kafkaProducerService;
 
     @Autowired
     private PayloadDataRepository payloadDataRepository;
@@ -28,8 +27,9 @@ public class DataHandler implements IDataAsker, PayloadDataHandler {
     private IPayloadHardwareProxy payloadHardwareProxy;
 
     @Override
-    public ResponseEntity<String> askOrbitToTelemetry() throws TelemetryServiceUnavailableException {
-        return telemetryProxy.missionStartNotify();
+    public ResponseEntity<String> askOrbitToTelemetry() {
+        kafkaProducerService.missionStartNotify();
+        return ResponseEntity.ok().body("Telemetry notified");
     }
     @Override
     public void saveDataPayload(PayloadData payloadData) throws PayloadHardwareServiceUnavaibleException {

@@ -43,7 +43,7 @@ public class MissionManager implements IMissionManager {
     KafkaProducerService kafkaProducerService;
 
     @Override
-    public ResponseEntity<String> startMission(String rocketName) throws RocketServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, LogsServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+    public ResponseEntity<String> startMission(String rocketName) throws RocketServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, LogsServiceUnavailableException, RobotDepartmentServiceUnavailableException, NotifyStateNotSupportedException {
         telemetryProxy.changeRocketName(rocketName);
         telemetryProxy.resetTrackings();
         logsProxy.changeRocketName(rocketName);
@@ -118,8 +118,8 @@ public class MissionManager implements IMissionManager {
         robotDepartmentProxy.missionStartNotification();
     }
 
-    private void gettingNotifyInCaseOfRocketAnomaly() throws TelemetryServiceUnavailableException {
-        telemetryProxy.gettingNotifyInCaseOfRocketAnomaly(RocketStates.SEVERE_ANOMALY);
-        telemetryProxy.gettingNotifyInCaseOfRocketAnomaly(RocketStates.PRESSURE_ANOMALY);
+    private void gettingNotifyInCaseOfRocketAnomaly() throws NotifyStateNotSupportedException {
+        kafkaProducerService.gettingNotifyInCaseOfRocketAnomaly(RocketStates.SEVERE_ANOMALY);
+        kafkaProducerService.gettingNotifyInCaseOfRocketAnomaly(RocketStates.PRESSURE_ANOMALY);
     }
 }

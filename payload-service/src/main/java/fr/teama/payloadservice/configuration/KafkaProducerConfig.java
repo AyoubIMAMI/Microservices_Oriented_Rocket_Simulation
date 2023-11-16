@@ -1,6 +1,7 @@
 package fr.teama.payloadservice.configuration;
 
 import fr.teama.payloadservice.connectors.externalDTO.MissionLogDTO;
+import fr.teama.payloadservice.connectors.externalDTO.TrackingDTO;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -47,5 +48,24 @@ public class KafkaProducerConfig
     public KafkaTemplate<String, String> kafkaTemplateString()
     {
         return new KafkaTemplate<>(producerFactoryString());
+    }
+
+
+
+    @Bean
+    public ProducerFactory<String, TrackingDTO> producerTrackingFactory()
+    {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "host.docker.internal:9092");
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+
+
+    @Bean
+    public KafkaTemplate<String, TrackingDTO> kafkaTrackingTemplate()
+    {
+        return new KafkaTemplate<>(producerTrackingFactory());
     }
 }

@@ -1,9 +1,6 @@
 package fr.teama.telemetryservice.configuration;
 
-import fr.teama.telemetryservice.controllers.dto.PayloadDataDTO;
-import fr.teama.telemetryservice.controllers.dto.RobotDataDTO;
-import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
-import fr.teama.telemetryservice.controllers.dto.StageDataDTO;
+import fr.teama.telemetryservice.controllers.dto.*;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
@@ -124,6 +121,32 @@ public class KafkaConsumerConfig
     {
         ConcurrentKafkaListenerContainerFactory<String, PayloadDataDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerPayloadDataFactory());
+        return factory;
+    }
+
+    @Bean
+    public ConsumerFactory<String, TrackingDTO> consumerTrackingFactory()
+    {
+        // Creating a map of string-object type
+        Map<String, Object> config = new HashMap<>();
+        // Adding the Configuration
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "host.docker.internal:9092");
+        config.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
+        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        config.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+        config.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
+        config.put(JsonDeserializer.VALUE_DEFAULT_TYPE, TrackingDTO.class);
+        // Returning message in JSON format
+        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new JsonDeserializer<>(TrackingDTO.class));
+    }
+
+    // Creating a Listener
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, TrackingDTO> messageTrackingListener()
+    {
+        ConcurrentKafkaListenerContainerFactory<String, TrackingDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerTrackingFactory());
         return factory;
     }
 }

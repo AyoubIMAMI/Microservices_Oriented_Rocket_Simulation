@@ -1,8 +1,7 @@
 package fr.teama.robotdepartmentservice.components;
 
-import fr.teama.robotdepartmentservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.robotdepartmentservice.interfaces.IDataAsker;
-import fr.teama.robotdepartmentservice.interfaces.proxy.ITelemetryProxy;
+import fr.teama.robotdepartmentservice.services.KafkaProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,12 +10,12 @@ import org.springframework.stereotype.Component;
 public class DataHandler implements IDataAsker {
 
     @Autowired
-    private ITelemetryProxy telemetryProxy;
+    private KafkaProducerService kafkaProducerService;
 
 
     @Override
-    public void askDataToTelemetry() throws TelemetryServiceUnavailableException {
-        telemetryProxy.askRocketHeight();
-        telemetryProxy.askRobotHeight();
+    public void askDataToTelemetry() {
+        kafkaProducerService.askRocketHeight();
+        kafkaProducerService.askRobotHeight();
     }
 }

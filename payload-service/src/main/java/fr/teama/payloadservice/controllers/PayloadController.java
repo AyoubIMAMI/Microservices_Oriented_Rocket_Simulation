@@ -42,7 +42,7 @@ public class PayloadController {
 
 
     @PostMapping
-    public ResponseEntity<String> missionStartWarning() throws TelemetryServiceUnavailableException {
+    public ResponseEntity<String> missionStartWarning() {
         LoggerHelper.logInfo("Notification of the start of the mission");
         return dataAsker.askOrbitToTelemetry();
     }

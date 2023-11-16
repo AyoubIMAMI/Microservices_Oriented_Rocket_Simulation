@@ -1,7 +1,7 @@
-package fr.teama.rocketdepartmentservice.configurations;
+package fr.teama.robotdepartmentservice.configurations;
 
-import fr.teama.rocketdepartmentservice.connectors.externalDTO.MissionLogDTO;
-import fr.teama.rocketdepartmentservice.connectors.externalDTO.TrackingDTO;
+import fr.teama.robotdepartmentservice.connectors.externalDTO.MissionLogDTO;
+import fr.teama.robotdepartmentservice.connectors.externalDTO.TrackingDTO;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
