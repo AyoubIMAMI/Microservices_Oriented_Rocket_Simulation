@@ -14,7 +14,7 @@ public class KafkaTopicConfig {
 
     // Create a bean for the Kafka topic
     @Bean
-    public NewTopic createTrackingTopic() {
+    public NewTopic createSampleEventTopic() {
         return TopicBuilder.name(TOPIC_NAME)
                 .partitions(PARTITIONS)
                 .replicas(1) // Set the number of replicas for fault tolerance

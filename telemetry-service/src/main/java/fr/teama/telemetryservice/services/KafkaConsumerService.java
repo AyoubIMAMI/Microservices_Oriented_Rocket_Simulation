@@ -42,8 +42,8 @@ public class KafkaConsumerService {
 
     @KafkaListener(topics = "robot-hardware-sample-topic", groupId = "group_id", containerFactory = "messageRobotDataListener")
     public void receiveRobotSampleData(RobotDataDTO robotDataDTO) {
-        LoggerHelper.logInfo("Receive \u001B[93mrobot\u001B[32m hardware data: " + robotDataDTO.toString());
-        this.dataSaver.saveRobotData(robotDataDTO);
+        LoggerHelper.logInfo("Receive \u001B[93mrobot\u001B[32m hardware data sample: " + robotDataDTO.toStringSample());
+        this.dataSaver.saveRobotDataSample(robotDataDTO);
         this.dataSender.sendRobotDataForScientist(robotDataDTO);
     }
 

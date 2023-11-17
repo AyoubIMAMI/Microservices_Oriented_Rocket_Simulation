@@ -38,4 +38,13 @@ public class RobotDepartmentControllerAdvice {
         return errorDTO;
     }
 
+    @ExceptionHandler({ScientificDepartmentServiceUnavailableException.class})
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    public ErrorDTO handleExceptions(ScientificDepartmentServiceUnavailableException e) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("Scientific department service unavailable.");
+        errorDTO.setDetails("The scientific department service is currently unavailable. Please try again later.");
+        return errorDTO;
+    }
+
 }

@@ -19,4 +19,12 @@ public class KafkaTopicConfig {
                 .replicas(1) // Set the number of replicas for fault tolerance
                 .build();
     }
+
+    @Bean
+    public NewTopic createPayloadDataTopic() {
+        return TopicBuilder.name("payload-data-topic")
+                .partitions(PARTITIONS)
+                .replicas(1) // Set the number of replicas for fault tolerance
+                .build();
+    }
 }

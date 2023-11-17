@@ -122,4 +122,11 @@ public class RobotDataDTO {
     public void setY(Double y) {
         this.position.setY(y);
     }
+
+    public String toStringSample() {
+        return "RobotData{" +
+                "position=" + position +
+                ", sample=" + sample +
+                '}';
+    }
 }

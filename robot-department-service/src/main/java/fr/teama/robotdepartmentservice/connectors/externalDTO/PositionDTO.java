@@ -14,6 +14,7 @@ public class PositionDTO {
     public PositionDTO(Double x, Double y) {
         this.x = x;
         this.y = y;
+        this.altitude = 0.0;
     }
 
     public Double getX() {

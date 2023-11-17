@@ -4,7 +4,6 @@ import fr.teama.telemetryservice.controllers.dto.RobotDataDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 @Embeddable
 @Entity
@@ -46,6 +45,7 @@ public class RobotData {
         this.timestamp = robotDTO.getTimestamp();
         this.angle = robotDTO.getAngle();
         this.isParachuteDeployed = robotDTO.isParachuteDeployed();
+        this.sample = robotDTO.getSample();
     }
 
     @Override

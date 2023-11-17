@@ -4,7 +4,6 @@ import fr.teama.telemetryservice.controllers.dto.PayloadDataDTO;
 import fr.teama.telemetryservice.controllers.dto.RobotDataDTO;
 import fr.teama.telemetryservice.controllers.dto.RocketDataDTO;
 import fr.teama.telemetryservice.controllers.dto.StageDataDTO;
-import fr.teama.telemetryservice.helpers.LoggerHelper;
 import fr.teama.telemetryservice.interfaces.DataSender;
 import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
 import fr.teama.telemetryservice.models.*;
@@ -79,7 +78,6 @@ public class DataManager implements DataSaver, DataSender {
     @Override
     public ResponseEntity<String> sendRobotDataForScientist(RobotDataDTO robotDataDTO) {
         kafkaProducerService.sendSample(robotDataDTO);
-        LoggerHelper.logInfo("Robot data sample sent to scientific department: "+ robotDataDTO.getSample().toString());
         return(ResponseEntity.ok().body("Robot data sent to scientific department"));
     }
 
@@ -87,6 +85,13 @@ public class DataManager implements DataSaver, DataSender {
     public ResponseEntity<String> saveRobotData(RobotDataDTO robotDataDTO) {
         RobotData robotData = new RobotData(rocketNameRepository.findTopByOrderByIdDesc().getName(), robotDataDTO);
         trackingHandler.verifyRobotData(robotData);
+        robotDataRepository.save(robotData);
+        return ResponseEntity.ok().body("Robot data saved");
+    }
+
+    @Override
+    public ResponseEntity<String> saveRobotDataSample(RobotDataDTO robotDataDTO) {
+        RobotData robotData = new RobotData(rocketNameRepository.findTopByOrderByIdDesc().getName(), robotDataDTO);
         robotDataRepository.save(robotData);
         return ResponseEntity.ok().body("Robot data saved");
     }

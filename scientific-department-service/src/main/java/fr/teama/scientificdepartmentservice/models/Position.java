@@ -11,6 +11,12 @@ public class Position {
         this.altitude = altitude;
     }
 
+    // Ne pas enlever
+    public Position() {
+
+    }
+
+
     public Double getX() {
         return x;
     }

@@ -15,4 +15,6 @@ public interface DataSaver {
     ResponseEntity<String> changeRocketName(String rocketName);
 
     ResponseEntity<String> saveRobotData(RobotDataDTO robotDataDTO);
+
+    ResponseEntity<String> saveRobotDataSample(RobotDataDTO robotDataDTO);
 }

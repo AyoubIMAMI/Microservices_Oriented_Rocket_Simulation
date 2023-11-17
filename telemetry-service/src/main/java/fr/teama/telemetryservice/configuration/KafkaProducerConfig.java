@@ -69,7 +69,7 @@ public class KafkaProducerConfig
     }
 
     @Bean
-    public ProducerFactory<String, RobotDataDTO> producerFactoryRobotDataDTO()
+    public ProducerFactory<String, RobotDataDTO> producerFactoryRobotData()
     {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "host.docker.internal:9092");
@@ -80,9 +80,9 @@ public class KafkaProducerConfig
 
 
     @Bean
-    public KafkaTemplate<String, RobotDataDTO> kafkaTemplateRobotDataDTO()
+    public KafkaTemplate<String, RobotDataDTO> kafkaTemplateRobotData()
     {
-        return new KafkaTemplate<>(producerFactoryRobotDataDTO());
+        return new KafkaTemplate<>(producerFactoryRobotData());
     }
     
     

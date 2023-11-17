@@ -1,67 +1,45 @@
 package fr.teama.scientificdepartmentservice.models;
 
-import fr.teama.scientificdepartmentservice.models.Position;
-
-import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
-@Embeddable
-@Entity
+
 public class RobotData {
 
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    String rocketName;
-
-    @Embedded
     private Position position;
+
+    private LocalDateTime timestamp;
 
     private Double speed;
 
     private Double acceleration;
+    private Sample sample;
 
     private Double angle;
 
-    private LocalDateTime timestamp;
-
     private boolean isParachuteDeployed;
-    @Embedded
-    private Sample sample;
+
+    public RobotData(Position position) {
+        this.position = position;
+        this.position.setAltitude(1000.0); // Robot is drop when rocket is at 1000dm altitude of the ground of the moon
+        this.speed = 0.0;
+        this.acceleration = 0.0;
+        this.isParachuteDeployed = false;
+        this.angle = (Math.random() * 35 + 10) * (new Random().nextBoolean() ? 1 : -1);
+    }
 
     public RobotData() {
 
     }
 
-    public RobotData(String rocketName, RobotData robotDTO) {
-        this.rocketName = rocketName;
-        if (robotDTO.getPosition() != null) {
-            this.position = robotDTO.getPosition();
-        } else {
-            this.position = null;
-        }
-        this.speed = robotDTO.getSpeed();
-        this.acceleration = robotDTO.getAcceleration();
-        this.timestamp = robotDTO.getTimestamp();
-        this.angle = robotDTO.getAngle();
-        this.isParachuteDeployed = robotDTO.isParachuteDeployed();
+    public Sample getSample() {
+        return sample;
     }
 
-    @Override
-    public String toString() {
-        return "StageData{" +
-                "rocketName=" + rocketName +
-                ", position=" + position +
-                ", speed=" + speed +
-                ", acceleration=" + acceleration +
-                ", angle=" + angle +
-                ", isParachuteDeployed=" + isParachuteDeployed +
-                ", timestamp=" + timestamp +
-                '}';
+    public void setSample(Sample sample) {
+        this.sample = sample;
     }
-
 
     public Position getPosition() {
         return position;
@@ -69,6 +47,24 @@ public class RobotData {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "RobotData{" +
+                "position=" + position +
+                ", speed=" + speed +
+                ", isParachuteDeployed=" + isParachuteDeployed +
+                ", angle=" + angle +
+                '}';
     }
 
     public Double getSpeed() {
@@ -87,12 +83,12 @@ public class RobotData {
         this.acceleration = acceleration;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public boolean isParachuteDeployed() {
+        return isParachuteDeployed;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+    public void setParachuteDeployed(boolean parachuteDeployed) {
+        isParachuteDeployed = parachuteDeployed;
     }
 
     public Double getAngle() {
@@ -111,27 +107,19 @@ public class RobotData {
         this.position.setAltitude(altitude);
     }
 
-    public String getRocketName() {
-        return rocketName;
+    public Double getX() {
+        return this.position.getX();
     }
 
-    public void setRocketName(String rocketName) {
-        this.rocketName = rocketName;
+    public void setX(Double x) {
+        this.position.setX(x);
     }
 
-    public boolean isParachuteDeployed() {
-        return isParachuteDeployed;
+    public Double getY() {
+        return this.position.getY();
     }
 
-    public void setParachuteDeployed(boolean parachuteDeployed) {
-        isParachuteDeployed = parachuteDeployed;
-    }
-
-    public Sample getSample() {
-        return sample;
-    }
-
-    public void setSample(Sample sample) {
-        this.sample = sample;
+    public void setY(Double y) {
+        this.position.setY(y);
     }
 }
