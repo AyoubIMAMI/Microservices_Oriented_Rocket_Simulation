@@ -28,4 +28,12 @@ public class KafkaTopicConfig {
                 .replicas(1) // Set the number of replicas for fault tolerance
                 .build();
     }
+
+    @Bean
+    public NewTopic createStartEventTopic() {
+        return TopicBuilder.name("start-event-topic")
+                .partitions(PARTITIONS)
+                .replicas(1) // Set the number of replicas for fault tolerance
+                .build();
+    }
 }

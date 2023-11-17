@@ -28,30 +28,12 @@ public class MissionControllerAdvice {
         return errorDTO;
     }
 
-    @ExceptionHandler({PayloadServiceUnavailableException.class})
-    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
-    public ErrorDTO handleExceptions(PayloadServiceUnavailableException e) {
-        ErrorDTO errorDTO = new ErrorDTO();
-        errorDTO.setError("Payload service unavailable.");
-        errorDTO.setDetails("The payload service is currently unavailable. Please try again later.");
-        return errorDTO;
-    }
-
     @ExceptionHandler({RocketHardwareServiceUnavailableException.class})
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     public ErrorDTO handleExceptions(RocketHardwareServiceUnavailableException e) {
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setError("Rocket hardware service unavailable.");
         errorDTO.setDetails("The rocket hardware service is currently unavailable. Please try again later.");
-        return errorDTO;
-    }
-
-    @ExceptionHandler({ExecutiveServiceUnavailableException.class})
-    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
-    public ErrorDTO handleExceptions(ExecutiveServiceUnavailableException e) {
-        ErrorDTO errorDTO = new ErrorDTO();
-        errorDTO.setError("Executive service unavailable.");
-        errorDTO.setDetails("The executive service is currently unavailable. Please try again later.");
         return errorDTO;
     }
 }
