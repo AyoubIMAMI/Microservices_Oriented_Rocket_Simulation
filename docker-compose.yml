@@ -146,7 +146,6 @@ services:
       - POSTGRESQL_PASSWORD=postgrespass
       - POSTGRESQL_USER=postgresuser
       - POSTGRESQL_DATABASE=database-telemetry
-      - POSTGRESQL_PGAUDIT_LOG=READ,WRITE
       - POSTGRESQL_REPLICATION_MODE=master
       - POSTGRESQL_REPLICATION_USER=repl_user
       - POSTGRESQL_REPLICATION_PASSWORD=repl_password
@@ -164,7 +163,6 @@ services:
       - POSTGRESQL_USER=postgresuser
       - POSTGRESQL_PASSWORD=postgrespass
       - POSTGRESQL_MASTER_HOST=postgres-telemetry
-      - POSTGRESQL_PGAUDIT_LOG=READ,WRITE
       - POSTGRESQL_LOG_HOSTNAME=true
       - POSTGRESQL_REPLICATION_MODE=slave
       - POSTGRESQL_REPLICATION_USER=repl_user
