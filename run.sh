@@ -23,6 +23,8 @@ Scenario 1: Mission successful with passage through Max Q, payload delivery and 
 
 Scenario 2: Mission failed due to a severe anomaly and the destruction of the rocket to prevent potential damage on the ground.
 
+Scenario 3: Mission failed due to the rocket auto-destruction after the detection of a critical anomaly.
+
 \033[0;35m========================================\033[0m\n\n"
 
 sleep 5
@@ -84,7 +86,7 @@ Start of scenario 3: Mission failed due to the rocket auto-destruction after the
 \033[0;35m========================================\033[0m\n\n"
   sleep 5
 
-  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3001/api/mission/start -H "Content-Type: application/text" --data "Falcon 10"
+  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3001/api/mission/start -H "Content-Type: application/text" --data "Falcon 11"
 }
 
 function sabotageRocket() {
@@ -100,9 +102,9 @@ function criticalRocketSabotaging() {
 wait_telemetry_service
 (sleep 2 && scenario1) &
 #todo: redo timing for scenario 2
-#(sleep 123 && scenario2) &
-#(sleep 140 && sabotageRocket) &
-#(sleep 145 && scenario3) &
-#(sleep 162 && criticalRocketSabotaging) &
+(sleep 120 && scenario2) &
+(sleep 135 && sabotageRocket) &
+(sleep 140 && scenario3) &
+(sleep 158 && criticalRocketSabotaging) &
 docker compose logs --follow --since 0m
 read -p "."
