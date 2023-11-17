@@ -1,5 +1,6 @@
 package fr.teama.robotdepartmentservice.components;
 
+import fr.teama.robotdepartmentservice.connectors.externalDTO.PositionDTO;
 import fr.teama.robotdepartmentservice.exceptions.RobotHardwareServiceUnavailableException;
 import fr.teama.robotdepartmentservice.interfaces.IRobotManager;
 import fr.teama.robotdepartmentservice.interfaces.proxy.IRobotHardwareProxy;
@@ -16,10 +17,9 @@ public class RobotManager implements IRobotManager {
     KafkaProducerService kafkaProducerService;
 
     @Override
-    public void startRobot() throws RobotHardwareServiceUnavailableException {
-        //TODO change the coordinate from coordinate coming from scientific department
-        robotHardwareProxy.moveToTheSpot(100.0,100.0);
-        kafkaProducerService.askRobotPosition(100.0,100.0);
+    public void startRobot(PositionDTO position) throws RobotHardwareServiceUnavailableException {
+        robotHardwareProxy.moveToTheSpot(position.getX(), position.getY());
+        kafkaProducerService.askRobotPosition(position.getX(), position.getY());
     }
     @Override
     public void takeSamples() throws RobotHardwareServiceUnavailableException {

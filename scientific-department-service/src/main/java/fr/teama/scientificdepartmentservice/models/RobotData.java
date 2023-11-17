@@ -1,10 +1,10 @@
-package fr.teama.telemetryservice.models;
+package fr.teama.scientificdepartmentservice.models;
 
-import fr.teama.telemetryservice.controllers.dto.RobotDataDTO;
+import fr.teama.scientificdepartmentservice.models.Position;
+
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 @Embeddable
 @Entity
@@ -16,6 +16,7 @@ public class RobotData {
 
     String rocketName;
 
+    @Embedded
     private Position position;
 
     private Double speed;
@@ -34,10 +35,10 @@ public class RobotData {
 
     }
 
-    public RobotData(String rocketName, RobotDataDTO robotDTO) {
+    public RobotData(String rocketName, RobotData robotDTO) {
         this.rocketName = rocketName;
         if (robotDTO.getPosition() != null) {
-            this.position = new Position(robotDTO.getPosition());
+            this.position = robotDTO.getPosition();
         } else {
             this.position = null;
         }

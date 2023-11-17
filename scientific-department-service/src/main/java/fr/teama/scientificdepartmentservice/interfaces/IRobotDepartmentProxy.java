@@ -1,4 +1,4 @@
-package fr.teama.scientificdepartmentservice;
+package fr.teama.scientificdepartmentservice.interfaces;
 
 import fr.teama.scientificdepartmentservice.exception.RobotDepartmentServiceUnavailableException;
 
