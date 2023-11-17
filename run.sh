@@ -73,15 +73,36 @@ Start of scenario 2: Mission failed due to a severe anomaly and the destruction 
   curl --silent --show-error --output /dev/null --location --request POST http://localhost:3001/api/mission/start -H "Content-Type: application/text" --data "Falcon 10"
 }
 
+function scenario3() {
+  printf "\n\033[0m========================================\033[0m\n"
+  printf "\n\033[0;33m## Ordering the launch of a third rocket\n\033[0m\n"
+
+  printf "\n\033[0;34m========================================\033[0m
+
+Start of scenario 3: Mission failed due to the rocket auto-destruction after the detection of a critical anomaly.
+
+\033[0;35m========================================\033[0m\n\n"
+  sleep 5
+
+  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3001/api/mission/start -H "Content-Type: application/text" --data "Falcon 10"
+}
+
 function sabotageRocket() {
   printf "\n\033[1;33m## Sabotage the rocket\n\033[0m\n"
   curl --silent --show-error --output /dev/null --location --request POST http://localhost:3005/api/rocket-hardware/sabotaging
 }
 
+function criticalRocketSabotaging() {
+  printf "\n\033[1;33m## Sabotage the rocket\n\033[0m\n"
+  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3005/api/rocket-hardware/dangerous-sabotaging
+}
+
 wait_telemetry_service
 (sleep 2 && scenario1) &
 #todo: redo timing for scenario 2
-#(sleep 130 && scenario2) &
-#(sleep 147 && sabotageRocket) &
+#(sleep 123 && scenario2) &
+#(sleep 140 && sabotageRocket) &
+#(sleep 145 && scenario3) &
+#(sleep 162 && criticalRocketSabotaging) &
 docker compose logs --follow --since 0m
 read -p "."
