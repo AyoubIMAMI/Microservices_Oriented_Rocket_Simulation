@@ -86,7 +86,7 @@ Start of scenario 3: Mission failed due to the rocket auto-destruction after the
 \033[0;35m========================================\033[0m\n\n"
   sleep 5
 
-  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3001/api/mission/start -H "Content-Type: application/text" --data "Falcon 10"
+  curl --silent --show-error --output /dev/null --location --request POST http://localhost:3001/api/mission/start -H "Content-Type: application/text" --data "Falcon 11"
 }
 
 function sabotageRocket() {
