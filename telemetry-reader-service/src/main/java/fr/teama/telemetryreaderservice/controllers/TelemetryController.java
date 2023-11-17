@@ -1,6 +1,9 @@
 package fr.teama.telemetryreaderservice.controllers;
 
+import fr.teama.telemetryreaderservice.repository.RobotDataRepository;
 import fr.teama.telemetryreaderservice.repository.RocketDataRepository;
+import fr.teama.telemetryreaderservice.repository.StageDataRepository;
+import fr.teama.telemetryreaderservice.repository.TrackingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,14 +17,35 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @CrossOrigin
 @RequestMapping(path = TelemetryController.BASE_URI, produces = APPLICATION_JSON_VALUE)
 public class TelemetryController {
-        public static final String BASE_URI = "/api/telemetry";
+        public static final String BASE_URI = "/api/telemetry-reader";
 
     @Autowired
     private RocketDataRepository rocketDataRepository;
 
-    @GetMapping("/service-status")
-    public ResponseEntity<String> telemetryStatus() {
+    @Autowired
+    private RobotDataRepository robotDataRepository;
+
+    @Autowired
+    private StageDataRepository stageDataRepository;
+
+    @Autowired
+    private TrackingRepository trackingDataRepository;
+
+    @GetMapping("/rocket-data")
+    public ResponseEntity<String> rocketData() {
         return ResponseEntity.ok().body(rocketDataRepository.findAll().toString());
+    }
+    @GetMapping("/robot-data")
+    public ResponseEntity<String> robotData() {
+        return ResponseEntity.ok().body(robotDataRepository.findAll().toString());
+    }
+    @GetMapping("/stage-data")
+    public ResponseEntity<String> stageData() {
+        return ResponseEntity.ok().body(stageDataRepository.findAll().toString());
+    }
+    @GetMapping("/tracking-data")
+    public ResponseEntity<String> trackingData() {
+        return ResponseEntity.ok().body(trackingDataRepository.findAll().toString());
     }
 
 }
