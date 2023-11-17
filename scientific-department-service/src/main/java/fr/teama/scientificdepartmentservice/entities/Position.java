@@ -5,10 +5,10 @@ public class Position {
     Double y;
     Double altitude;
 
-    public Position() {
-        this.x = 0.0;
-        this.y = 0.0;
-        this.altitude = 3600.0;
+    public Position(Double x, Double y, Double altitude) {
+        this.x = x;
+        this.y = y;
+        this.altitude = altitude;
     }
 
     public Double getX() {
