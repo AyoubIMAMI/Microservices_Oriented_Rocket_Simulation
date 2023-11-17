@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
@@ -18,6 +19,7 @@
         <option value="$PROJECT_DIR$/webcaster-service/pom.xml" />
         <option value="$PROJECT_DIR$/robot-department-service/pom.xml" />
         <option value="$PROJECT_DIR$/robot-hardware-mock-service/pom.xml" />
+        <option value="$PROJECT_DIR$/telemetry-reader-service/pom.xml" />
       </list>
     </option>
   </component>

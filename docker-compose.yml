@@ -52,6 +52,17 @@ services:
     depends_on:
       - postgres-telemetry
 
+  telemetry-reader-service:
+    container_name: telemetry-reader-service
+    image: "marsy/telemetry-reader-service"
+    restart: always
+    ports:
+      - 3017:8080
+    environment:
+      - POSTGRES_HOST=postgres-telemetry-slave:5432
+    depends_on:
+      - postgres-telemetry-slave
+
   payload-service:
     container_name: payload-service
     image: "marsy/payload-service"
@@ -129,14 +140,40 @@ services:
 
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
   postgres-telemetry:
-    image: postgres:15.2
+    image: 'bitnami/postgresql:latest'
     container_name: database-telemetry
     environment:
-      - POSTGRES_PASSWORD=postgrespass
-      - POSTGRES_USER=postgresuser
-      - POSTGRES_DB=database-telemetry
+      - POSTGRESQL_PASSWORD=postgrespass
+      - POSTGRESQL_USER=postgresuser
+      - POSTGRESQL_DATABASE=database-telemetry
+      - POSTGRESQL_PGAUDIT_LOG=READ,WRITE
+      - POSTGRESQL_REPLICATION_MODE=master
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
     ports:
       - 3006:5432
+    volumes:
+      - ./log-directory-master:/var/lib/postgresql/data
+
+  postgres-telemetry-slave:
+    image: 'bitnami/postgresql:latest'
+    container_name: database-telemetry-slave
+    depends_on:
+      - postgres-telemetry
+    environment:
+      - POSTGRESQL_USER=postgresuser
+      - POSTGRESQL_PASSWORD=postgrespass
+      - POSTGRESQL_MASTER_HOST=postgres-telemetry
+      - POSTGRESQL_PGAUDIT_LOG=READ,WRITE
+      - POSTGRESQL_LOG_HOSTNAME=true
+      - POSTGRESQL_REPLICATION_MODE=slave
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
+      - POSTGRESQL_MASTER_PORT_NUMBER=5432
+    ports:
+      - 3016:5432
+    volumes:
+      - ./log-directory-slave:/var/lib/postgresql/data
 
   postgres-payload:
     image: postgres:15.2
