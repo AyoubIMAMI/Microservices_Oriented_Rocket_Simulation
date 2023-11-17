@@ -5,6 +5,7 @@ import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.IMissionManager;
 import fr.teama.missionservice.interfaces.proxy.*;
 import fr.teama.missionservice.models.RocketStates;
+import fr.teama.missionservice.services.KafkaProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,9 @@ public class MissionManager implements IMissionManager {
     IExecutiveProxy executiveProxy;
 
     @Autowired
+    IRobotDepartmentProxy robotDepartmentProxy;
+
+    @Autowired
     IRocketHardwareProxy rocketHardwareProxy;
 
     @Autowired
@@ -36,10 +40,10 @@ public class MissionManager implements IMissionManager {
     ILogsProxy logsProxy;
 
     @Autowired
-    IWebcasterProxy webcasterProxy;
+    KafkaProducerService kafkaProducerService;
 
     @Override
-    public ResponseEntity<String> startMission(String rocketName) throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, WebcasterServiceUnavailableException, LogsServiceUnavailableException {
+    public ResponseEntity<String> startMission(String rocketName) throws RocketServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, LogsServiceUnavailableException, RobotDepartmentServiceUnavailableException, NotifyStateNotSupportedException {
         telemetryProxy.changeRocketName(rocketName);
         telemetryProxy.resetTrackings();
         logsProxy.changeRocketName(rocketName);
@@ -48,11 +52,21 @@ public class MissionManager implements IMissionManager {
         rocketHardwareProxy.startLogging();
 
         LoggerHelper.logInfo("Rocket " + rocketName + " preparation started");
-        webcasterProxy.warnWebcaster("Rocket " + rocketName + " preparation started");
+        kafkaProducerService.warnWebcaster("Rocket " + rocketName + " preparation started");
         Double rocketStatus = rocketHardwareProxy.checkRocket();
 
-        boolean weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
-        boolean rocketServiceReady = rocketDepartmentProxy.getRocketStatus().equals("GO");
+        boolean weatherServiceReady = false;
+        boolean rocketServiceReady = false;
+
+        try {
+            weatherServiceReady = weatherProxy.getWeatherStatus().equals("GO");
+            rocketServiceReady = rocketDepartmentProxy.getRocketStatus().equals("GO");
+        } catch (WeatherServiceUnavailableException e) {
+            LoggerHelper.logError("Weather service is unavailable");
+        } catch (RocketServiceUnavailableException e) {
+            LoggerHelper.logError("Rocket department service is unavailable");
+        }
+
         boolean missionReady = rocketStatus == RocketStates.NORMAL.getValue() && weatherServiceReady && rocketServiceReady;
 
         logServiceMessage(weatherServiceReady, "Weather service");
@@ -60,25 +74,26 @@ public class MissionManager implements IMissionManager {
         logServiceMessage(missionReady, "Mission service");
 
         LoggerHelper.logInfo("Rocket " + rocketName + " preparation complete");
-        webcasterProxy.warnWebcaster("Rocket " + rocketName + " preparation complete");
+        kafkaProducerService.warnWebcaster("Rocket " + rocketName + " preparation complete");
 
         if (missionReady) {
             LoggerHelper.logInfo("Rocket " + rocketName + " is on Internal Power");
-            webcasterProxy.warnWebcaster("Rocket " + rocketName + " is on Internal Power");
+            kafkaProducerService.warnWebcaster("Rocket " + rocketName + " is on Internal Power");
             gettingNotifyInCaseOfRocketAnomaly();
             NotifyMissionStart();
             rocketDepartmentProxy.launchRocket();
             return ResponseEntity.ok().body("GO");
         } else {
             LoggerHelper.logWarn("CANNOT LAUNCH ROCKET");
+            missionFailed();
             return ResponseEntity.ok().body("NO GO");
         }
     }
 
     @Override
-    public void missionSuccess() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException, WebcasterServiceUnavailableException {
+    public void missionSuccess() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
         LoggerHelper.logWarn("The mission has succeed !!!");
-        webcasterProxy.warnWebcaster("The mission has succeed !!!");
+        kafkaProducerService.warnWebcaster("The mission has succeed !!!");
         rocketHardwareProxy.stopLogging();
         LoggerHelper.logInfoWithoutSaving("Number of logs of the missions : " + Objects.requireNonNull(logsProxy.getAllLogs().getBody()).size());
     }
@@ -97,13 +112,14 @@ public class MissionManager implements IMissionManager {
             LoggerHelper.logWarn(serviceName + " is not OK to launch rocket");
     }
 
-    private void NotifyMissionStart() throws PayloadServiceUnavailableException, ExecutiveServiceUnavailableException {
+    private void NotifyMissionStart() throws PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, RobotDepartmentServiceUnavailableException {
         payloadProxy.missionStartNotification();
         executiveProxy.missionStartNotification();
+        robotDepartmentProxy.missionStartNotification();
     }
 
-    private void gettingNotifyInCaseOfRocketAnomaly() throws TelemetryServiceUnavailableException {
-        telemetryProxy.gettingNotifyInCaseOfRocketAnomaly(RocketStates.SEVERE_ANOMALY);
-        telemetryProxy.gettingNotifyInCaseOfRocketAnomaly(RocketStates.PRESSURE_ANOMALY);
+    private void gettingNotifyInCaseOfRocketAnomaly() throws NotifyStateNotSupportedException {
+        kafkaProducerService.gettingNotifyInCaseOfRocketAnomaly(RocketStates.SEVERE_ANOMALY);
+        kafkaProducerService.gettingNotifyInCaseOfRocketAnomaly(RocketStates.PRESSURE_ANOMALY);
     }
 }

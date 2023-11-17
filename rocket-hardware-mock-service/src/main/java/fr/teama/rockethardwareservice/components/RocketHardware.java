@@ -1,13 +1,16 @@
 package fr.teama.rockethardwareservice.components;
 
+import fr.teama.rockethardwareservice.services.KafkaProducerService;
+import fr.teama.rockethardwareservice.exceptions.MissionServiceUnvailableException;
 import fr.teama.rockethardwareservice.exceptions.PayloadHardwareServiceUnavaibleException;
+import fr.teama.rockethardwareservice.exceptions.RobotHardwareServiceUnavaibleException;
 import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
-import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.helpers.LoggerHelper;
 import fr.teama.rockethardwareservice.interfaces.IRocketHardware;
+import fr.teama.rockethardwareservice.interfaces.proxy.IMissionProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.IPayloadHardwareProxy;
+import fr.teama.rockethardwareservice.interfaces.proxy.IRobotHardwareProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.IStageHardwareProxy;
-import fr.teama.rockethardwareservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.rockethardwareservice.models.RocketData;
 import fr.teama.rockethardwareservice.models.RocketStates;
 import fr.teama.rockethardwareservice.models.StageData;
@@ -24,13 +27,19 @@ import static java.lang.Math.min;
 public class RocketHardware implements IRocketHardware {
 
     @Autowired
-    ITelemetryProxy telemetryProxy;
-
-    @Autowired
     IStageHardwareProxy stageHardwareProxy;
 
     @Autowired
     IPayloadHardwareProxy payloadHardwareProxy;
+
+    @Autowired
+    IMissionProxy missionProxy;
+
+    @Autowired
+    IRobotHardwareProxy robotHardwareProxy;
+
+    @Autowired
+    KafkaProducerService kafkaProducerService;
 
     private final long updateDelay = 500;
 
@@ -43,13 +52,18 @@ public class RocketHardware implements IRocketHardware {
     boolean sendLog;
 
     @Override
-    public void startLogging() throws TelemetryServiceUnavailableException {
+    public void startLogging() throws MissionServiceUnvailableException {
         LoggerHelper.logInfo("Start logging");
         rocket = new RocketData(List.of(new StageData(1, 0.0), new StageData(2, 0.0)));
 
         sendLog = true;
 
         while (sendLog) {
+            if (rocket.getStatus() == RocketStates.CRITICAL_ANOMALY.getValue()) {
+                LoggerHelper.logWarn("Rocket critical anomaly detected");
+                missionProxy.warnMissionThatRocketHasCriticalAnomaly();
+            }
+
             Double altitude = rocket.getPosition().getAltitude();
             if (rocket.getStages().get(0) != null) {
                 StageData lowestStageOnRocket = rocket.getStages().get(0);
@@ -77,7 +91,7 @@ public class RocketHardware implements IRocketHardware {
 
             try {
                 rocket.setTimestamp(java.time.LocalDateTime.now());
-                telemetryProxy.sendRocketData(rocket);
+                kafkaProducerService.sendRocketData(rocket);
                 TimeUnit.MILLISECONDS.sleep(updateDelay);
             } catch (InterruptedException e) {
                 LoggerHelper.logError(e.toString());
@@ -145,6 +159,12 @@ public class RocketHardware implements IRocketHardware {
     }
 
     @Override
+    public void dropRobot() throws RobotHardwareServiceUnavaibleException {
+        LoggerHelper.logInfo("Drop robot physically");
+        robotHardwareProxy.startRobotLogging(rocket.getPosition());
+    }
+
+    @Override
     public void fairing() {
         LoggerHelper.logInfo("Eject fairing physically");
     }
@@ -153,5 +173,11 @@ public class RocketHardware implements IRocketHardware {
     public void pressureAnomalyOnTheRocket() {
         LoggerHelper.logWarn("A pressure anomaly appeared on the rocket");
         rocket.setStatus(RocketStates.PRESSURE_ANOMALY.getValue());
+    }
+
+    @Override
+    public void criticalSabotagingOfTheRocket() {
+        LoggerHelper.logWarn("Rocket is redirected towards the earth");
+        rocket.setStatus(RocketStates.CRITICAL_ANOMALY.getValue());
     }
 }

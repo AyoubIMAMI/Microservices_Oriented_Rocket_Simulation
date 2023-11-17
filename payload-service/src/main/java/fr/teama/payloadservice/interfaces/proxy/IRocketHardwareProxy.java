@@ -8,4 +8,5 @@ public interface IRocketHardwareProxy {
 
     ResponseEntity<String> dropPayload() throws RocketHardwareServiceUnavailableException;
 
+    ResponseEntity<String> activeEngine() throws RocketHardwareServiceUnavailableException;
 }

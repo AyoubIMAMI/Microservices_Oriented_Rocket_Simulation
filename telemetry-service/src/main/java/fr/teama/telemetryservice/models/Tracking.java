@@ -13,17 +13,17 @@ public class Tracking {
     @GeneratedValue
     private Long id;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<TrackItem> data;
 
     private String serviceToBeNotified;
 
-    private String routeToNotify;
+    private String eventDataType;
 
     @Enumerated
     private TrackingCategory category;
 
-    public Tracking(List<TrackItem> data, String requestService, String routeToNotify, TrackingCategory category) {
+    public Tracking(List<TrackItem> data, String requestService, String eventDataType, TrackingCategory category) {
         this.data = data;
         this.serviceToBeNotified = requestService;
         this.category = category;
@@ -34,7 +34,7 @@ public class Tracking {
         trackingDTO.getData().forEach(trackItemDTO -> this.data.add(new TrackItem(trackItemDTO)));
         this.serviceToBeNotified = trackingDTO.getServiceToBeNotified();
         this.category = trackingDTO.getCategory();
-        this.routeToNotify = trackingDTO.getRouteToNotify();
+        this.eventDataType = trackingDTO.getEventDataType();
     }
 
     public Tracking() {
@@ -65,12 +65,12 @@ public class Tracking {
         this.category = category;
     }
 
-    public String getRouteToNotify() {
-        return routeToNotify;
+    public String getEventDataType() {
+        return eventDataType;
     }
 
-    public void setRouteToNotify(String routeToNotify) {
-        this.routeToNotify = routeToNotify;
+    public void setEventDataType(String eventDataType) {
+        this.eventDataType = eventDataType;
     }
 
     @Override

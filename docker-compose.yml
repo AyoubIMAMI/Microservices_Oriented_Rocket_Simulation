@@ -20,13 +20,11 @@ services:
       - stage-hardware-mock-service
       - payload-hardware-mock-service
       - executive-service
-      - postgres
+      - postgres-telemetry
       - kafka
 
   weather-service:
     container_name: weather-service
-    networks:
-      - app-tier
     image: "marsy/weather-service"
     restart: always
     ports:
@@ -40,6 +38,8 @@ services:
     restart: always
     ports:
       - 3002:8080
+    depends_on:
+      - kafka
 
   telemetry-service:
     container_name: telemetry-service
@@ -48,9 +48,10 @@ services:
     ports:
       - 3003:8080
     environment:
-      - POSTGRES_HOST=postgres:5432
+      - POSTGRES_HOST=postgres-telemetry:5432
     depends_on:
-      - postgres
+      - postgres-telemetry
+      - kafka
 
   payload-service:
     container_name: payload-service
@@ -62,6 +63,7 @@ services:
       - POSTGRES_HOST=postgres-payload:5432
     depends_on:
       - postgres-payload
+      - kafka
 
   rocket-hardware-mock-service:
     container_name: rocket-hardware-mock-service
@@ -69,6 +71,8 @@ services:
     restart: always
     ports:
       - 3005:8080
+    depends_on:
+      - kafka
 
   stage-hardware-mock-service:
     container_name: stage-hardware-mock-service
@@ -76,6 +80,8 @@ services:
     restart: always
     ports:
       - 3010:8080
+    depends_on:
+      - kafka
 
   payload-hardware-mock-service:
     container_name: payload-hardware-mock-service
@@ -83,6 +89,8 @@ services:
     restart: always
     ports:
       - 3009:8080
+    depends_on:
+      - kafka
 
   executive-service:
     container_name: executive-service
@@ -90,6 +98,8 @@ services:
     restart: always
     ports:
       - 3008:8080
+    depends_on:
+      - kafka
 
   logs-service:
     container_name: logs-service
@@ -100,6 +110,7 @@ services:
       - POSTGRES_HOST=postgres-logs:5432
     depends_on:
       - postgres-logs
+      - kafka
 
   webcaster-service:
     container_name: webcaster-service
@@ -107,6 +118,26 @@ services:
     restart: always
     ports:
       - 3013:8080
+    depends_on:
+      - kafka
+
+  robot-department-service:
+    container_name: robot-department-service
+    image: "marsy/robot-department-service"
+    restart: always
+    ports:
+      - 3014:8080
+    depends_on:
+      - kafka
+
+  robot-hardware-mock-service:
+    container_name: robot-hardware-mock-service
+    image: "marsy/robot-hardware-mock-service"
+    restart: always
+    ports:
+      - 3015:8080
+    depends_on:
+      - kafka
 
   scientific-department-service:
     container_name: scientific-department-service
@@ -116,7 +147,7 @@ services:
       - 3016:8080
 
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
-  postgres:
+  postgres-telemetry:
     image: postgres:15.2
     container_name: database-telemetry
     environment:

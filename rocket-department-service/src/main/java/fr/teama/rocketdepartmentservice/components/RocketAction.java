@@ -1,13 +1,11 @@
 package fr.teama.rocketdepartmentservice.components;
 
+import fr.teama.rocketdepartmentservice.services.KafkaProducerService;
 import fr.teama.rocketdepartmentservice.exceptions.RocketHardwareServiceUnavailableException;
-import fr.teama.rocketdepartmentservice.exceptions.TelemetryServiceUnavailableException;
-import fr.teama.rocketdepartmentservice.exceptions.WebcasterServiceUnavailableException;
 import fr.teama.rocketdepartmentservice.helpers.LoggerHelper;
 import fr.teama.rocketdepartmentservice.interfaces.IDataAsker;
 import fr.teama.rocketdepartmentservice.interfaces.IRocketAction;
 import fr.teama.rocketdepartmentservice.interfaces.proxy.IRocketHardwareProxy;
-import fr.teama.rocketdepartmentservice.interfaces.proxy.IWebcasterProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,19 +21,19 @@ public class RocketAction implements IRocketAction {
     private IDataAsker dataAsker;
 
     @Autowired
-    IWebcasterProxy webcasterProxy;
+    KafkaProducerService kafkaProducerService;
 
     @Override
-    public void stageRocket() throws RocketHardwareServiceUnavailableException, WebcasterServiceUnavailableException {
+    public void stageRocket() throws RocketHardwareServiceUnavailableException {
         rocketHardwareProxy.stageRocket();
-        webcasterProxy.warnWebcaster("Main engine cut-off. Staging separation");
+        kafkaProducerService.warnWebcaster("Main engine cut-off. Staging separation");
         rocketHardwareProxy.activateCurrentStage();
-        webcasterProxy.warnWebcaster("Second engine starting");
+        kafkaProducerService.warnWebcaster("Second engine starting");
     }
 
     @Override
-    public void launchRocket() throws TelemetryServiceUnavailableException, RocketHardwareServiceUnavailableException,
-            InterruptedException, WebcasterServiceUnavailableException {
+    public void launchRocket() throws RocketHardwareServiceUnavailableException,
+            InterruptedException {
         for (int i = 60; i > 10; i-=10) {
             LoggerHelper.logInfo("The mission will start in " + i + " seconds");
             sleep(500);
@@ -51,11 +49,11 @@ public class RocketAction implements IRocketAction {
         LoggerHelper.logInfo("The mission will start in 2 seconds");
         LoggerHelper.logInfo("The mission will start in 1 second");
         LoggerHelper.logInfo("Rocket launched");
-        webcasterProxy.warnWebcaster("The mission will start in 3 seconds");
-        webcasterProxy.warnWebcaster("Main engine starting");
-        webcasterProxy.warnWebcaster("The mission will start in 2 seconds");
-        webcasterProxy.warnWebcaster("The mission will start in 1 second");
-        webcasterProxy.warnWebcaster("Rocket launched");
+        kafkaProducerService.warnWebcaster("The mission will start in 3 seconds");
+        kafkaProducerService.warnWebcaster("Main engine starting");
+        kafkaProducerService.warnWebcaster("The mission will start in 2 seconds");
+        kafkaProducerService.warnWebcaster("The mission will start in 1 second");
+        kafkaProducerService.warnWebcaster("Rocket launched");
         dataAsker.getNotificationOnEvents();
     }
 

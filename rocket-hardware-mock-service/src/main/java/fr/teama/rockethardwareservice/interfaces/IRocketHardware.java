@@ -1,12 +1,13 @@
 package fr.teama.rockethardwareservice.interfaces;
 
+import fr.teama.rockethardwareservice.exceptions.MissionServiceUnvailableException;
 import fr.teama.rockethardwareservice.exceptions.PayloadHardwareServiceUnavaibleException;
+import fr.teama.rockethardwareservice.exceptions.RobotHardwareServiceUnavaibleException;
 import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
-import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.models.RocketData;
 
 public interface IRocketHardware {
-    void startLogging() throws TelemetryServiceUnavailableException;
+    void startLogging() throws MissionServiceUnvailableException;
 
     void stopLogging();
 
@@ -29,4 +30,8 @@ public interface IRocketHardware {
     void fairing();
 
     void pressureAnomalyOnTheRocket();
+
+    void dropRobot() throws RobotHardwareServiceUnavaibleException;
+
+    void criticalSabotagingOfTheRocket();
 }

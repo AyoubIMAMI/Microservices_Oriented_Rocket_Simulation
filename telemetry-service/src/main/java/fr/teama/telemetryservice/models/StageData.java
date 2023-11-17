@@ -148,6 +148,10 @@ public class StageData {
         return this.position.getAltitude();
     }
 
+    public void setAltitude(Double altitude) {
+        this.position.setAltitude(altitude);
+    }
+
     public String getRocketName() {
         return rocketName;
     }

@@ -19,7 +19,18 @@ public class RocketHardwareProxy implements IRocketHardwareProxy {
     public ResponseEntity<String> dropPayload() throws RocketHardwareServiceUnavailableException {
         try {
             LoggerHelper.logInfo("Inform the rocket hardware service to drop the payload");
-            ResponseEntity<String> response = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket-hardware/drop-payload", null, String.class);
+            return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket-hardware/drop-payload", null, String.class);
+        } catch (Exception e) {
+            LoggerHelper.logError("Hardware service unavailable");
+            throw new RocketHardwareServiceUnavailableException();
+        }
+    }
+
+    @Override
+    public ResponseEntity<String> activeEngine() throws RocketHardwareServiceUnavailableException {
+        try {
+            LoggerHelper.logInfo("Inform the rocket hardware service to active the engine");
+            ResponseEntity<String> response = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/rocket-hardware/activate-stage", null, String.class);
             return response;
         } catch (Exception e) {
             LoggerHelper.logError("Hardware service unavailable");
