@@ -2,8 +2,10 @@ package fr.teama.telemetryservice.services;
 
 
 import fr.teama.telemetryservice.connectors.externalDTO.MissionLogDTO;
+import fr.teama.telemetryservice.controllers.dto.RobotDataDTO;
 import fr.teama.telemetryservice.helpers.LoggerHelper;
 import fr.teama.telemetryservice.models.PayloadData;
+import fr.teama.telemetryservice.models.Sample;
 import fr.teama.telemetryservice.models.Tracking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -22,10 +24,14 @@ public class KafkaProducerService {
     private final KafkaTemplate<String, PayloadData> kafkaPayloadDataTemplate;
 
     @Autowired
-    public KafkaProducerService(KafkaTemplate<String, MissionLogDTO> kafkaTemplate, KafkaTemplate<String, String> kafkaStringTemplate, KafkaTemplate<String, PayloadData> kafkaPayloadDataTemplate) {
+    private final KafkaTemplate<String, RobotDataDTO> kafkaRobotDataDTOTemplate;
+
+    @Autowired
+    public KafkaProducerService(KafkaTemplate<String, MissionLogDTO> kafkaTemplate, KafkaTemplate<String, String> kafkaStringTemplate, KafkaTemplate<String, PayloadData> kafkaPayloadDataTemplate, KafkaTemplate<String, RobotDataDTO> kafkaRobotDataDTOTemplate) {
         KafkaProducerService.kafkaTemplate = kafkaTemplate;
         this.kafkaStringTemplate = kafkaStringTemplate;
         this.kafkaPayloadDataTemplate = kafkaPayloadDataTemplate;
+        this.kafkaRobotDataDTOTemplate = kafkaRobotDataDTOTemplate;
     }
 
     public static void sendMissionLog(String serviceName, String text) {
@@ -76,6 +82,11 @@ public class KafkaProducerService {
     public void sendPayloadData(PayloadData payloadData) {
         LoggerHelper.logInfo("Transferring the data from \u001B[37mpayload\u001B[32m hardware to the payload service");
         kafkaPayloadDataTemplate.send("payload-data-topic", payloadData);
+    }
+
+    public void sendSample(RobotDataDTO robotDataDTO) {
+        LoggerHelper.logInfo("Transferring Sample to the robot department service");
+        kafkaRobotDataDTOTemplate.send("sample-event-topic", robotDataDTO);
     }
 }
 

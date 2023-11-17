@@ -35,7 +35,6 @@ public class KafkaConsumerService {
             case "landed":
                 LoggerHelper.logInfo("Notification received, robot has landed");
                 kafkaProducerService.warnWebcaster("Robot has landed");
-                robotManager.startRobot();
                 break;
             case "reached-position":
                 LoggerHelper.logInfo("Notification received, robot has reached the position");

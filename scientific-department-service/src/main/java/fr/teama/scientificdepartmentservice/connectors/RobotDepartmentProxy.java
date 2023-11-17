@@ -1,6 +1,6 @@
 package fr.teama.scientificdepartmentservice.connectors;
 
-import fr.teama.scientificdepartmentservice.IRobotDepartmentProxy;
+import fr.teama.scientificdepartmentservice.interfaces.IRobotDepartmentProxy;
 import fr.teama.scientificdepartmentservice.models.Position;
 import fr.teama.scientificdepartmentservice.exception.RobotDepartmentServiceUnavailableException;
 import fr.teama.scientificdepartmentservice.helpers.LoggerHelper;

@@ -1,7 +1,7 @@
 package fr.teama.scientificdepartmentservice.controllers;
 
 
-import fr.teama.scientificdepartmentservice.IRobotDepartmentProxy;
+import fr.teama.scientificdepartmentservice.interfaces.IRobotDepartmentProxy;
 import fr.teama.scientificdepartmentservice.exception.RobotDepartmentServiceUnavailableException;
 import fr.teama.scientificdepartmentservice.helpers.LoggerHelper;
 import fr.teama.scientificdepartmentservice.models.Sample;

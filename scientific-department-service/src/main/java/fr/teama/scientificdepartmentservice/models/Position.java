@@ -1,4 +1,4 @@
-package fr.teama.scientificdepartmentservice.entities;
+package fr.teama.scientificdepartmentservice.models;
 
 public class Position {
     Double x;
