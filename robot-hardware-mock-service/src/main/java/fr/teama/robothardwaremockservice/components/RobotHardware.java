@@ -1,9 +1,8 @@
 package fr.teama.robothardwaremockservice.components;
 
-import fr.teama.robothardwaremockservice.exceptions.TelemetryServiceUnavailableException;
+import fr.teama.robothardwaremockservice.services.KafkaProducerService;
 import fr.teama.robothardwaremockservice.helpers.LoggerHelper;
 import fr.teama.robothardwaremockservice.interfaces.IRobotHardware;
-import fr.teama.robothardwaremockservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.robothardwaremockservice.models.Position;
 import fr.teama.robothardwaremockservice.models.RobotData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ import static java.lang.Math.min;
 public class RobotHardware implements IRobotHardware {
 
     @Autowired
-    ITelemetryProxy telemetryProxy;
+    KafkaProducerService kafkaProducerService;
 
     private final long updateDelay = 1;
 
@@ -107,12 +106,12 @@ public class RobotHardware implements IRobotHardware {
             // Send datas
             try {
                 robotData.setTimestamp(java.time.LocalDateTime.now());
-                telemetryProxy.sendRobotData(robotData);
+                kafkaProducerService.sendRobotData(robotData);
                 TimeUnit.SECONDS.sleep(updateDelay);
                 if (robotData.getAltitude() == 0) {
                     sendLog = false;
                 }
-            } catch (InterruptedException | TelemetryServiceUnavailableException e) {
+            } catch (InterruptedException e) {
                 LoggerHelper.logError(e.toString());
             }
         }
@@ -161,12 +160,12 @@ public class RobotHardware implements IRobotHardware {
                     LoggerHelper.logWarn("Robot has finished its autopilot guidance maneuver");
                 }
                 robotData.setTimestamp(java.time.LocalDateTime.now());
-                telemetryProxy.sendRobotData(robotData);
+                kafkaProducerService.sendRobotData(robotData);
                 TimeUnit.SECONDS.sleep(updateDelay);
                 if (Objects.equals(robotData.getX(), positionToReach.getX()) && Objects.equals(robotData.getY(), positionToReach.getY())) {
                     return ;
                 }
-            } catch (InterruptedException | TelemetryServiceUnavailableException e) {
+            } catch (InterruptedException e) {
                 LoggerHelper.logError(e.toString());
             }
         }
@@ -187,7 +186,7 @@ public class RobotHardware implements IRobotHardware {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        telemetryProxy.sendSampleData(robotData);
+        kafkaProducerService.sendSampleData(robotData);
         LoggerHelper.logInfo("Robot has finished to take samples");
     }
 

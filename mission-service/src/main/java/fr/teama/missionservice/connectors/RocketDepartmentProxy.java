@@ -1,9 +1,10 @@
 package fr.teama.missionservice.connectors;
 
-import fr.teama.missionservice.KafkaProducerService;
+
 import fr.teama.missionservice.exceptions.RocketServiceUnavailableException;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.proxy.IRocketDepartmentProxy;
+import fr.teama.missionservice.services.KafkaProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;

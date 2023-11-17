@@ -10,15 +10,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice(assignableTypes = {PayloadController.class})
 public class PayloadControllerAdvice {
 
-    @ExceptionHandler({TelemetryServiceUnavailableException.class})
-    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
-    public ErrorDTO handleExceptions(TelemetryServiceUnavailableException e) {
-        ErrorDTO errorDTO = new ErrorDTO();
-        errorDTO.setError("Telemetry service unavailable.");
-        errorDTO.setDetails("The telemetry service is currently unavailable. Please try again later.");
-        return errorDTO;
-    }
-
     @ExceptionHandler({RocketHardwareServiceUnavailableException.class})
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     public ErrorDTO handleExceptions(RocketHardwareServiceUnavailableException e) {

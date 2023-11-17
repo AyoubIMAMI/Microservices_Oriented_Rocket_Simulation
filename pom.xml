@@ -38,6 +38,7 @@
         <module>webcaster-service</module>
         <module>robot-department-service</module>
         <module>robot-hardware-mock-service</module>
+        <module>scientific-department-service</module>
     </modules>
 
     <dependencyManagement>

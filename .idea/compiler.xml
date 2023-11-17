@@ -11,6 +11,7 @@
         <module name="logs-service" />
         <module name="weather-service" />
         <module name="executive-service" />
+        <module name="scientific-department-service" />
         <module name="telemetry-reader-service" />
         <module name="webcaster-service" />
         <module name="payload-service" />
@@ -42,6 +43,7 @@
       <module name="rocket-department-service" options="-parameters" />
       <module name="rocket-hardware-mock-service" options="-parameters" />
       <module name="rocket-service" options="-parameters" />
+      <module name="scientific-department-service" options="" />
       <module name="stage-hardware-mock-service" options="-parameters" />
       <module name="telemetry-reader-service" options="-parameters" />
       <module name="telemetry-service" options="-parameters" />

@@ -13,13 +13,13 @@ public class TrackingDTO {
 
     private TrackingCategory category;
 
-    private String routeToNotify;
+    private String eventDataType;
 
-    public TrackingDTO(List<TrackItemDTO> data, String requestService, String routeToNotify, TrackingCategory category) {
+    public TrackingDTO(List<TrackItemDTO> data, String requestService, String eventDataType, TrackingCategory category) {
         this.data = data;
         this.serviceToBeNotified = requestService;
         this.category = category;
-        this.routeToNotify = routeToNotify;
+        this.eventDataType = eventDataType;
     }
 
     public TrackingDTO() {
@@ -49,12 +49,12 @@ public class TrackingDTO {
         this.category = category;
     }
 
-    public String getRouteToNotify() {
-        return routeToNotify;
+    public String getEventDataType() {
+        return eventDataType;
     }
 
-    public void setRouteToNotify(String routeToNotify) {
-        this.routeToNotify = routeToNotify;
+    public void setEventDataType(String eventDataType) {
+        this.eventDataType = eventDataType;
     }
 }
 

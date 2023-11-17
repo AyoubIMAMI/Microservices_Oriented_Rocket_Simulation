@@ -1,6 +1,6 @@
 package fr.teama.missionservice.controllers;
 
-import fr.teama.missionservice.KafkaProducerService;
+import fr.teama.missionservice.services.KafkaProducerService;
 import fr.teama.missionservice.exceptions.*;
 import fr.teama.missionservice.helpers.LoggerHelper;
 import fr.teama.missionservice.interfaces.IMissionManager;
@@ -26,7 +26,7 @@ public class MissionController {
     KafkaProducerService kafkaProducerService;
 
     @PostMapping("/start")
-    public ResponseEntity<String> startMission(@RequestBody String rocketName) throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, LogsServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+    public ResponseEntity<String> startMission(@RequestBody String rocketName) throws RocketServiceUnavailableException, WeatherServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, LogsServiceUnavailableException, RobotDepartmentServiceUnavailableException, NotifyStateNotSupportedException {
         LoggerHelper.logInfo("Request received to start the mission for rocket " + rocketName);
         return missionManager.startMission(rocketName);
     }
@@ -34,19 +34,6 @@ public class MissionController {
     public ResponseEntity<String> endMission() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
         missionManager.missionSuccess();
         return ResponseEntity.ok().body("OK");
-    }
-
-    @PostMapping("/rocket-hardware-destruction")
-    public ResponseEntity<String> rocketHardwareDestructionOrder() throws RocketHardwareServiceUnavailableException, LogsServiceUnavailableException {
-        rocketHardwareProxy.rocketDestruction();
-        missionManager.missionFailed();
-        return ResponseEntity.ok("Destruction order sent");
-    }
-
-    @PostMapping("/rocket-pressure-anomaly")
-    public ResponseEntity<String> informRocketPressureAnomaly() {
-        LoggerHelper.logWarn("Pressure anomaly detected");
-        return ResponseEntity.ok("Pressure anomaly");
     }
 
     @PostMapping("/sendMessageToWeather")

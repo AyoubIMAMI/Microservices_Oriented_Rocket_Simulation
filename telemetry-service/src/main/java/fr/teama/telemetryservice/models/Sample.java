@@ -2,7 +2,6 @@ package fr.teama.telemetryservice.models;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +24,12 @@ public class Sample {
     public void setMinerals(List<String> minerals) {
         this.minerals = minerals;
     }
+
+
     @Override
     public String toString() {
-        String mineralsString = "";
-        for (String mineral : minerals) {
-            mineralsString += mineral + ", ";
-        }
-        return "SampleDTO{" +
-                "minerals=" + mineralsString +
+        return "Sample{" +
+                "minerals=" + minerals +
                 '}';
     }
-
 }

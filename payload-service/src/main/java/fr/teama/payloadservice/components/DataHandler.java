@@ -2,13 +2,12 @@ package fr.teama.payloadservice.components;
 
 import fr.teama.payloadservice.models.PayloadData;
 import fr.teama.payloadservice.exceptions.PayloadHardwareServiceUnavaibleException;
-import fr.teama.payloadservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.payloadservice.helpers.LoggerHelper;
 import fr.teama.payloadservice.interfaces.IDataAsker;
 import fr.teama.payloadservice.interfaces.PayloadDataHandler;
 import fr.teama.payloadservice.interfaces.proxy.IPayloadHardwareProxy;
-import fr.teama.payloadservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.payloadservice.repository.PayloadDataRepository;
+import fr.teama.payloadservice.services.KafkaProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ import java.util.List;
 public class DataHandler implements IDataAsker, PayloadDataHandler {
 
     @Autowired
-    private ITelemetryProxy telemetryProxy;
+    private KafkaProducerService kafkaProducerService;
 
     @Autowired
     private PayloadDataRepository payloadDataRepository;
@@ -28,8 +27,9 @@ public class DataHandler implements IDataAsker, PayloadDataHandler {
     private IPayloadHardwareProxy payloadHardwareProxy;
 
     @Override
-    public ResponseEntity<String> askOrbitToTelemetry() throws TelemetryServiceUnavailableException {
-        return telemetryProxy.missionStartNotify();
+    public ResponseEntity<String> askOrbitToTelemetry() {
+        kafkaProducerService.missionStartNotify();
+        return ResponseEntity.ok().body("Telemetry notified");
     }
     @Override
     public void saveDataPayload(PayloadData payloadData) throws PayloadHardwareServiceUnavaibleException {
@@ -40,14 +40,14 @@ public class DataHandler implements IDataAsker, PayloadDataHandler {
         if (payloadDataList.size()>=10){
             boolean certifyOrbit=true;
             LoggerHelper.logInfo("Sample of 10 payload data available");
-            LoggerHelper.logInfo("Verifying that the payload altitude was always between 3500 and 3800");
+            LoggerHelper.logInfo("Verifying that the payload altitude was always between 3500 and 3900");
             for (PayloadData currentPayloadData: payloadDataList){
                 LoggerHelper.logInfo(currentPayloadData.toString());
-                if (currentPayloadData.getPosition().getAltitude()>3500 && currentPayloadData.getPosition().getAltitude()<3800){
-                    LoggerHelper.logInfo("Altitude: " +currentPayloadData.getPosition().getAltitude()+" between 3500 and 3800");
+                if (currentPayloadData.getPosition().getAltitude()>3500 && currentPayloadData.getPosition().getAltitude()<3900){
+                    LoggerHelper.logInfo("Altitude: " +currentPayloadData.getPosition().getAltitude()+" between 3500 and 3900");
                 }
                 else{
-                    LoggerHelper.logInfo("Altitude: " +currentPayloadData.getPosition().getAltitude()+" not between 3500 and 3800");
+                    LoggerHelper.logInfo("Altitude: " +currentPayloadData.getPosition().getAltitude()+" not between 3500 and 3900");
                     certifyOrbit=false;
                     break;
                 }

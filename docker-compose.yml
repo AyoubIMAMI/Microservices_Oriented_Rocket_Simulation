@@ -51,6 +51,7 @@ services:
       - POSTGRES_HOST=postgres-telemetry:5432
     depends_on:
       - postgres-telemetry
+      - kafka
 
   telemetry-reader-service:
     container_name: telemetry-reader-service
@@ -81,6 +82,8 @@ services:
     restart: always
     ports:
       - 3005:8080
+    depends_on:
+      - kafka
 
   stage-hardware-mock-service:
     container_name: stage-hardware-mock-service
@@ -88,6 +91,8 @@ services:
     restart: always
     ports:
       - 3010:8080
+    depends_on:
+      - kafka
 
   payload-hardware-mock-service:
     container_name: payload-hardware-mock-service
@@ -95,6 +100,8 @@ services:
     restart: always
     ports:
       - 3009:8080
+    depends_on:
+      - kafka
 
   executive-service:
     container_name: executive-service
@@ -102,6 +109,8 @@ services:
     restart: always
     ports:
       - 3008:8080
+    depends_on:
+      - kafka
 
   logs-service:
     container_name: logs-service
@@ -112,6 +121,7 @@ services:
       - POSTGRES_HOST=postgres-logs:5432
     depends_on:
       - postgres-logs
+      - kafka
 
   webcaster-service:
     container_name: webcaster-service
@@ -137,6 +147,15 @@ services:
     restart: always
     ports:
       - 3015:8080
+    depends_on:
+      - kafka
+
+  scientific-department-service:
+    container_name: scientific-department-service
+    image: "marsy/scientific-department-service"
+    restart: always
+    ports:
+      - 3016:8080
 
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
   postgres-telemetry:

@@ -1,17 +1,16 @@
 package fr.teama.rockethardwareservice.components;
 
+import fr.teama.rockethardwareservice.services.KafkaProducerService;
 import fr.teama.rockethardwareservice.exceptions.MissionServiceUnvailableException;
 import fr.teama.rockethardwareservice.exceptions.PayloadHardwareServiceUnavaibleException;
 import fr.teama.rockethardwareservice.exceptions.RobotHardwareServiceUnavaibleException;
 import fr.teama.rockethardwareservice.exceptions.StageHardwareServiceUnavailableException;
-import fr.teama.rockethardwareservice.exceptions.TelemetryServiceUnavailableException;
 import fr.teama.rockethardwareservice.helpers.LoggerHelper;
 import fr.teama.rockethardwareservice.interfaces.IRocketHardware;
 import fr.teama.rockethardwareservice.interfaces.proxy.IMissionProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.IPayloadHardwareProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.IRobotHardwareProxy;
 import fr.teama.rockethardwareservice.interfaces.proxy.IStageHardwareProxy;
-import fr.teama.rockethardwareservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.rockethardwareservice.models.RocketData;
 import fr.teama.rockethardwareservice.models.RocketStates;
 import fr.teama.rockethardwareservice.models.StageData;
@@ -28,9 +27,6 @@ import static java.lang.Math.min;
 public class RocketHardware implements IRocketHardware {
 
     @Autowired
-    ITelemetryProxy telemetryProxy;
-
-    @Autowired
     IStageHardwareProxy stageHardwareProxy;
 
     @Autowired
@@ -41,6 +37,9 @@ public class RocketHardware implements IRocketHardware {
 
     @Autowired
     IRobotHardwareProxy robotHardwareProxy;
+
+    @Autowired
+    KafkaProducerService kafkaProducerService;
 
     private final long updateDelay = 500;
 
@@ -53,7 +52,7 @@ public class RocketHardware implements IRocketHardware {
     boolean sendLog;
 
     @Override
-    public void startLogging() throws TelemetryServiceUnavailableException, MissionServiceUnvailableException {
+    public void startLogging() throws MissionServiceUnvailableException {
         LoggerHelper.logInfo("Start logging");
         rocket = new RocketData(List.of(new StageData(1, 0.0), new StageData(2, 0.0)));
 
@@ -92,7 +91,7 @@ public class RocketHardware implements IRocketHardware {
 
             try {
                 rocket.setTimestamp(java.time.LocalDateTime.now());
-                telemetryProxy.sendRocketData(rocket);
+                kafkaProducerService.sendRocketData(rocket);
                 TimeUnit.MILLISECONDS.sleep(updateDelay);
             } catch (InterruptedException e) {
                 LoggerHelper.logError(e.toString());

@@ -1,9 +1,8 @@
 package fr.teama.stagehardwaremockservice.components;
 
-import fr.teama.stagehardwaremockservice.exceptions.TelemetryServiceUnavailableException;
+import fr.teama.stagehardwaremockservice.services.KafkaProducerService;
 import fr.teama.stagehardwaremockservice.helpers.LoggerHelper;
 import fr.teama.stagehardwaremockservice.interfaces.IStageHardware;
-import fr.teama.stagehardwaremockservice.interfaces.proxy.ITelemetryProxy;
 import fr.teama.stagehardwaremockservice.models.StageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ import static java.lang.Math.min;
 public class StageHardware implements IStageHardware {
 
     @Autowired
-    ITelemetryProxy telemetryProxy;
+    KafkaProducerService kafkaProducerService;
 
     private final long updateDelay = 1;
 
@@ -134,9 +133,9 @@ public class StageHardware implements IStageHardware {
             // Send datas
             try {
                 stageData.setTimestamp(java.time.LocalDateTime.now());
-                telemetryProxy.sendStageData(stageData);
+                kafkaProducerService.sendStageData(stageData);
                 TimeUnit.SECONDS.sleep(updateDelay);
-            } catch (InterruptedException | TelemetryServiceUnavailableException e) {
+            } catch (InterruptedException e) {
                 LoggerHelper.logError(e.toString());
             }
         }

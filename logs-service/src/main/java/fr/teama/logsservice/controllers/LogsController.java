@@ -34,6 +34,12 @@ public class LogsController {
         return ResponseEntity.ok().body(logsManager.getAllLogs());
     }
 
+    @GetMapping("/{rocket-name}")
+    public ResponseEntity<List<MissionLog>> getAllLogsByRocketName(@PathVariable("rocket-name") String rocketName) {
+        LoggerHelper.logInfo("Request received to get all logs for rocket " + rocketName);
+        return ResponseEntity.ok().body(logsManager.getAllLogs(rocketName));
+    }
+
     @PostMapping("/reset-db")
     public ResponseEntity<String> resetDb() {
         LoggerHelper.logInfo("Resetting database");
