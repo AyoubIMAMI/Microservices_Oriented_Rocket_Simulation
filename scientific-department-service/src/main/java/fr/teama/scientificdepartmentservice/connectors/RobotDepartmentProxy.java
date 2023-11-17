@@ -19,7 +19,7 @@ public class RobotDepartmentProxy implements IRobotDepartmentProxy {
     public void sendPositionToGo() throws RobotDepartmentServiceUnavailableException {
         try {
             LoggerHelper.logInfo("Sending to the robot department service the position where the robot has to go to");
-            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/robot/destination", new Position(12.0, 42.0, 1.0), Position.class);
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/robot/destination", new Position(70.0, 60.0, 0.0), Position.class);
         } catch (Exception e) {
             throw new RobotDepartmentServiceUnavailableException();
         }

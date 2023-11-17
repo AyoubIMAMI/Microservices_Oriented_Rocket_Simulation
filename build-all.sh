@@ -35,6 +35,10 @@ compile_dir "robot-department-service"
 
 compile_dir "robot-hardware-mock-service"
 
+compile_dir "scientific-department-service"
+
+compile_dir "telemetry-reader-service"
+
 # remove # to add pause in script execution
 #read -p "** Press any key to continue... "
 

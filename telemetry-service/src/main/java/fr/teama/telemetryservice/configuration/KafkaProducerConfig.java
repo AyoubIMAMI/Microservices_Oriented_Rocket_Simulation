@@ -1,6 +1,7 @@
 package fr.teama.telemetryservice.configuration;
 
 import fr.teama.telemetryservice.connectors.externalDTO.MissionLogDTO;
+import fr.teama.telemetryservice.controllers.dto.RobotDataDTO;
 import fr.teama.telemetryservice.models.PayloadData;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -65,6 +66,23 @@ public class KafkaProducerConfig
     public KafkaTemplate<String, PayloadData> kafkaTemplatePayloadData()
     {
         return new KafkaTemplate<>(producerFactoryPayloadData());
+    }
+
+    @Bean
+    public ProducerFactory<String, RobotDataDTO> producerFactoryRobotDataDTO()
+    {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "host.docker.internal:9092");
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+
+
+    @Bean
+    public KafkaTemplate<String, RobotDataDTO> kafkaTemplateRobotDataDTO()
+    {
+        return new KafkaTemplate<>(producerFactoryRobotDataDTO());
     }
     
     

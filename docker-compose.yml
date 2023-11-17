@@ -156,6 +156,8 @@ services:
     restart: always
     ports:
       - 3016:8080
+    depends_on:
+      - kafka
 
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
   postgres-telemetry:
