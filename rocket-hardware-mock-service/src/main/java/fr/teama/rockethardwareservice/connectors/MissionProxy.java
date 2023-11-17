@@ -19,7 +19,7 @@ public class MissionProxy implements IMissionProxy {
     public ResponseEntity<String> warnMissionThatRocketHasCriticalAnomaly() throws MissionServiceUnvailableException {
         try {
             LoggerHelper.logWarn("Inform the mission service that the rocket has a critical anomaly and will self-destroy");
-            return restTemplate.getForEntity(apiBaseUrlHostAndPort + "/mission/rocket-critical-anomaly", String.class);
+            return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/mission/rocket-critical-anomaly", null, String.class);
         } catch (Exception e) {
             LoggerHelper.logError(e.toString());
             throw new MissionServiceUnvailableException();
