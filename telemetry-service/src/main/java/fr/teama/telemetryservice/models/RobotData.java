@@ -50,7 +50,7 @@ public class RobotData {
 
     @Override
     public String toString() {
-        return "StageData{" +
+        return "RobotData{" +
                 "rocketName=" + rocketName +
                 ", position=" + position +
                 ", speed=" + speed +

@@ -43,9 +43,5 @@ public class TelemetryController {
     public ResponseEntity<String> stageData() {
         return ResponseEntity.ok().body(stageDataRepository.findAll().toString());
     }
-    @GetMapping("/tracking-data")
-    public ResponseEntity<String> trackingData() {
-        return ResponseEntity.ok().body(trackingDataRepository.findAll().toString());
-    }
 
 }

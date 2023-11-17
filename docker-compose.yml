@@ -191,6 +191,7 @@ services:
   postgres-telemetry:
     image: 'bitnami/postgresql:latest'
     container_name: database-telemetry
+    restart: always
     environment:
       - POSTGRESQL_PASSWORD=postgrespass
       - POSTGRESQL_USER=postgresuser
@@ -206,6 +207,7 @@ services:
   postgres-telemetry-slave:
     image: 'bitnami/postgresql:latest'
     container_name: database-telemetry-slave
+    restart: always
     depends_on:
       - postgres-telemetry
     environment:
@@ -225,6 +227,7 @@ services:
   postgres-payload:
     image: postgres:15.2
     container_name: database-payload
+    restart: always
     environment:
       - POSTGRES_PASSWORD=postgrespass
       - POSTGRES_USER=postgresuser
@@ -234,6 +237,7 @@ services:
 
   postgres-logs:
     image: postgres:15.2
+    restart: always
     environment:
       - POSTGRES_PASSWORD=postgrespass
       - POSTGRES_USER=postgresuser
