@@ -8,16 +8,16 @@ public class TrackingDTO {
     private List<TrackItemDTO> data;
     private TrackingCategoryDTO category;
     private String serviceToBeNotified;
-    private String routeToNotify;
+    private String eventDataType;
 
-    public TrackingDTO(List<TrackItemDTO> data, String requestService, String routeToNotify, TrackingCategoryDTO category) {
+    public TrackingDTO(List<TrackItemDTO> data, String requestService, String eventDataType, TrackingCategoryDTO category) {
         this.data = data;
         this.serviceToBeNotified = requestService;
-        this.routeToNotify = routeToNotify;
+        this.eventDataType = eventDataType;
         this.category = category;
     }
 
-    public TrackingDTO(String routeToNotify) {
+    public TrackingDTO(String eventDataType) {
     }
 
     public List<TrackItemDTO> getData() {
@@ -28,8 +28,8 @@ public class TrackingDTO {
         return serviceToBeNotified;
     }
 
-    public String getRouteToNotify() {
-        return routeToNotify;
+    public String getEventDataType() {
+        return eventDataType;
     }
 
     public TrackingCategoryDTO getCategory() {
@@ -44,8 +44,8 @@ public class TrackingDTO {
         this.serviceToBeNotified = serviceToBeNotified;
     }
 
-    public void setRouteToNotify(String routeToNotify) {
-        this.routeToNotify = routeToNotify;
+    public void setEventDataType(String eventDataType) {
+        this.eventDataType = eventDataType;
     }
 
     public void setCategory(TrackingCategoryDTO category) {

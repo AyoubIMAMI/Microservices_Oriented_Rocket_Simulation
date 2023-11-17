@@ -41,9 +41,9 @@ public class KafkaProducerService {
         trackItemDTOList.add(trackItemDTO);
         TrackingDTO trackingDTO = switch (rocketState) {
             case SEVERE_ANOMALY ->
-                    new TrackingDTO(trackItemDTOList, "mission", TrackingCategory.ROCKET, "/mission/rocket-hardware-destruction");
+                    new TrackingDTO(trackItemDTOList, "mission", TrackingCategory.ROCKET, "rocket-hardware-destruction");
             case PRESSURE_ANOMALY ->
-                    new TrackingDTO(trackItemDTOList, "mission", TrackingCategory.ROCKET, "/mission/rocket-pressure-anomaly");
+                    new TrackingDTO(trackItemDTOList, "mission", TrackingCategory.ROCKET, "rocket-pressure-anomaly");
             default -> throw new NotifyStateNotSupportedException();
         };
         LoggerHelper.logInfo("Ask telemetry to being notify in case of rocket anomaly detection with rocket status : " + trackItemDTO.getData());

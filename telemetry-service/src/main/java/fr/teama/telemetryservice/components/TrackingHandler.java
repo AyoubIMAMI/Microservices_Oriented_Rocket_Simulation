@@ -1,12 +1,11 @@
 package fr.teama.telemetryservice.components;
 
-import fr.teama.telemetryservice.exceptions.*;
-import fr.teama.telemetryservice.interfaces.proxy.*;
 import fr.teama.telemetryservice.models.*;
 import fr.teama.telemetryservice.models.RocketData;
 import fr.teama.telemetryservice.helpers.LoggerHelper;
 import fr.teama.telemetryservice.interfaces.ITelemetryNotifier;
 import fr.teama.telemetryservice.repository.TrackingRepository;
+import fr.teama.telemetryservice.services.KafkaProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,19 +15,7 @@ public class TrackingHandler implements ITelemetryNotifier {
     TrackingRepository trackingRepository;
 
     @Autowired
-    IPayloadProxy payloadProxy;
-
-    @Autowired
-    IRocketDepartmentProxy rocketDepartmentProxy;
-
-    @Autowired
-    IMissionProxy missionProxy;
-
-    @Autowired
-    IExecutiveProxy executiveProxy;
-
-    @Autowired
-    IRobotDepartmentProxy robotDepartmentProxy;
+    KafkaProducerService kafkaProducerService;
 
     @Override
     public Tracking trackingNotify(Tracking tracking) {
@@ -37,7 +24,7 @@ public class TrackingHandler implements ITelemetryNotifier {
     }
 
     @Override
-    public void verifyRocketData(RocketData rocketData) throws PayloadServiceUnavailableException, RocketStageServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+    public void verifyRocketData(RocketData rocketData) {
         for (Tracking tracking: trackingRepository.findByCategory(TrackingCategory.ROCKET)){
             boolean allConditionsReached = true;
 
@@ -57,7 +44,7 @@ public class TrackingHandler implements ITelemetryNotifier {
     }
 
     @Override
-    public void verifyStageData(StageData stageData) throws RocketStageServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+    public void verifyStageData(StageData stageData) {
         for (Tracking tracking: trackingRepository.findByCategory(TrackingCategory.INDEPENDENT_STAGE)){
             boolean allConditionsReached = true;
 
@@ -77,7 +64,7 @@ public class TrackingHandler implements ITelemetryNotifier {
     }
 
     @Override
-    public void verifyRobotData(RobotData robotData) throws RocketStageServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+    public void verifyRobotData(RobotData robotData) {
         for (Tracking tracking: trackingRepository.findByCategory(TrackingCategory.ROBOT)){
             boolean allConditionsReached = true;
 
@@ -124,37 +111,37 @@ public class TrackingHandler implements ITelemetryNotifier {
         };
     }
 
-    private void notifyService(Tracking tracking) throws RocketStageServiceUnavailableException, PayloadServiceUnavailableException, MissionServiceUnavailableException, ExecutiveServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+    private void notifyService(Tracking tracking) {
         switch (tracking.getServiceToBeNotified()) {
             case "rocket-department":
-                switch (tracking.getRouteToNotify()) {
-                    case "/rocket/stage":
-                        rocketDepartmentProxy.fuelLevelReached();
+                switch (tracking.getEventDataType()) {
+                    case "stage":
+                        kafkaProducerService.fuelLevelReached();
                         break;
-                    case "/rocket/enters-q", "/rocket/fairing-altitude", "/rocket/leaves-q":
-                        rocketDepartmentProxy.heightReached(tracking);
+                    case "enters-q", "fairing-altitude", "leaves-q":
+                        kafkaProducerService.heightReached(tracking);
                         break;
                 }
                 break;
             case "payload":
-                payloadProxy.heightReached();
+                kafkaProducerService.payloadHeightReached();
                 break;
             case "mission":
-                missionProxy.specificStatusDetected(tracking.getRouteToNotify());
+                kafkaProducerService.specificStatusDetected(tracking.getEventDataType());
                 break;
             case "executive":
-                executiveProxy.notifyStageLanded();
+                kafkaProducerService.notifyStageLanded();
                 break;
             case "robot-department":
-                switch (tracking.getRouteToNotify()) {
-                    case "/robot/drop":
-                        robotDepartmentProxy.notifyHeightReached();
+                switch (tracking.getEventDataType()) {
+                    case "drop":
+                        kafkaProducerService.robotNotifyHeightReached();
                         break;
-                    case "/robot/landed":
-                        robotDepartmentProxy.landedSuccessfully();
+                    case "landed":
+                        kafkaProducerService.robotLandedSuccessfully();
                         break;
-                    case "/robot/reached-position":
-                        robotDepartmentProxy.reachedPositionSuccessfully();
+                    case "reached-position":
+                        kafkaProducerService.robotReachedPositionSuccessfully();
                         break;
                 }
                 break;

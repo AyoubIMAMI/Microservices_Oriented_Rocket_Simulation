@@ -1,7 +1,6 @@
 package fr.teama.telemetryservice.services;
 
 import fr.teama.telemetryservice.controllers.dto.*;
-import fr.teama.telemetryservice.exceptions.*;
 import fr.teama.telemetryservice.helpers.LoggerHelper;
 import fr.teama.telemetryservice.interfaces.DataSaver;
 import fr.teama.telemetryservice.interfaces.DataSender;
@@ -24,32 +23,32 @@ public class KafkaConsumerService {
     private ITelemetryNotifier telemetryNotifier;
 
     @KafkaListener(topics = "rocket-hardware-topic", groupId = "group_id", containerFactory = "messageRocketDataListener")
-    public void receiveRocketData(RocketDataDTO rocketDataDTO) throws RocketStageServiceUnavailableException, ExecutiveServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+    public void receiveRocketData(RocketDataDTO rocketDataDTO) {
         LoggerHelper.logInfo("Receive \u001B[33mrocket\u001B[32m hardware data: " + rocketDataDTO.toString());
         this.dataSaver.saveRocketData(rocketDataDTO);
     }
 
     @KafkaListener(topics = "stage-hardware-topic", groupId = "group_id", containerFactory = "messageStageDataListener")
-    public void receiveStageData(StageDataDTO stageDataDTO) throws RocketStageServiceUnavailableException, ExecutiveServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+    public void receiveStageData(StageDataDTO stageDataDTO) {
         LoggerHelper.logInfo("Receive \u001B[38;5;165mstage\u001B[32m " + stageDataDTO.getStageLevel() + " hardware data: " + stageDataDTO.toStringComplete());
         this.dataSaver.saveStageData(stageDataDTO);
     }
 
     @KafkaListener(topics = "robot-hardware-topic", groupId = "group_id", containerFactory = "messageRobotDataListener")
-    public void receiveRobotData(RobotDataDTO robotDataDTO) throws RocketStageServiceUnavailableException, ExecutiveServiceUnavailableException, MissionServiceUnavailableException, PayloadServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+    public void receiveRobotData(RobotDataDTO robotDataDTO) {
         LoggerHelper.logInfo("Receive \u001B[93mrobot\u001B[32m hardware data: " + robotDataDTO.toString());
         this.dataSaver.saveRobotData(robotDataDTO);
     }
 
     @KafkaListener(topics = "robot-hardware-sample-topic", groupId = "group_id", containerFactory = "messageRobotDataListener")
-    public void receiveRobotSampleData(RobotDataDTO robotDataDTO) throws PayloadServiceUnavailableException, RocketStageServiceUnavailableException, ExecutiveServiceUnavailableException, MissionServiceUnavailableException, RobotDepartmentServiceUnavailableException {
+    public void receiveRobotSampleData(RobotDataDTO robotDataDTO) {
         LoggerHelper.logInfo("Receive \u001B[93mrobot\u001B[32m hardware data: " + robotDataDTO.toString());
         this.dataSaver.saveRobotData(robotDataDTO);
         this.dataSender.sendRobotDataForScientist(robotDataDTO);
     }
 
     @KafkaListener(topics = "payload-hardware-topic", groupId = "group_id", containerFactory = "messagePayloadDataListener")
-    public void receivePayloadData(PayloadDataDTO payloadDataDTO) throws PayloadServiceUnavailableException {
+    public void receivePayloadData(PayloadDataDTO payloadDataDTO) {
         this.dataSender.sendPayloadData(payloadDataDTO);
     }
 

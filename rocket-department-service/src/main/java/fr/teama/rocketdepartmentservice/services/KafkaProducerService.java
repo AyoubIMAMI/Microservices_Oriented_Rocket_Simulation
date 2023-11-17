@@ -25,11 +25,11 @@ public class KafkaProducerService {
         kafkaTemplate.send("webcaster-topic", message);
     }
 
-    public void askWhenEventHappens(TrackingFieldDTO fieldToTrack, Double data, String service, String routeToNotify, OperationTypeDTO operationTypeDTO, String log) {
+    public void askWhenEventHappens(TrackingFieldDTO fieldToTrack, Double data, String service, String eventDataType, OperationTypeDTO operationTypeDTO, String log) {
         TrackItemDTO trackItemDTO = new TrackItemDTO(fieldToTrack, data, operationTypeDTO);
         List<TrackItemDTO> trackItemDTOList = new ArrayList<>();
         trackItemDTOList.add(trackItemDTO);
-        TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, service, routeToNotify, TrackingCategoryDTO.ROCKET);
+        TrackingDTO trackingDTO = new TrackingDTO(trackItemDTOList, service, eventDataType, TrackingCategoryDTO.ROCKET);
         LoggerHelper.logInfo("Ask to the telemetry service to be notified when " + log + trackItemDTO.getData());
         kafkaTrackingTemplate.send("tracking-topic", trackingDTO);
     }

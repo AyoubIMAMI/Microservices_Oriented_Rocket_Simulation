@@ -28,10 +28,4 @@ public class ExecutiveController {
         return ResponseEntity.ok("Tracking condition sent to telemetry service");
     }
 
-    @PostMapping("/stage-landed")
-    public ResponseEntity<String> stageLanded() {
-        LoggerHelper.logInfo("The stage has successfully landed");
-        return ResponseEntity.ok("The stage has successfully landed");
-    }
-
 }
