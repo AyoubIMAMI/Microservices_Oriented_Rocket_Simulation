@@ -2,15 +2,12 @@ package fr.teama.scientificdepartmentservice.controllers;
 
 
 import fr.teama.scientificdepartmentservice.IRobotDepartmentProxy;
-import fr.teama.scientificdepartmentservice.entities.Position;
 import fr.teama.scientificdepartmentservice.exception.RobotDepartmentServiceUnavailableException;
 import fr.teama.scientificdepartmentservice.helpers.LoggerHelper;
+import fr.teama.scientificdepartmentservice.models.Sample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
@@ -18,7 +15,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @CrossOrigin
 @RequestMapping(path = ScientificDepartmentController.BASE_URI, produces = APPLICATION_JSON_VALUE)
 public class ScientificDepartmentController {
-    public static final String BASE_URI = "/api/rocket";
+    public static final String BASE_URI = "/api/scientific-department";
 
     @Autowired
     IRobotDepartmentProxy robotDepartmentProxy;
@@ -30,5 +27,10 @@ public class ScientificDepartmentController {
         return ResponseEntity.ok().body("Position sent to the robot department service");
     }
 
-    //TODO receive sample to analyze them
+    @PostMapping("/sample")
+    public ResponseEntity<String> receiveSample(@RequestBody Sample sample) {
+        LoggerHelper.logInfo("Sample received from the robot department service");
+        //TODO
+        return ResponseEntity.ok().body("Sample received");
+    }
 }

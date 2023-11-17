@@ -1,7 +1,7 @@
 package fr.teama.scientificdepartmentservice.connectors;
 
 import fr.teama.scientificdepartmentservice.IRobotDepartmentProxy;
-import fr.teama.scientificdepartmentservice.entities.Position;
+import fr.teama.scientificdepartmentservice.models.Position;
 import fr.teama.scientificdepartmentservice.exception.RobotDepartmentServiceUnavailableException;
 import fr.teama.scientificdepartmentservice.helpers.LoggerHelper;
 import org.springframework.beans.factory.annotation.Value;
