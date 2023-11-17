@@ -5,6 +5,7 @@ import fr.teama.robotdepartmentservice.exceptions.RobotHardwareServiceUnavailabl
 import fr.teama.robotdepartmentservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.robotdepartmentservice.exceptions.ScientificDepartmentServiceUnavailableException;
 import fr.teama.robotdepartmentservice.helpers.LoggerHelper;
+import fr.teama.robotdepartmentservice.interfaces.IDataAsker;
 import fr.teama.robotdepartmentservice.interfaces.IRobotManager;
 import fr.teama.robotdepartmentservice.interfaces.IRobotReleaser;
 import fr.teama.robotdepartmentservice.interfaces.proxy.IScientificDepartmentProxy;
@@ -27,6 +28,9 @@ public class KafkaConsumerService {
 
     @Autowired
     private IScientificDepartmentProxy scientificDepartmentProxy;
+
+    @Autowired
+    private IDataAsker dataAsker;
 
     @KafkaListener(topics = "robot-event-topic", groupId = "group_id")
     void robotEvent(String event) throws MissionServiceUnavailableException, RocketHardwareServiceUnavailableException, RobotHardwareServiceUnavailableException, ScientificDepartmentServiceUnavailableException {
@@ -51,5 +55,11 @@ public class KafkaConsumerService {
                 LoggerHelper.logWarn("Unknown event received");
         }
 
+    }
+
+    @KafkaListener(topics = "start-event-topic", groupId = "group_id_robot")
+    public void missionStartWarning() {
+        LoggerHelper.logInfo("Notification of the start of the mission");
+        dataAsker.askDataToTelemetry();
     }
 }

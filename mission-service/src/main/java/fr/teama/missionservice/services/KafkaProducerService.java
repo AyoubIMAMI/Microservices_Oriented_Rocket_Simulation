@@ -49,4 +49,8 @@ public class KafkaProducerService {
         LoggerHelper.logInfo("Ask telemetry to being notify in case of rocket anomaly detection with rocket status : " + trackItemDTO.getData());
         kafkaTrackingTemplate.send("tracking-topic", trackingDTO);
     }
+
+    public void sendStartEventNotification() {
+        kafkaTemplate.send("start-event-topic", "start-event");
+    }
 }

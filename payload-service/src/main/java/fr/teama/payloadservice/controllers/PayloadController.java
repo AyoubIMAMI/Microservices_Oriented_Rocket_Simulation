@@ -1,7 +1,6 @@
 package fr.teama.payloadservice.controllers;
 
 import fr.teama.payloadservice.helpers.LoggerHelper;
-import fr.teama.payloadservice.interfaces.IDataAsker;
 import fr.teama.payloadservice.interfaces.PayloadDataHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +17,8 @@ public class PayloadController {
     public static final String BASE_URI = "/api/payload";
 
     @Autowired
-    private IDataAsker dataAsker;
-    @Autowired
     private PayloadDataHandler payloadDataHandler;
 
-
-    @PostMapping
-    public ResponseEntity<String> missionStartWarning() {
-        LoggerHelper.logInfo("Notification of the start of the mission");
-        return dataAsker.askOrbitToTelemetry();
-    }
 
     @PostMapping("/reset-db")
     public ResponseEntity<String> resetDb() {

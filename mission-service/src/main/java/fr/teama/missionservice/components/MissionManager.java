@@ -22,15 +22,6 @@ public class MissionManager implements IMissionManager {
     IRocketDepartmentProxy rocketDepartmentProxy;
 
     @Autowired
-    IPayloadProxy payloadProxy;
-
-    @Autowired
-    IExecutiveProxy executiveProxy;
-
-    @Autowired
-    IRobotDepartmentProxy robotDepartmentProxy;
-
-    @Autowired
     IRocketHardwareProxy rocketHardwareProxy;
 
     @Autowired
@@ -43,7 +34,7 @@ public class MissionManager implements IMissionManager {
     KafkaProducerService kafkaProducerService;
 
     @Override
-    public ResponseEntity<String> startMission(String rocketName) throws RocketServiceUnavailableException, RocketHardwareServiceUnavailableException, PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, TelemetryServiceUnavailableException, LogsServiceUnavailableException, RobotDepartmentServiceUnavailableException, NotifyStateNotSupportedException {
+    public ResponseEntity<String> startMission(String rocketName) throws RocketServiceUnavailableException, RocketHardwareServiceUnavailableException,TelemetryServiceUnavailableException, LogsServiceUnavailableException, NotifyStateNotSupportedException {
         telemetryProxy.changeRocketName(rocketName);
         telemetryProxy.resetTrackings();
         logsProxy.changeRocketName(rocketName);
@@ -112,10 +103,9 @@ public class MissionManager implements IMissionManager {
             LoggerHelper.logWarn(serviceName + " is not OK to launch rocket");
     }
 
-    private void NotifyMissionStart() throws PayloadServiceUnavailableException, ExecutiveServiceUnavailableException, RobotDepartmentServiceUnavailableException {
-        payloadProxy.missionStartNotification();
-        executiveProxy.missionStartNotification();
-        robotDepartmentProxy.missionStartNotification();
+    private void NotifyMissionStart() {
+        LoggerHelper.logInfo("Send a mission start notification event");
+        kafkaProducerService.sendStartEventNotification();
     }
 
     private void gettingNotifyInCaseOfRocketAnomaly() throws NotifyStateNotSupportedException {

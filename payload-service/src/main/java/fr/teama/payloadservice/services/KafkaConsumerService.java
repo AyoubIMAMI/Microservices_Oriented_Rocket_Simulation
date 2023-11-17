@@ -6,6 +6,7 @@ import fr.teama.payloadservice.exceptions.MissionServiceUnavailableException;
 import fr.teama.payloadservice.exceptions.PayloadHardwareServiceUnavaibleException;
 import fr.teama.payloadservice.exceptions.RocketHardwareServiceUnavailableException;
 import fr.teama.payloadservice.helpers.LoggerHelper;
+import fr.teama.payloadservice.interfaces.IDataAsker;
 import fr.teama.payloadservice.interfaces.IPayloadReleaser;
 import fr.teama.payloadservice.interfaces.PayloadDataHandler;
 import fr.teama.payloadservice.interfaces.proxy.IRocketHardwareProxy;
@@ -33,6 +34,9 @@ public class KafkaConsumerService {
     @Autowired
     private PayloadDataHandler payloadDataHandler;
 
+    @Autowired
+    private IDataAsker dataAsker;
+
 
     @KafkaListener(topics = "payload-event-topic", groupId = "group_id")
     void payloadEvent(String event) throws MissionServiceUnavailableException, RocketHardwareServiceUnavailableException {
@@ -56,5 +60,11 @@ public class KafkaConsumerService {
         LocalDateTime timestamp = payloadDataDTO.getTimestamp();
         Position position = new Position(positionDTO.getX(), positionDTO.getY(), positionDTO.getAltitude());
         payloadDataHandler.saveDataPayload(new PayloadData(rocketName, position, timestamp));
+    }
+
+    @KafkaListener(topics = "start-event-topic", groupId = "group_id_payload")
+    public void missionStartWarning() {
+        LoggerHelper.logInfo("Notification of the start of the mission");
+        dataAsker.askOrbitToTelemetry();
     }
 }
