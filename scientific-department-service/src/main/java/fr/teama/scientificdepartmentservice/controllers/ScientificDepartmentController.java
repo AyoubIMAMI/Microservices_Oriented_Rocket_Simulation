@@ -26,11 +26,4 @@ public class ScientificDepartmentController {
         robotDepartmentProxy.sendPositionToGo();
         return ResponseEntity.ok().body("Position sent to the robot department service");
     }
-
-    @PostMapping("/sample")
-    public ResponseEntity<String> receiveSample(@RequestBody Sample sample) {
-        LoggerHelper.logInfo("Sample received from the robot department service");
-        //TODO
-        return ResponseEntity.ok().body("Sample received");
-    }
 }
