@@ -3,7 +3,7 @@
 ./stop-all.sh
 
 echo "** Starting all"
-docker-compose up -d
+docker compose up -d
 
 # remove # to add pause in script execution
 #read -p "** Press any key to continue... "
