@@ -106,9 +106,9 @@ function criticalAnomaly() {
 
 wait_telemetry_service
 (sleep 4 && scenario1) &
-(sleep 122 && scenario2) &
-(sleep 137 && sabotageRocket) &
-(sleep 142 && scenario3) &
-(sleep 157 && criticalAnomaly) &
+(sleep 124 && scenario2) &
+(sleep 139 && sabotageRocket) &
+(sleep 144 && scenario3) &
+(sleep 159 && criticalAnomaly) &
 docker compose logs --follow --since 0m
 read -p "."
