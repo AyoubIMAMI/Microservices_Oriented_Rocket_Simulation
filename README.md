@@ -61,8 +61,8 @@ The three scenarios will automatically be run in sequence using the run.sh scrip
 
 
 - *logs-service*: Records all mission logs
- - Receive all logs from all services linked to the mission, then save them
- - Allows access to the log history of each rocket for different missions
+  - Receive all logs from all services linked to the mission, then save them
+  - Allows access to the log history of each rocket for different missions
 
 
 - *mission-service*: overlook the whole mission
