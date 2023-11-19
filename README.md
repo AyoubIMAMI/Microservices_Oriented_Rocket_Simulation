@@ -35,14 +35,20 @@ git checkout tags/MVP
 - Mission successful
   - Poll to weather and rocket department services
   - Rocket launch
-  - Stage splitting and returning to Earth
   - Speed variation through Max Q
+  - Stage splitting and returning to Earth
   - Payload dropped and monitored
+  - Robot dropped and monitored
+  - Moon sample analysis
 
 
-- Mission failed
-  - Rocket damaged by sabotage
-  - Rocket destroyed to avoid potential ground damage
+- Mission failed: severe anomaly
+  - Rocket damaged, sabotaged by Elune Mars
+  - Rocket destroyed by the mission commander, to avoid potential ground damage
+ 
+- Mission failed: critical anomaly
+  - Rocket damaged, sabotaged by Palpatooine
+  - Rocket self-destructed, to avoid potential ground damage
 
 The two scenarios will automatically be run in sequence using the run.sh script
 
@@ -52,6 +58,11 @@ The two scenarios will automatically be run in sequence using the run.sh script
 #### Services
 - *weather-service*: make sure the weather is safe across sites
   - Reply GO or NO-GO to the *mission-service* when it asks for the weather status before launching the rocket
+
+
+- *logs-service*: Records all mission logs
+ - Receive all logs from all services linked to the mission, then save them
+ - Allows access to the log history of each rocket for different missions
 
 
 - *mission-service*: overlook the whole mission
@@ -147,6 +158,7 @@ The two scenarios will automatically be run in sequence using the run.sh script
 	- Save the stage data received by the *stage-hardware-mock-service*
    	- Save robot data received by the *robot-hardware-mock-service*
 	- Save notification requests received by other services
+   	- Save rocket names received by *mission-service*
 
 
 - *database-telemetry-slave*:
