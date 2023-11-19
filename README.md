@@ -50,7 +50,7 @@ git checkout tags/FINAL
   - Rocket damaged, sabotaged by Palpatooine
   - Rocket self-destructed, to avoid potential ground damage
 
-The two scenarios will automatically be run in sequence using the run.sh script
+The three scenarios will automatically be run in sequence using the run.sh script
 
 ---
 ## Services descriptions
