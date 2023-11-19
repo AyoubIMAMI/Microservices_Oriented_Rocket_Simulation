@@ -62,15 +62,15 @@ public class RobotHardware implements IRobotHardware {
             // Guidance
             if (robotData.getX() != 0 || robotData.getY() != 0) {
                 if (robotData.getX() > 0) {
-                    robotData.setX(max(robotData.getX() - new Random().nextDouble() * 2, 0));
+                    robotData.setX(max(robotData.getX() - new Random().nextDouble() * 5, 0));
                 } else {
-                    robotData.setX(min(robotData.getX() + new Random().nextDouble() * 2, 0));
+                    robotData.setX(min(robotData.getX() + new Random().nextDouble() * 5, 0));
                 }
 
                 if (robotData.getY() > 0) {
-                    robotData.setY(max(robotData.getY() - new Random().nextDouble() * 2, 0));
+                    robotData.setY(max(robotData.getY() - new Random().nextDouble() * 5, 0));
                 } else {
-                    robotData.setY(min(robotData.getY() + new Random().nextDouble() * 2, 0));
+                    robotData.setY(min(robotData.getY() + new Random().nextDouble() * 5, 0));
                 }
 
                 if (robotData.getX() == 0 && robotData.getY() == 0) {
